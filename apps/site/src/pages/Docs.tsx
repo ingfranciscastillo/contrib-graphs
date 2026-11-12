@@ -4,7 +4,7 @@ import { fromDates } from 'contrib-graphs/data'
 import { useMemo, type ReactNode } from 'react'
 import { useLang, useLocaleParams } from '../i18n'
 import { useDemo } from '../search'
-import { CodeBlock, Section } from '../ui'
+import { CodeBlock, Section, registryUrl } from '../ui'
 
 /** Anclas iguales en los dos idiomas: un enlace a #themes funciona en /docs y en /es/docs. */
 const toc = [
@@ -66,21 +66,44 @@ export function Docs() {
         <Section id="installation" title={title('installation')}>
           <p>
             {L(
-              'Install the package and import the styles once, for example in your layout or entry file. The only dependency is React 18 or later.',
-              'Instala el paquete e importa los estilos una sola vez, por ejemplo en tu layout o en el archivo de entrada. La única dependencia es React 18 o superior.',
+              'There are two ways to use the components. The only dependency is React 18 or later.',
+              'Hay dos formas de usar los componentes. La única dependencia es React 18 o superior.',
+            )}
+          </p>
+          <h3>{L('From npm', 'Desde npm')}</h3>
+          <p>
+            {L(
+              'Install the package and import the styles once, for example in your layout or entry file. You get updates with npm.',
+              'Instala el paquete e importa los estilos una sola vez, por ejemplo en tu layout o en el archivo de entrada. Las actualizaciones llegan con npm.',
             )}
           </p>
           <CodeBlock label="bash" code={`npm install contrib-graphs`} />
           <CodeBlock
             label="tsx"
-            code={`import { Link } from '@tanstack/react-router'
-import { ClassicGraph } from 'contrib-graphs'
+            code={`import { ClassicGraph } from 'contrib-graphs'
 import 'contrib-graphs/styles.css'
 
 export function Activity({ contributions }) {
   return <ClassicGraph data={contributions} theme="github" animate />
 }`}
           />
+          <h3>{L('Copy into your project', 'Copiar a tu proyecto')}</h3>
+          <p>
+            {L(
+              'Use the shadcn CLI to copy the source of the variants you want into components/contrib-graphs, and edit it like your own code. Each variant brings the shared core with it. It needs a components.json, which npx shadcn@latest init creates.',
+              'Usa el CLI de shadcn para copiar el código de las variantes que quieras a components/contrib-graphs y editarlo como código tuyo. Cada variante trae consigo el núcleo compartido. Necesita un components.json, que crea npx shadcn@latest init.',
+            )}
+          </p>
+          <CodeBlock label="bash" code={`npx shadcn@latest add ${registryUrl('classic-graph')}`} />
+          <CodeBlock
+            label="tsx"
+            code={`import { ClassicGraph } from '@/components/contrib-graphs/variants/GridGraph'
+import '@/components/contrib-graphs/styles.css'`}
+          />
+          <p>
+            {L('The GitHub, GitLab and sample data helpers are a separate item:', 'Los adaptadores de GitHub y GitLab y los datos de ejemplo son un item aparte:')}
+          </p>
+          <CodeBlock label="bash" code={`npx shadcn@latest add ${registryUrl('contrib-graphs-data')}`} />
         </Section>
 
         <Section id="frameworks" title={title('frameworks')}>
@@ -108,8 +131,7 @@ export function Activity({ contributions }) {
           )}
           <CodeBlock
             label="app/page.tsx"
-            code={`import { Link } from '@tanstack/react-router'
-import { ClassicGraph } from 'contrib-graphs'
+            code={`import { ClassicGraph } from 'contrib-graphs'
 import { fetchGitHubContributions } from 'contrib-graphs/data'
 
 export const revalidate = 3600 // ${L('refetch the data every hour', 'vuelve a pedir los datos cada hora')}
@@ -146,7 +168,6 @@ export default async function Page() {
             label="src/pages/index.astro"
             code={`---
 import 'contrib-graphs/styles.css'
-import { Link } from '@tanstack/react-router'
 import { ClassicGraph } from 'contrib-graphs'
 import { fetchGitHubContributions } from 'contrib-graphs/data'
 

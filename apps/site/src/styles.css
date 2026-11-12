@@ -1213,3 +1213,9 @@ input[type='checkbox'][role='switch']:checked::after {
   display: flex;
   justify-content: center;
 }
+
+.preview-note {
+  margin: 4px 0 -4px;
+  font-size: 13.5px;
+  color: var(--text-2);
+}

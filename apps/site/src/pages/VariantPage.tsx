@@ -7,7 +7,7 @@ import { useLang, useLocaleParams, type Lang } from '../i18n'
 import { componentApi, PropsTable } from '../api'
 import { useT } from '../messages'
 import { useDemo } from '../search'
-import { CodeBlock, DemoToolbar } from '../ui'
+import { CodeBlock, DemoToolbar, registryUrl } from '../ui'
 import { tr, usageSnippet, variants, variantsById, type Control, type Values, type VariantDef } from '../variants'
 
 export function VariantPage() {
@@ -103,6 +103,8 @@ function Playground({ def }: { def: VariantDef }) {
             )}
           </div>
           <CodeBlock code={usageSnippet(def, values, theme)} />
+          <p className="preview-note">{t.playground.orCopy}</p>
+          <CodeBlock label="bash" code={`npx shadcn@latest add ${registryUrl(`${def.id}-graph`)}`} />
           <PropsReference importName={def.importName} />
         </div>
 

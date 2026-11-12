@@ -26,6 +26,12 @@ Every component takes the same `{ date, count }[]` data. Adapters for GitHub and
 
 Requires React 18 or later.
 
+Prefer to own the code? Copy any variant into your project with the shadcn CLI instead of installing the package:
+
+```bash
+npx shadcn@latest add https://ingfranciscastillo.github.io/contrib-graphs/r/classic-graph.json
+```
+
 ## Next.js, Astro and server rendering
 
 - `contrib-graphs` exports the components and starts with `"use client"`, so you can render them straight from a Next.js Server Component.
