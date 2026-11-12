@@ -16,3 +16,17 @@ test('cada prop y cada función pública tiene descripción', () => {
   ]
   assert.deepEqual(missing, [])
 })
+
+test('cada texto de la API tiene traducción al español, y no sobran traducciones', async () => {
+  const { apiEs } = await import('../src/api-es.ts')
+  const api = extractApi()
+  const texts = new Set([
+    ...api.components.flatMap((c) => [c.description, ...c.props.map((p) => p.description)]),
+    ...api.functions.map((f) => f.description),
+    ...api.constants.map((c) => c.description),
+  ])
+  const defaults = new Set(api.components.flatMap((c) => c.props.map((p) => p.default).filter(Boolean)))
+  const missing = [...texts].filter((t) => !(t in apiEs))
+  const unused = Object.keys(apiEs).filter((k) => !texts.has(k) && !defaults.has(k))
+  assert.deepEqual({ missing, unused }, { missing: [], unused: [] })
+})

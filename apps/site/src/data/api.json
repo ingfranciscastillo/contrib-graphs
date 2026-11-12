@@ -98,7 +98,7 @@
           "type": "string | Date",
           "required": false,
           "default": "today",
-          "description": "Last day of the calendar. When rendering on the server, always pass it:\nthe server and the browser may be on different days.",
+          "description": "Last day of the calendar. When rendering on the server, always pass it: the server and the browser may be on different days.",
           "shared": true
         },
         {
@@ -313,7 +313,7 @@
           "type": "string | Date",
           "required": false,
           "default": "today",
-          "description": "Last day of the calendar. When rendering on the server, always pass it:\nthe server and the browser may be on different days.",
+          "description": "Last day of the calendar. When rendering on the server, always pass it: the server and the browser may be on different days.",
           "shared": true
         },
         {
@@ -512,7 +512,7 @@
           "type": "string | Date",
           "required": false,
           "default": "today",
-          "description": "Last day of the calendar. When rendering on the server, always pass it:\nthe server and the browser may be on different days.",
+          "description": "Last day of the calendar. When rendering on the server, always pass it: the server and the browser may be on different days.",
           "shared": true
         },
         {
@@ -719,7 +719,7 @@
           "type": "string | Date",
           "required": false,
           "default": "today",
-          "description": "Last day of the calendar. When rendering on the server, always pass it:\nthe server and the browser may be on different days.",
+          "description": "Last day of the calendar. When rendering on the server, always pass it: the server and the browser may be on different days.",
           "shared": true
         },
         {
@@ -902,7 +902,7 @@
           "type": "string | Date",
           "required": false,
           "default": "today",
-          "description": "Last day of the calendar. When rendering on the server, always pass it:\nthe server and the browser may be on different days.",
+          "description": "Last day of the calendar. When rendering on the server, always pass it: the server and the browser may be on different days.",
           "shared": true
         },
         {
@@ -1101,7 +1101,7 @@
           "type": "string | Date",
           "required": false,
           "default": "today",
-          "description": "Last day of the calendar. When rendering on the server, always pass it:\nthe server and the browser may be on different days.",
+          "description": "Last day of the calendar. When rendering on the server, always pass it: the server and the browser may be on different days.",
           "shared": true
         },
         {
@@ -1316,7 +1316,7 @@
           "type": "string | Date",
           "required": false,
           "default": "today",
-          "description": "Last day of the calendar. When rendering on the server, always pass it:\nthe server and the browser may be on different days.",
+          "description": "Last day of the calendar. When rendering on the server, always pass it: the server and the browser may be on different days.",
           "shared": true
         },
         {
@@ -1421,12 +1421,12 @@
     {
       "name": "fetchGitHubContributions",
       "signature": "fetchGitHubContributions(login: string, token: string): Promise<ContributionDay[]>",
-      "description": "Fetches the last year of contributions from GitHub's GraphQL API. Server only (Node 18+, Deno, Bun, edge runtimes).\nA classic token with `read:user` includes private contributions."
+      "description": "Fetches the last year of contributions from GitHub's GraphQL API. Server only (Node 18+, Deno, Bun, edge runtimes). A classic token with `read:user` includes private contributions."
     },
     {
       "name": "fetchGitLabContributions",
       "signature": "fetchGitLabContributions(username: string, baseUrl?: string): Promise<ContributionDay[]>",
-      "description": "Fetches a GitLab user's calendar. The endpoint is public but sends no CORS headers,\nso call it from the server or at build time. Pass `baseUrl` for self-hosted instances."
+      "description": "Fetches a GitLab user's calendar. The endpoint is public but sends no CORS headers, so call it from the server or at build time. Pass `baseUrl` for self-hosted instances."
     },
     {
       "name": "formatDate",
@@ -1477,7 +1477,7 @@
   "constants": [
     {
       "name": "GITHUB_CONTRIBUTIONS_QUERY",
-      "description": "GitHub GraphQL query for the contribution calendar. It needs a token even\nfor public data, so run it on the server and never send the token to the browser."
+      "description": "GitHub GraphQL query for the contribution calendar. It needs a token even for public data, so run it on the server and never send the token to the browser."
     },
     {
       "name": "sampleProfiles",

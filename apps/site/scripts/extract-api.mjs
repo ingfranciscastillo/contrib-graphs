@@ -34,7 +34,7 @@ export function extractApi() {
     const sf = program.getSourceFile(resolve(PKG, file))
     return checker.getExportsOfModule(checker.getSymbolAtLocation(sf)).map((s) => (s.flags & ts.SymbolFlags.Alias ? checker.getAliasedSymbol(s) : s))
   }
-  const doc = (symbol) => ts.displayPartsToString(symbol.getDocumentationComment(checker)).trim()
+  const doc = (symbol) => ts.displayPartsToString(symbol.getDocumentationComment(checker)).replace(/\s*\n\s*/g, ' ').trim()
   const defaultOf = (symbol) => {
     const tag = symbol.getJsDocTags(checker).find((t) => t.name === 'default')
     return tag ? ts.displayPartsToString(tag.text).trim() : null
