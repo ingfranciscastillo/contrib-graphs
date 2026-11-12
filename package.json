@@ -17,6 +17,7 @@
     "typecheck": "npm run typecheck --workspaces --if-present",
     "test": "npm run typecheck && npm test --workspaces --if-present",
     "api": "npm run api -w site",
-    "images": "npm run build:package && npm run images -w site"
+    "images": "npm run build:package && npm run images -w site",
+    "og": "npm run build:package && npm run og -w site"
   }
 }
