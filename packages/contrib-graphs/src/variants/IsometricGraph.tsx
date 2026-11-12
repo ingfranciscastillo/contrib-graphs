@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { GraphShell, cellDelay, defaultTitle, describeDay, summaryOf, useCalendarGraph } from '../core'
+import { ISO_SHADES, isometricLayout } from '../isometric'
 import type { BaseGraphProps } from '../types'
 import { computeStats, formatDate, formatNumber } from '../utils'
 
@@ -40,41 +41,20 @@ export function IsometricGraph(props: IsometricGraphProps) {
   const { calendar, periodTotal, interaction } = useCalendarGraph(props)
   const stats = useMemo(() => computeStats(calendar.days), [calendar])
 
-  const tw = tileSize
-  const th = tileSize / 2
-  const W = calendar.weeks.length
-  const width = (W + 7) * (tw / 2)
-  const height = (W + 7) * (th / 2) + maxHeight + 2
-  const ox = 7 * (tw / 2)
-
   const svg = useMemo(() => {
-    // Orden de pintado de atrás hacia adelante.
-    const ordered = [...calendar.days].sort((a, b) => a.weekIndex + a.dayIndex - (b.weekIndex + b.dayIndex) || a.weekIndex - b.weekIndex)
+    const { width, height, tiles } = isometricLayout(calendar, { tileSize, maxHeight, heightBy })
     return (
       <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} aria-hidden="true">
-        {ordered.map((d) => {
-          const X = ox + (d.weekIndex - d.dayIndex) * (tw / 2)
-          const Y = maxHeight + (d.weekIndex + d.dayIndex) * (th / 2)
-          const h =
-            d.count === 0
-              ? 0
-              : heightBy === 'level'
-                ? (d.level / 4) * maxHeight
-                : Math.max(3, (d.count / Math.max(1, calendar.max)) * maxHeight)
-          const top = `${X},${Y - h} ${X + tw / 2},${Y + th / 2 - h} ${X},${Y + th - h} ${X - tw / 2},${Y + th / 2 - h}`
-          const leftFace = `${X - tw / 2},${Y + th / 2 - h} ${X},${Y + th - h} ${X},${Y + th} ${X - tw / 2},${Y + th / 2}`
-          const rightFace = `${X},${Y + th - h} ${X + tw / 2},${Y + th / 2 - h} ${X + tw / 2},${Y + th / 2} ${X},${Y + th}`
-          return (
-            <g key={d.date} className="cg-cell cg-rise" data-cg-i={d.index} style={cellDelay(d.weekIndex)}>
-              {h > 0 && <polygon points={leftFace} style={{ fill: shade(d.level, 78) }} />}
-              {h > 0 && <polygon points={rightFace} style={{ fill: shade(d.level, 60) }} />}
-              <polygon points={top} style={{ fill: `var(--cg-l${d.level})` }} />
-            </g>
-          )
-        })}
+        {tiles.map(({ day: d, height: h, top, left, right }) => (
+          <g key={d.date} className="cg-cell cg-rise" data-cg-i={d.index} style={cellDelay(d.weekIndex)}>
+            {h > 0 && <polygon points={left} style={{ fill: shade(d.level, ISO_SHADES.left) }} />}
+            {h > 0 && <polygon points={right} style={{ fill: shade(d.level, ISO_SHADES.right) }} />}
+            <polygon points={top} style={{ fill: `var(--cg-l${d.level})` }} />
+          </g>
+        ))}
       </svg>
     )
-  }, [calendar, width, height, ox, tw, th, maxHeight, heightBy])
+  }, [calendar, tileSize, maxHeight, heightBy])
 
   const n = (v: number) => formatNumber(v, props.locale)
   return (
