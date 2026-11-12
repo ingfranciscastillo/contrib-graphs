@@ -225,11 +225,6 @@ await writeFile('public/contributions.json', JSON.stringify(data))`}
               clásico con el permiso <code>read:user</code>. Si ya tienes la respuesta GraphQL, usa <code>fromGitHub(response)</code>.
             </p>,
           )}
-          <p>
-            <Link to="/{-$locale}/readme" params={lp} search={(p) => p}>
-              {L('Want it in your GitHub profile README? Use the README generator.', '¿Lo quieres en el README de tu perfil de GitHub? Usa el generador de README.')}
-            </Link>
-          </p>
         </Section>
 
         <Section id="gitlab" title={title('gitlab')}>

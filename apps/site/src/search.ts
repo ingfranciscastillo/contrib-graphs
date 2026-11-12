@@ -4,7 +4,7 @@ import { generateSampleData, sampleProfiles, themeNames, type ContributionDay, t
 import github from './data/contributions.json'
 import { useLang, type Lang } from './i18n'
 
-/** Datos reales generados con `npm run data` (CLI del paquete: `contrib-graphs json`). */
+/** Datos reales generados con `npm run data` (scripts/fetch-contributions.mjs). */
 export const githubData = github as { username: string; generatedAt: string; source: string; total: number; days: ContributionDay[] }
 
 /** Fuente de datos del demo: tu GitHub o uno de los perfiles de ejemplo. */

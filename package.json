@@ -13,7 +13,7 @@
     "dev": "npm run dev -w site",
     "build": "npm run build -w contrib-graphs && npm run build -w site",
     "build:package": "npm run build -w contrib-graphs",
-    "data": "npm run build:package && npm run data -w site",
+    "data": "npm run data -w site",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "test": "npm run typecheck && npm test --workspaces --if-present",
     "api": "npm run api -w site"

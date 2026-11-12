@@ -90,8 +90,6 @@ export const apiEs: Record<string, string> = {
     'Obtiene el último año de contribuciones de la API GraphQL de GitHub. Solo en servidor (Node 18+, Deno, Bun, edge runtimes). Un token clásico con `read:user` incluye las contribuciones privadas.',
   "Fetches a GitLab user's calendar. The endpoint is public but sends no CORS headers, so call it from the server or at build time. Pass `baseUrl` for self-hosted instances.":
     'Obtiene el calendario de un usuario de GitLab. El endpoint es público pero no envía cabeceras CORS: llámalo desde el servidor o en build. Pasa `baseUrl` para instancias self-hosted.',
-  'Renders the isometric graph as a standalone SVG string: no JavaScript, no external CSS and colors already resolved, so it works as an image in a GitHub README. For light and dark READMEs, render once per `mode` and use a `<picture>` element.':
-    'Genera el gráfico isométrico como un SVG autónomo: sin JavaScript, sin CSS externo y con los colores ya resueltos, así que funciona como imagen en un README de GitHub. Para claro y oscuro, genera uno por `mode` y usa un elemento `<picture>`.',
   'Formats an ISO date with `Intl`, in UTC so the day never shifts.': 'Formatea una fecha ISO con `Intl`, en UTC para que el día nunca se corra.',
   'Counts occurrences per day: blog posts, workouts, local commits… Strings are sliced to the date; `Date` objects use the local date.':
     'Cuenta ocurrencias por día: posts, entrenamientos, commits locales… Los strings se recortan a la fecha; los objetos `Date` usan la fecha local.',

@@ -7,7 +7,6 @@ Componentes de contribution graph para React (estilo GitHub/GitLab) en siete dis
 ```
 packages/contrib-graphs/   paquete de npm `contrib-graphs` (tsdown: ESM + CJS + tipos)
 apps/site/                 sitio: Vite + React + TanStack Router
-examples/github-profile/   archivos listos para tu repo de perfil (workflow, SVG, README)
 ```
 
 ## Desarrollo
