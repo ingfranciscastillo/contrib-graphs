@@ -2,12 +2,14 @@ import { Link, Outlet } from '@tanstack/react-router'
 import { useMemo } from 'react'
 import { BookOpen, SquaresFour } from '@phosphor-icons/react'
 import { buildCalendar, themes, themeVars } from 'contrib-graphs'
+import { useLocaleParams } from './i18n'
 import { useDemo } from './search'
-import { Logo, ModeToggle } from './ui'
+import { LanguageSwitch, Logo, ModeToggle } from './ui'
 import { variants } from './variants'
 
 export function Layout() {
   const { theme } = useDemo()
+  const lp = useLocaleParams()
   return (
     // `tv` resuelve los colores del tema (claro/oscuro) como --t0…--t4 para todo el sitio.
     <div className="app tv" style={themeVars(themes[theme])}>
@@ -16,22 +18,23 @@ export function Layout() {
       </a>
       <header className="topbar">
         <div className="container topbar-inner">
-          <Link to="/" search={(p) => p} className="brand">
+          <Link to="/{-$locale}" params={lp} search={(p) => p} className="brand">
             <Logo />
             <span>
               contrib<span className="brand-dim">/graphs</span>
             </span>
           </Link>
           <nav className="nav" aria-label="Principal">
-            <Link to="/" search={(p) => p} activeOptions={{ exact: true, includeSearch: false }} activeProps={{ 'aria-current': 'page' }}>
+            <Link to="/{-$locale}" params={lp} search={(p) => p} activeOptions={{ exact: true, includeSearch: false }} activeProps={{ 'aria-current': 'page' }}>
               <SquaresFour size={16} aria-hidden="true" />
               Galería
             </Link>
-            <Link to="/docs" search={(p) => p} activeProps={{ 'aria-current': 'page' }}>
+            <Link to="/{-$locale}/docs" params={lp} search={(p) => p} activeProps={{ 'aria-current': 'page' }}>
               <BookOpen size={16} aria-hidden="true" />
               Docs
             </Link>
           </nav>
+          <LanguageSwitch />
           <ModeToggle />
         </div>
       </header>
@@ -45,6 +48,7 @@ export function Layout() {
 
 function Footer() {
   const { data, endDate } = useDemo()
+  const lp = useLocaleParams()
   const calendar = useMemo(() => buildCalendar(data, { weeks: 53, endDate }), [data, endDate])
   return (
     <footer className="footer">
@@ -60,7 +64,7 @@ function Footer() {
       </div>
       <div className="container footer-inner">
         <div className="footer-brand">
-          <Link to="/" search={(p) => p} className="brand">
+          <Link to="/{-$locale}" params={lp} search={(p) => p} className="brand">
             <Logo size={26} />
             <span>
               contrib<span className="brand-dim">/graphs</span>
@@ -73,7 +77,7 @@ function Footer() {
           <ul>
             {variants.map((v) => (
               <li key={v.id}>
-                <Link to="/variants/$variantId" params={{ variantId: v.id }} search={(p) => p}>
+                <Link to="/{-$locale}/variants/$variantId" params={{ ...lp, variantId: v.id }} search={(p) => p}>
                   {v.name}
                 </Link>
               </li>
@@ -84,22 +88,22 @@ function Footer() {
           <p>Recursos</p>
           <ul>
             <li>
-              <Link to="/docs" search={(p) => p}>
+              <Link to="/{-$locale}/docs" params={lp} search={(p) => p}>
                 Documentación
               </Link>
             </li>
             <li>
-              <Link to="/docs" hash="github" search={(p) => p}>
+              <Link to="/{-$locale}/docs" params={lp} hash="github" search={(p) => p}>
                 Datos de GitHub
               </Link>
             </li>
             <li>
-              <Link to="/docs" hash="gitlab" search={(p) => p}>
+              <Link to="/{-$locale}/docs" params={lp} hash="gitlab" search={(p) => p}>
                 Datos de GitLab
               </Link>
             </li>
             <li>
-              <Link to="/docs" hash="temas" search={(p) => p}>
+              <Link to="/{-$locale}/docs" params={lp} hash="temas" search={(p) => p}>
                 Temas propios
               </Link>
             </li>
@@ -112,12 +116,13 @@ function Footer() {
 }
 
 export function NotFound() {
+  const lp = useLocaleParams()
   return (
     <div className="container page">
       <h1>No encontrado</h1>
       <p className="lead">
         Esa página no existe.{' '}
-        <Link to="/" search={(p) => p}>
+        <Link to="/{-$locale}" params={lp} search={(p) => p}>
           Volver a la galería
         </Link>
       </p>

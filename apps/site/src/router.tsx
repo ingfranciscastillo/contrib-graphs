@@ -13,14 +13,23 @@ const rootRoute = createRootRoute({
   validateSearch: validateGlobalSearch,
 })
 
-const indexRoute = createRoute({
+// Idioma como parámetro opcional: /docs (inglés) y /es/docs (español).
+const localeRoute = createRoute({
   getParentRoute: () => rootRoute,
+  path: '/{-$locale}',
+  beforeLoad: ({ params }) => {
+    if (params.locale !== undefined && params.locale !== 'es') throw notFound()
+  },
+})
+
+const indexRoute = createRoute({
+  getParentRoute: () => localeRoute,
   path: '/',
   component: Gallery,
 })
 
 const variantRoute = createRoute({
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => localeRoute,
   path: '/variants/$variantId',
   loader: ({ params }) => {
     if (!variantsById[params.variantId]) throw notFound()
@@ -29,12 +38,12 @@ const variantRoute = createRoute({
 })
 
 const docsRoute = createRoute({
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => localeRoute,
   path: '/docs',
   component: Docs,
 })
 
-const routeTree = rootRoute.addChildren([indexRoute, variantRoute, docsRoute])
+const routeTree = rootRoute.addChildren([localeRoute.addChildren([indexRoute, variantRoute, docsRoute])])
 
 export const router = createRouter({
   routeTree,

@@ -1,7 +1,9 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { Check, Copy, Desktop, Moon, Shuffle, Sun } from '@phosphor-icons/react'
 import { themeNames, themes, themeVars } from 'contrib-graphs'
-import { profiles, useDemo, type Lang, type Profile } from './search'
+import { Link } from '@tanstack/react-router'
+import { langs, useLang, type Lang } from './i18n'
+import { profiles, useDemo, type Profile } from './search'
 
 /* ---------------------------------------------------------- Modo del sitio */
 
@@ -42,7 +44,7 @@ export function ModeToggle() {
 /* ---------------------------------------------------------- Toolbar demo */
 
 export function DemoToolbar() {
-  const { theme, profile, lang, seed, set } = useDemo()
+  const { theme, profile, seed, set } = useDemo()
   return (
     <div className="toolbar" role="toolbar" aria-label="Opciones del demo">
       <div className="toolbar-group chips" role="radiogroup" aria-label="Tema">
@@ -82,13 +84,6 @@ export function DemoToolbar() {
             Otros datos
           </button>
         )}
-        <div className="segmented" role="radiogroup" aria-label="Idioma de los componentes">
-          {(['es', 'en'] as Lang[]).map((l) => (
-            <button key={l} role="radio" aria-checked={l === lang} onClick={() => set({ lang: l })}>
-              {l === 'es' ? 'Español' : 'English'}
-            </button>
-          ))}
-        </div>
       </div>
     </div>
   )
@@ -143,5 +138,41 @@ export function Logo({ size = 22 }: { size?: number }) {
         <rect key={i} x={(i % 3) * 7.5} y={Math.floor(i / 3) * 7.5} width="6.5" height="6.5" rx="1.6" style={{ fill: `var(--t${l})` }} />
       ))}
     </svg>
+  )
+}
+
+/* ---------------------------------------------------------- Idioma */
+
+const langNames: Record<Lang, string> = { en: 'English', es: 'Español' }
+
+/** Cambia solo el parámetro de idioma: misma página, mismos filtros. */
+export function LanguageSwitch() {
+  const lang = useLang()
+  return (
+    <nav className="segmented lang-switch" aria-label="Language / Idioma">
+      {langs.map((l) => (
+        <Link
+          key={l}
+          to="."
+          params={(prev: Record<string, unknown>) => ({ ...prev, locale: l === 'es' ? 'es' : undefined })}
+          search={(p) => p}
+          hrefLang={l}
+          lang={l}
+          aria-current={l === lang ? 'true' : undefined}
+          onClick={() => {
+            try {
+              localStorage.setItem('cg-site-lang', l)
+            } catch {
+              /* almacenamiento no disponible */
+            }
+          }}
+        >
+          <span className="hide-sm">{langNames[l]}</span>
+          <span className="show-sm" aria-hidden="true">
+            {l.toUpperCase()}
+          </span>
+        </Link>
+      ))}
+    </nav>
   )
 }
