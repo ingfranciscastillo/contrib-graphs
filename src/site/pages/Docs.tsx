@@ -123,8 +123,7 @@ const all = mergeSources(github, gitlab)`}
 
         <Section id="temas" title="Temas">
           <p>
-            Hay 7 presets (<code>github</code>, <code>gitlab</code>, <code>frost</code>, <code>ember</code>, <code>violet</code>, <code>mono</code>,{' '}
-            <code>neon</code>). Cada tema define una paleta clara y una oscura. Con <code>colorMode="auto"</code> se sigue{' '}
+            Hay 6 presets: <code>github</code>, <code>gitlab</code>, <code>frost</code>, <code>ember</code>, <code>violet</code> y <code>mono</code>. Cada tema define una paleta clara y una oscura. Con <code>colorMode="auto"</code> se sigue{' '}
             <code>prefers-color-scheme</code>, o un <code>data-theme="dark|light"</code> en <code>&lt;html&gt;</code> si tu sitio tiene su propio switch.
           </p>
           <CodeBlock
@@ -133,7 +132,6 @@ const all = mergeSources(github, gitlab)`}
 
 const brand: GraphTheme = {
   name: 'Brand',
-  glow: false,
   light: { levels: ['#eef', '#c7d2fe', '#818cf8', '#4f46e5', '#312e81'], text: '#111', muted: '#666', surface: '#fff', border: '#ddd' },
   dark:  { levels: ['#1e1b2e', '#312e81', '#4f46e5', '#818cf8', '#c7d2fe'], text: '#eee', muted: '#999', surface: '#0b0b12', border: '#2a2a3a' },
 }

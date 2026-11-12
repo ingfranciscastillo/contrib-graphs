@@ -1,5 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react'
-import { sampleProfiles, themeNames, themes, type SampleProfile } from '@cg/index'
+import { Check, Copy, Desktop, Moon, Shuffle, Sun } from '@phosphor-icons/react'
+import { sampleProfiles, themeNames, themes, themeVars, type SampleProfile } from '@cg/index'
 import { useDemo, type Lang } from './search'
 
 /* ---------------------------------------------------------- Modo del sitio */
@@ -29,34 +30,12 @@ export function ModeToggle() {
   }, [mode])
   const next: Record<SiteMode, SiteMode> = { system: 'light', light: 'dark', dark: 'system' }
   const label = { system: 'Sistema', light: 'Claro', dark: 'Oscuro' }[mode]
+  const Icon = { system: Desktop, light: Sun, dark: Moon }[mode]
   return (
-    <button className="btn btn-ghost" onClick={() => setMode(next[mode])} title="Cambiar modo de color" aria-label={`Modo de color: ${label}`}>
-      <ModeIcon mode={mode} />
+    <button className="btn btn-ghost" onClick={() => setMode(next[mode])} aria-label={`Modo de color: ${label}. Cambiar`}>
+      <Icon size={17} aria-hidden="true" />
       <span className="hide-sm">{label}</span>
     </button>
-  )
-}
-
-function ModeIcon({ mode }: { mode: SiteMode }) {
-  const p = { width: 16, height: 16, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const, 'aria-hidden': true }
-  if (mode === 'light')
-    return (
-      <svg {...p}>
-        <circle cx="12" cy="12" r="4" />
-        <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
-      </svg>
-    )
-  if (mode === 'dark')
-    return (
-      <svg {...p}>
-        <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
-      </svg>
-    )
-  return (
-    <svg {...p}>
-      <rect x="2" y="4" width="20" height="13" rx="2" />
-      <path d="M8 21h8M12 17v4" />
-    </svg>
   )
 }
 
@@ -66,22 +45,23 @@ export function DemoToolbar() {
   const { theme, profile, lang, seed, set } = useDemo()
   return (
     <div className="toolbar" role="toolbar" aria-label="Opciones del demo">
-      <div className="toolbar-group" role="radiogroup" aria-label="Tema">
+      <div className="toolbar-group chips" role="radiogroup" aria-label="Tema">
         {themeNames.map((t) => (
           <button
             key={t}
-            className="theme-chip"
+            className="theme-chip tv"
+            style={themeVars(themes[t])}
             role="radio"
             aria-checked={t === theme}
             onClick={() => set({ theme: t })}
-            title={themes[t].name}
           >
             <span className="chip-swatches" aria-hidden="true">
-              {themes[t].dark.levels.slice(1).map((c) => (
-                <i key={c} style={{ background: c }} />
-              ))}
+              <i style={{ background: 'var(--t1)' }} />
+              <i style={{ background: 'var(--t2)' }} />
+              <i style={{ background: 'var(--t3)' }} />
+              <i style={{ background: 'var(--t4)' }} />
             </span>
-            <span>{themes[t].name}</span>
+            {themes[t].name}
           </button>
         ))}
       </div>
@@ -96,16 +76,14 @@ export function DemoToolbar() {
             ))}
           </select>
         </label>
-        <button className="btn" onClick={() => set({ seed: (seed % 997) + 1 + Math.floor(Math.random() * 50) })} title="Generar otros datos">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-            <path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5" />
-          </svg>
-          Mezclar
+        <button className="btn" onClick={() => set({ seed: (seed % 997) + 1 + Math.floor(Math.random() * 50) })}>
+          <Shuffle size={15} aria-hidden="true" />
+          Otros datos
         </button>
         <div className="segmented" role="radiogroup" aria-label="Idioma de los componentes">
           {(['es', 'en'] as Lang[]).map((l) => (
             <button key={l} role="radio" aria-checked={l === lang} onClick={() => set({ lang: l })}>
-              {l.toUpperCase()}
+              {l === 'es' ? 'Español' : 'English'}
             </button>
           ))}
         </div>
@@ -131,8 +109,9 @@ export function CodeBlock({ code, label }: { code: string; label?: string }) {
     <div className="code">
       <div className="code-head">
         <span>{label ?? 'tsx'}</span>
-        <button className="btn btn-ghost btn-sm" onClick={copy}>
-          {copied ? '¡Copiado!' : 'Copiar'}
+        <button className="btn btn-ghost btn-sm" onClick={copy} aria-live="polite">
+          {copied ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}
+          {copied ? 'Copiado' : 'Copiar'}
         </button>
       </div>
       <pre>
@@ -153,12 +132,13 @@ export function Section({ id, title, children }: { id: string; title: string; ch
   )
 }
 
-export function Logo() {
-  const levels = [1, 3, 2, 4, 2, 3, 1, 4, 3]
+/** El logo es un mini contribution graph: toma los colores del tema activo. */
+export function Logo({ size = 22 }: { size?: number }) {
+  const levels = [4, 2, 1, 3, 0, 2, 1, 3, 4]
   return (
-    <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
+    <svg className="logo" width={size} height={size} viewBox="0 0 22 22" aria-hidden="true">
       {levels.map((l, i) => (
-        <rect key={i} x={(i % 3) * 7.5} y={Math.floor(i / 3) * 7.5} width="6" height="6" rx="1.5" fill="var(--accent)" opacity={0.25 + l * 0.19} />
+        <rect key={i} x={(i % 3) * 7.5} y={Math.floor(i / 3) * 7.5} width="6.5" height="6.5" rx="1.6" style={{ fill: `var(--t${l})` }} />
       ))}
     </svg>
   )
