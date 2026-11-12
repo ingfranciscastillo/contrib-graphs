@@ -8,7 +8,8 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "data": "node --env-file-if-exists=.env.local scripts/fetch-contributions.mjs"
+    "data": "node --env-file-if-exists=.env.local scripts/fetch-contributions.mjs",
+    "test": "node --test 'scripts/**/*.test.mjs'"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",
