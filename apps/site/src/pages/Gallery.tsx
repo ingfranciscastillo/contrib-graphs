@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { ArrowDown, SlidersHorizontal } from '@phosphor-icons/react'
-import { CompactGraph, IsometricGraph } from '@cg/index'
+import { CompactGraph, IsometricGraph } from 'contrib-graphs'
 import { githubData, useDemo } from '../search'
 import { DemoToolbar } from '../ui'
 import { variants } from '../variants'

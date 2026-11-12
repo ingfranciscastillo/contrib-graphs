@@ -1,5 +1,3 @@
-import './contribution-graph.css'
-
 export { ClassicGraph, DotsGraph, type GridGraphProps } from './variants/GridGraph'
 export { IsometricGraph, type IsometricGraphProps } from './variants/IsometricGraph'
 export { RadialGraph, type RadialGraphProps } from './variants/RadialGraph'
