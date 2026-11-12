@@ -1,5 +1,6 @@
 import { Link, useParams } from '@tanstack/react-router'
 import { useState } from 'react'
+import { ArrowCounterClockwise, CaretLeft, CaretRight } from '@phosphor-icons/react'
 import type { CalendarDay } from '@cg/index'
 import { formatDate } from '@cg/index'
 import { useDemo } from '../search'
@@ -40,10 +41,12 @@ function Playground({ def }: { def: VariantDef }) {
         </div>
         <div className="pager">
           <Link to="/variants/$variantId" params={{ variantId: prev.id }} search={(p) => p} className="btn btn-sm">
-            ← {prev.name}
+            <CaretLeft size={14} aria-hidden="true" />
+            {prev.name}
           </Link>
           <Link to="/variants/$variantId" params={{ variantId: next.id }} search={(p) => p} className="btn btn-sm">
-            {next.name} →
+            {next.name}
+            <CaretRight size={14} aria-hidden="true" />
           </Link>
         </div>
       </header>
@@ -65,11 +68,12 @@ function Playground({ def }: { def: VariantDef }) {
           <div className="preview-meta">
             <span>
               {clicked
-                ? `onDayClick → ${clicked.date} · ${clicked.count} (nivel ${clicked.level}) · ${formatDate(clicked.date, locale.locale)}`
-                : 'Pasa el cursor o usa Tab + flechas sobre el gráfico. Clic o Enter dispara onDayClick.'}
+                ? `onDayClick({ date: '${clicked.date}', count: ${clicked.count}, level: ${clicked.level} }), ${formatDate(clicked.date, locale.locale)}`
+                : 'Pasa el cursor o entra con Tab y usa las flechas. Clic o Enter llama a onDayClick.'}
             </span>
             {values.animate === true && (
               <button className="btn btn-ghost btn-sm" onClick={() => setReplay((r) => r + 1)}>
+                <ArrowCounterClockwise size={14} aria-hidden="true" />
                 Repetir animación
               </button>
             )}
@@ -81,6 +85,7 @@ function Playground({ def }: { def: VariantDef }) {
           <div className="controls-head">
             <h2>Props</h2>
             <button className="btn btn-ghost btn-sm" onClick={() => setValues(def.defaults)} disabled={!changed}>
+              <ArrowCounterClockwise size={14} aria-hidden="true" />
               Restablecer
             </button>
           </div>

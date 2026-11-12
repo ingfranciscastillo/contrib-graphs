@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { ArrowDown, SlidersHorizontal } from '@phosphor-icons/react'
 import { CompactGraph, IsometricGraph } from '@cg/index'
 import { useDemo } from '../search'
 import { DemoToolbar } from '../ui'
@@ -11,7 +12,6 @@ export function Gallery() {
       <section className="hero">
         <div className="container hero-inner">
           <div className="hero-copy">
-            <p className="eyebrow">{variants.length} variantes · React + TypeScript</p>
             <h1>Contribution graphs para tu portfolio</h1>
             <p className="lead">
               Componentes que copias a tu proyecto y personalizas. Un mismo formato de datos para GitHub, GitLab o lo que quieras medir,
@@ -22,6 +22,7 @@ export function Gallery() {
                 Empezar
               </Link>
               <a href="#galeria" className="btn">
+                <ArrowDown size={15} aria-hidden="true" />
                 Ver variantes
               </a>
             </div>
@@ -52,7 +53,8 @@ export function Gallery() {
                   <p>{v.tagline}</p>
                 </div>
                 <Link to="/variants/$variantId" params={{ variantId: v.id }} search={(p) => p} className="btn btn-sm">
-                  Personalizar <span aria-hidden="true">→</span>
+                  <SlidersHorizontal size={14} aria-hidden="true" />
+                  Personalizar
                 </Link>
               </header>
               <div className="card-demo">
