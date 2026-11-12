@@ -44,8 +44,8 @@ export function Layout() {
 }
 
 function Footer() {
-  const { data } = useDemo()
-  const calendar = useMemo(() => buildCalendar(data, { weeks: 53 }), [data])
+  const { data, endDate } = useDemo()
+  const calendar = useMemo(() => buildCalendar(data, { weeks: 53, endDate }), [data, endDate])
   return (
     <footer className="footer">
       {/* Decorativo: el año de los datos del demo, con los colores del tema. */}

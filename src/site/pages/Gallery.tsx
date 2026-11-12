@@ -1,12 +1,12 @@
 import { Link } from '@tanstack/react-router'
 import { ArrowDown, SlidersHorizontal } from '@phosphor-icons/react'
 import { CompactGraph, IsometricGraph } from '@cg/index'
-import { useDemo } from '../search'
+import { githubData, useDemo } from '../search'
 import { DemoToolbar } from '../ui'
 import { variants } from '../variants'
 
 export function Gallery() {
-  const { data, theme, locale } = useDemo()
+  const { data, theme, locale, profile } = useDemo()
   return (
     <>
       <section className="hero">
@@ -28,6 +28,19 @@ export function Gallery() {
             </div>
             <div className="hero-compact">
               <CompactGraph data={data} theme={theme} {...locale} days={28} animate />
+              <p className="data-source">
+                {profile === 'github' ? (
+                  <>
+                    Datos reales de{' '}
+                    <a href={`https://github.com/${githubData.username}`} target="_blank" rel="noreferrer">
+                      @{githubData.username}
+                    </a>
+                    , actualizados el {new Date(githubData.generatedAt).toLocaleDateString('es', { day: 'numeric', month: 'long', year: 'numeric' })}.
+                  </>
+                ) : (
+                  'Datos de ejemplo generados en tu navegador.'
+                )}
+              </p>
             </div>
           </div>
           <div className="hero-art">
