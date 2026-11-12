@@ -3,11 +3,12 @@ import { addDays, toISO, todayUTC } from './utils'
 
 export type SampleProfile = 'steady' | 'burst' | 'weekend' | 'sparse'
 
+/** Perfiles de actividad disponibles, con una descripción corta en inglés. */
 export const sampleProfiles: Record<SampleProfile, string> = {
-  steady: 'Constante',
-  burst: 'Por rachas',
-  weekend: 'Fines de semana',
-  sparse: 'Esporádico',
+  steady: 'Steady',
+  burst: 'Bursts',
+  weekend: 'Weekends',
+  sparse: 'Sparse',
 }
 
 function mulberry32(seed: number) {
