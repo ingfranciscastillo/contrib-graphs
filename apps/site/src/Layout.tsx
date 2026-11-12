@@ -4,6 +4,7 @@ import { BookOpen, BracketsCurly, SquaresFour } from '@phosphor-icons/react'
 import { buildCalendar, themes, themeVars } from 'contrib-graphs'
 import { useLang, useLocaleParams } from './i18n'
 import { useT } from './messages'
+import { routeMeta } from './seo.ts'
 import { useDemo } from './search'
 import { LanguageSwitch, Logo, ModeToggle } from './ui'
 import { variants } from './variants'
@@ -53,16 +54,21 @@ export function Layout() {
   )
 }
 
-/** <html lang>, meta description y enlaces hreflang según el idioma de la página. */
+/** <html lang>, <title>, meta description y enlaces hreflang de la página actual (ver seo.ts). */
 function DocumentLanguage() {
   const lang = useLang()
-  const t = useT()
   const { pathname } = useLocation()
   useEffect(() => {
-    document.documentElement.lang = lang
-    document.querySelector('meta[name="description"]')?.setAttribute('content', t.meta.description)
     const base = pathname.replace(/^\/es(?=\/|$)/, '') || '/'
-    const urls = { en: base, es: base === '/' ? '/es' : `/es${base}`, 'x-default': base }
+    const meta = routeMeta(base, lang)
+    document.documentElement.lang = lang
+    document.title = meta.title
+    document.querySelector('meta[name="description"]')?.setAttribute('content', meta.description)
+    // Con barra final: es la URL que GitHub Pages sirve con estado 200 (ver scripts/prerender.mjs).
+    const slash = base === '/' ? '/' : `${base}/`
+    const urls = { en: slash, es: `/es${slash}`, 'x-default': slash }
+    const canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]')
+    if (canonical) canonical.href = new URL(import.meta.env.BASE_URL.replace(/\/$/, '') + urls[lang], location.origin).href
     for (const [hreflang, path] of Object.entries(urls)) {
       let link = document.head.querySelector<HTMLLinkElement>(`link[rel="alternate"][hreflang="${hreflang}"]`)
       if (!link) {
@@ -73,7 +79,7 @@ function DocumentLanguage() {
       }
       link.href = new URL(import.meta.env.BASE_URL.replace(/\/$/, '') + path, location.origin).href
     }
-  }, [lang, pathname, t])
+  }, [lang, pathname])
   return null
 }
 
