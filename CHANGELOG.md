@@ -4,6 +4,10 @@ All notable changes to the `contrib-graphs` package are listed here. The format 
 
 ## [Unreleased]
 
+### Fixed
+
+- Cropped graphs grow back when there is room again. Inside a centering flex container, `ClassicGraph`, `DotsGraph` and `SkylineGraph` stayed cropped after the window got narrower and then wider, for example after rotating a phone.
+
 ## [0.1.1] - 2026-11-12
 
 ### Fixed
