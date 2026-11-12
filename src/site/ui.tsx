@@ -1,7 +1,7 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { Check, Copy, Desktop, Moon, Shuffle, Sun } from '@phosphor-icons/react'
-import { sampleProfiles, themeNames, themes, themeVars, type SampleProfile } from '@cg/index'
-import { useDemo, type Lang } from './search'
+import { themeNames, themes, themeVars } from '@cg/index'
+import { profiles, useDemo, type Lang, type Profile } from './search'
 
 /* ---------------------------------------------------------- Modo del sitio */
 
@@ -68,18 +68,20 @@ export function DemoToolbar() {
       <div className="toolbar-group">
         <label className="field-inline">
           <span>Datos</span>
-          <select value={profile} onChange={(e) => set({ profile: e.target.value as SampleProfile })}>
-            {Object.entries(sampleProfiles).map(([k, v]) => (
+          <select value={profile} onChange={(e) => set({ profile: e.target.value as Profile })}>
+            {Object.entries(profiles).map(([k, v]) => (
               <option key={k} value={k}>
                 {v}
               </option>
             ))}
           </select>
         </label>
-        <button className="btn" onClick={() => set({ seed: (seed % 997) + 1 + Math.floor(Math.random() * 50) })}>
-          <Shuffle size={15} aria-hidden="true" />
-          Otros datos
-        </button>
+        {profile !== 'github' && (
+          <button className="btn" onClick={() => set({ seed: (seed % 997) + 1 + Math.floor(Math.random() * 50) })}>
+            <Shuffle size={15} aria-hidden="true" />
+            Otros datos
+          </button>
+        )}
         <div className="segmented" role="radiogroup" aria-label="Idioma de los componentes">
           {(['es', 'en'] as Lang[]).map((l) => (
             <button key={l} role="radio" aria-checked={l === lang} onClick={() => set({ lang: l })}>
