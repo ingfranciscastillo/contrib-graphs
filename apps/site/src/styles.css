@@ -297,15 +297,33 @@ h3 {
   gap: 10px;
   margin-top: 28px;
 }
-.hero-compact {
-  margin-top: 36px;
-  padding-top: 20px;
-  border-top: 1px dashed var(--line-2);
+.hero-install {
+  margin-top: 28px;
+  max-width: 460px;
 }
 .hero-art {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
   min-width: 0;
+}
+.hero-art .data-source {
+  margin: 0;
+  text-align: center;
+}
+/* Una columna: el isométrico es la imagen del hero, no otro gráfico con datos.
+   Más pequeño y sin su título, para no repetir lo que muestra la galería. */
+@media (max-width: 959px) {
+  .hero-inner {
+    gap: 28px;
+  }
+  .hero-art .cg-header {
+    display: none;
+  }
+  .hero-art .cg-root svg {
+    max-width: 420px;
+  }
 }
 .hero-art .cg-root {
   width: 100%;
