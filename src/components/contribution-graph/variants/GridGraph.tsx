@@ -12,7 +12,7 @@ export interface GridGraphProps extends BaseGraphProps {
   radius?: number
   showWeekdays?: boolean
   showMonths?: boolean
-  /** Brillo en las celdas con actividad. Default: el del tema. */
+  /** Brillo en las celdas más activas. */
   glow?: boolean
   /** `crop` recorta semanas antiguas en pantallas angostas; `scale` encoge el SVG. */
   fit?: 'crop' | 'scale'
@@ -31,10 +31,10 @@ function useGrid(props: GridGraphProps, shape: Shape) {
   const pitch = cellSize + gap
   const left = showWeekdays ? 30 : 0
   const top = showMonths ? 15 : 0
-  const { calendar, periodTotal, interaction, theme } = useCalendarGraph(props, {
+  const { calendar, periodTotal, interaction } = useCalendarGraph(props, {
     fit: { pitch, reserved: left - gap, enabled: fit === 'crop' },
   })
-  const glow = props.glow ?? theme.glow ?? false
+  const glow = props.glow ?? false
   const filterId = useSvgId('cg-glow')
   const weekdays = useMemo(() => weekdayLabels(props.locale, props.weekStart ?? 0), [props.locale, props.weekStart])
 
