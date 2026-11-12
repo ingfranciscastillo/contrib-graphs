@@ -254,3 +254,10 @@ describe('datos vacíos', () => {
     expect(container.querySelector('[data-level="1"], [data-level="2"]')).toBeNull()
   })
 })
+
+test('Terminal: la cuadrícula de caracteres está oculta a lectores de pantalla, el texto no', () => {
+  const { container } = render(<TerminalGraph {...base} />)
+  const cellsHidden = [...cells(container)].every((c) => c.closest('[aria-hidden="true"]'))
+  expect(cellsHidden).toBe(true)
+  expect(container.querySelector('.cg-prompt')!.closest('[aria-hidden="true"]')).toBeNull()
+})

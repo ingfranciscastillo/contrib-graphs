@@ -4,7 +4,7 @@
   --panel: #ffffff;
   --text: #17181a;
   --text-2: #55585e;
-  --text-3: #8a8d93;
+  --text-3: #6b6e74; /* 4.9:1 sobre --bg */
   --line: #e6e6e3;
   --line-2: #d6d6d2;
   --shadow: 0 1px 2px rgb(16 17 19 / 0.04), 0 4px 16px rgb(16 17 19 / 0.04);
@@ -22,7 +22,7 @@
     --panel: #111214;
     --text: #ececec;
     --text-2: #a5a7ab;
-    --text-3: #6e7076;
+    --text-3: #82858b; /* 5.3:1 sobre --bg */
     --line: #1f2024;
     --line-2: #2c2d32;
     --accent: var(--accent-dark, #39d353);
@@ -37,7 +37,7 @@
   --panel: #111214;
   --text: #ececec;
   --text-2: #a5a7ab;
-  --text-3: #6e7076;
+  --text-3: #82858b; /* 5.3:1 sobre --bg */
   --line: #1f2024;
   --line-2: #2c2d32;
   --shadow: 0 1px 2px rgb(0 0 0 / 0.3);
@@ -484,10 +484,10 @@ input[type='text'] {
   padding: 22px 20px 20px;
   min-width: 0;
 }
-.card-demo > .cg-root:not(.cg-compact) {
+.card-demo .when-visible > .cg-root:not(.cg-compact) {
   width: 100%;
 }
-.card-wide .card-demo > .cg-root:not(.cg-terminal) {
+.card-wide .card-demo .when-visible > .cg-root:not(.cg-terminal) {
   width: auto;
 }
 
@@ -835,6 +835,9 @@ input[type='checkbox'][role='switch']:checked::after {
 }
 .footer-graph {
   --cols: 53;
+  /* Decorativo y al final de la página: el navegador no lo procesa hasta que se acerca. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 200px;
   display: grid;
   grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
   gap: 3px;
@@ -1134,4 +1137,10 @@ input[type='checkbox'][role='switch']:checked::after {
 }
 .props-reference summary:hover {
   color: var(--text);
+}
+
+.when-visible {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
