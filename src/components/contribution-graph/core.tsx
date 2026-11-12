@@ -204,10 +204,19 @@ export function describeDay(day: CalendarDay, props: BaseGraphProps): Descriptio
   }
 }
 
-export function defaultTitle(total: number, props: BaseGraphProps, span = 'in the last year'): ReactNode {
+/** Texto del periodo según las semanas pedidas (no las recortadas por ancho). */
+export function periodText(props: BaseGraphProps): string {
+  const weeks = props.weeks ?? 53
+  const p = props.periodLabel
+  if (typeof p === 'function') return p(weeks)
+  if (typeof p === 'string') return p
+  return weeks >= 52 ? 'in the last year' : `in the last ${weeks} weeks`
+}
+
+export function defaultTitle(total: number, props: BaseGraphProps): ReactNode {
   return (
     <>
-      <strong>{formatNumber(total, props.locale)}</strong> {pluralize(total, props.unit)} {props.periodLabel ?? span}
+      <strong>{formatNumber(total, props.locale)}</strong> {pluralize(total, props.unit)} {periodText(props)}
     </>
   )
 }

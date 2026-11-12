@@ -73,8 +73,11 @@ export interface BaseGraphProps {
   title?: ReactNode
   /** Singular y plural de la unidad. Default `['contribution', 'contributions']`. */
   unit?: readonly [string, string]
-  /** Texto tras el total en el encabezado. Default `in the last year`. */
-  periodLabel?: string
+  /**
+   * Texto tras el total en el encabezado. Puede ser una función de las semanas
+   * mostradas. Default: `in the last year` (52+ semanas) o `in the last N weeks`.
+   */
+  periodLabel?: string | ((weeks: number) => string)
   /** Textos de la leyenda. Default `['Less', 'More']`. */
   legendLabels?: readonly [string, string]
   onDayClick?: (day: CalendarDay) => void

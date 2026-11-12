@@ -1,5 +1,5 @@
 import { Fragment, useLayoutEffect, useMemo, useState } from 'react'
-import { GraphShell, cellDelay, describeDay, summaryOf, useCalendarGraph } from '../core'
+import { GraphShell, cellDelay, describeDay, periodText, summaryOf, useCalendarGraph } from '../core'
 import type { BaseGraphProps, Level } from '../types'
 import { formatNumber, pluralize, weekdayLabels } from '../utils'
 
@@ -126,7 +126,7 @@ export function TerminalGraph(props: TerminalGraphProps) {
             {props.showTotal !== false && (
               <span className="cg-prompt">
                 {props.title ??
-                  `${formatNumber(periodTotal, props.locale)} ${pluralize(periodTotal, props.unit)} ${props.periodLabel ?? 'in the last year'}`}
+                  `${formatNumber(periodTotal, props.locale)} ${pluralize(periodTotal, props.unit)} ${periodText(props)}`}
               </span>
             )}
             {props.showLegend !== false && (
