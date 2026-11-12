@@ -80,6 +80,13 @@
 }
 html {
   -webkit-text-size-adjust: 100%;
+  /* Deja libre la altura de la barra superior fija al saltar a un ancla. */
+  scroll-padding-top: 64px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 body {
   margin: 0;
@@ -317,7 +324,6 @@ h3 {
   background: color-mix(in srgb, var(--bg) 88%, transparent);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--line);
-  scroll-margin-top: 56px;
 }
 .toolbar-wrap .toolbar {
   border: 0;
@@ -557,8 +563,53 @@ input[type='text'] {
   background-size: 18px 18px;
   overflow: hidden;
 }
-.preview > .cg-root.cg-terminal {
+.preview-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.preview-bar .segmented button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.preview-size {
+  font-size: 13px;
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 640px) {
+  /* En un teléfono la vista previa ya es de móvil. */
+  .preview-bar {
+    display: none;
+  }
+}
+.device-frame {
+  display: flex;
+  justify-content: center;
   width: 100%;
+  margin: 0 auto;
+  transition: max-width 0.3s ease;
+}
+.device-frame > .cg-root {
+  min-width: 0;
+  max-width: 100%;
+}
+.device-frame > .cg-root.cg-terminal {
+  width: 100%;
+}
+/* Tablet y móvil: un marco con los márgenes laterales (16px) de una página real. */
+.preview:not([data-device='desktop']) .device-frame {
+  padding: 28px 16px;
+  border: 1px solid var(--line-2);
+  border-radius: 22px;
+  background: var(--bg);
+}
+@media (prefers-reduced-motion: reduce) {
+  .device-frame {
+    transition: none;
+  }
 }
 .preview-meta {
   display: flex;
@@ -751,7 +802,6 @@ input[type='checkbox'][role='switch']:checked::after {
 }
 .doc-section {
   padding-top: 28px;
-  scroll-margin-top: 64px;
 }
 .doc-section h2 {
   font-size: 22px;
