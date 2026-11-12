@@ -9,7 +9,7 @@ export const githubData = github as { username: string; generatedAt: string; sou
 
 /** Fuente de datos del demo: tu GitHub o uno de los perfiles de ejemplo. */
 export type Profile = 'github' | SampleProfile
-export const profiles: Record<Profile, string> = { github: `GitHub de @${githubData.username}`, ...sampleProfiles }
+export const profileKeys: Profile[] = ['github', ...(Object.keys(sampleProfiles) as SampleProfile[])]
 
 /** Estado global del demo, guardado en la URL (compartible). */
 export interface GlobalSearch {
@@ -22,7 +22,7 @@ export function validateGlobalSearch(s: Record<string, unknown>): GlobalSearch {
   const seed = Number(s.seed)
   return {
     theme: themeNames.includes(s.theme as ThemeName) ? (s.theme as ThemeName) : undefined,
-    profile: typeof s.profile === 'string' && s.profile in profiles ? (s.profile as Profile) : undefined,
+    profile: typeof s.profile === 'string' && profileKeys.includes(s.profile as Profile) ? (s.profile as Profile) : undefined,
     seed: Number.isInteger(seed) && seed > 0 ? seed : undefined,
   }
 }

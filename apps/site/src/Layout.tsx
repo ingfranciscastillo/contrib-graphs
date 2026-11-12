@@ -3,6 +3,7 @@ import { useMemo } from 'react'
 import { BookOpen, SquaresFour } from '@phosphor-icons/react'
 import { buildCalendar, themes, themeVars } from 'contrib-graphs'
 import { useLocaleParams } from './i18n'
+import { useT } from './messages'
 import { useDemo } from './search'
 import { LanguageSwitch, Logo, ModeToggle } from './ui'
 import { variants } from './variants'
@@ -10,11 +11,12 @@ import { variants } from './variants'
 export function Layout() {
   const { theme } = useDemo()
   const lp = useLocaleParams()
+  const t = useT()
   return (
     // `tv` resuelve los colores del tema (claro/oscuro) como --t0…--t4 para todo el sitio.
     <div className="app tv" style={themeVars(themes[theme])}>
       <a className="skip" href="#main">
-        Saltar al contenido
+        {t.skip}
       </a>
       <header className="topbar">
         <div className="container topbar-inner">
@@ -24,14 +26,14 @@ export function Layout() {
               contrib<span className="brand-dim">/graphs</span>
             </span>
           </Link>
-          <nav className="nav" aria-label="Principal">
+          <nav className="nav" aria-label={t.nav.label}>
             <Link to="/{-$locale}" params={lp} search={(p) => p} activeOptions={{ exact: true, includeSearch: false }} activeProps={{ 'aria-current': 'page' }}>
               <SquaresFour size={16} aria-hidden="true" />
-              Galería
+              {t.nav.gallery}
             </Link>
             <Link to="/{-$locale}/docs" params={lp} search={(p) => p} activeProps={{ 'aria-current': 'page' }}>
               <BookOpen size={16} aria-hidden="true" />
-              Docs
+              {t.nav.docs}
             </Link>
           </nav>
           <LanguageSwitch />
@@ -49,6 +51,7 @@ export function Layout() {
 function Footer() {
   const { data, endDate } = useDemo()
   const lp = useLocaleParams()
+  const t = useT()
   const calendar = useMemo(() => buildCalendar(data, { weeks: 53, endDate }), [data, endDate])
   return (
     <footer className="footer">
@@ -70,10 +73,10 @@ function Footer() {
               contrib<span className="brand-dim">/graphs</span>
             </span>
           </Link>
-          <p>Contribution graphs para tu sitio o portfolio. Copia el componente, pásale tus datos y elige un tema.</p>
+          <p>{t.footer.tagline}</p>
         </div>
-        <nav className="footer-nav" aria-label="Variantes">
-          <p>Variantes</p>
+        <nav className="footer-nav" aria-label={t.footer.variants}>
+          <p>{t.footer.variants}</p>
           <ul>
             {variants.map((v) => (
               <li key={v.id}>
@@ -84,46 +87,52 @@ function Footer() {
             ))}
           </ul>
         </nav>
-        <nav className="footer-nav" aria-label="Recursos">
-          <p>Recursos</p>
+        <nav className="footer-nav" aria-label={t.footer.resources}>
+          <p>{t.footer.resources}</p>
           <ul>
             <li>
               <Link to="/{-$locale}/docs" params={lp} search={(p) => p}>
-                Documentación
+                {t.footer.docs}
               </Link>
             </li>
             <li>
               <Link to="/{-$locale}/docs" params={lp} hash="github" search={(p) => p}>
-                Datos de GitHub
+                {t.footer.github}
               </Link>
             </li>
             <li>
               <Link to="/{-$locale}/docs" params={lp} hash="gitlab" search={(p) => p}>
-                Datos de GitLab
+                {t.footer.gitlab}
               </Link>
             </li>
             <li>
               <Link to="/{-$locale}/docs" params={lp} hash="temas" search={(p) => p}>
-                Temas propios
+                {t.footer.themes}
+              </Link>
+            </li>
+            <li>
+              <Link to="/{-$locale}/docs" params={lp} hash="frameworks" search={(p) => p}>
+                {t.footer.frameworks}
               </Link>
             </li>
           </ul>
         </nav>
       </div>
-      <div className="container footer-base">Hecho con React, TypeScript, Vite y TanStack Router. Los datos del demo se generan en tu navegador.</div>
+      <div className="container footer-base">{t.footer.builtWith}</div>
     </footer>
   )
 }
 
 export function NotFound() {
   const lp = useLocaleParams()
+  const t = useT()
   return (
     <div className="container page">
-      <h1>No encontrado</h1>
+      <h1>{t.notFound.title}</h1>
       <p className="lead">
-        Esa página no existe.{' '}
+        {t.notFound.text}{' '}
         <Link to="/{-$locale}" params={lp} search={(p) => p}>
-          Volver a la galería
+          {t.notFound.back}
         </Link>
       </p>
     </div>
