@@ -1,5 +1,7 @@
 # contrib-graphs
 
+![Isometric contribution graph](https://raw.githubusercontent.com/ingfranciscastillo/contrib-graphs/main/docs/images/isometric-light.svg)
+
 Contribution graph components for React: GitHub-style activity heatmaps in seven designs (Classic, Dots, Isometric, Terminal, Radial, Skyline, Compact), with themes, light/dark mode, keyboard navigation and screen reader support.
 
 ```bash
@@ -43,6 +45,8 @@ export default async function Page() {
 ```
 
 Tested with Next.js 16 (React 19) and Astro 6.
+
+More designs, the full API reference and examples: [github.com/ingfranciscastillo/contrib-graphs](https://github.com/ingfranciscastillo/contrib-graphs).
 
 ## License
 

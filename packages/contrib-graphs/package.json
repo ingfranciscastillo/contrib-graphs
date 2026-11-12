@@ -13,6 +13,16 @@
     "svg"
   ],
   "license": "MIT",
+  "author": "Francis Miguel Castillo Cruz (https://github.com/ingfranciscastillo)",
+  "homepage": "https://github.com/ingfranciscastillo/contrib-graphs#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ingfranciscastillo/contrib-graphs.git",
+    "directory": "packages/contrib-graphs"
+  },
+  "bugs": {
+    "url": "https://github.com/ingfranciscastillo/contrib-graphs/issues"
+  },
   "type": "module",
   "sideEffects": [
     "*.css"
@@ -25,7 +35,8 @@
     "dev": "tsdown --watch",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build && npm test"
   },
   "peerDependencies": {
     "react": ">=18"
