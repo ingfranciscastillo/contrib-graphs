@@ -13,6 +13,8 @@ export interface CompactGraphProps extends Omit<BaseGraphProps, 'weeks' | 'weekS
   showStreak?: boolean
   /** Texto para la racha, recibe el número. Default `"N day streak"`. */
   streakLabel?: (n: number) => string
+  /** Texto tras el total, recibe los días. Default `"in the last N days"`. */
+  rangeLabel?: (days: number) => string
 }
 
 /** Una sola fila con los últimos N días. Pensado para headers, tarjetas y footers. */
@@ -70,10 +72,11 @@ export function CompactGraph(props: CompactGraphProps) {
       title={
         <>
           <strong>{formatNumber(stats.total, props.locale)}</strong> {pluralize(stats.total, props.unit)}
-          {` · ${n}d`}
+          {' '}
+          {(props.rangeLabel ?? ((d: number) => `in the last ${d} days`))(n)}
         </>
       }
-      headerEnd={showStreak && stats.currentStreak > 0 && <span style={{ color: 'var(--cg-muted)' }}>🔥 {streak(stats.currentStreak)}</span>}
+      headerEnd={showStreak && stats.currentStreak > 0 && <span style={{ color: 'var(--cg-muted)' }}>{streak(stats.currentStreak)}</span>}
     >
       {svg}
     </GraphShell>
