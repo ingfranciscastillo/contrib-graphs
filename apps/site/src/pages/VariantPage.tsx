@@ -8,6 +8,7 @@ import { componentApi, PropsTable } from '../api'
 import { useT } from '../messages'
 import { useDemo } from '../search'
 import { CodeBlock, DemoToolbar, registryUrl } from '../ui'
+import { PmCommand } from '../pm'
 import { tr, usageSnippet, variants, variantsById, type Control, type Values, type VariantDef } from '../variants'
 
 export function VariantPage() {
@@ -104,7 +105,7 @@ function Playground({ def }: { def: VariantDef }) {
           </div>
           <CodeBlock code={usageSnippet(def, values, theme)} />
           <p className="preview-note">{t.playground.orCopy}</p>
-          <CodeBlock label="bash" code={`npx shadcn@latest add ${registryUrl(`${def.id}-graph`)}`} />
+          <PmCommand kind="dlx" arg={`shadcn@latest add ${registryUrl(`${def.id}-graph`)}`} />
           <PropsReference importName={def.importName} />
         </div>
 
