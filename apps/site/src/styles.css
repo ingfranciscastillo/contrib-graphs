@@ -451,6 +451,10 @@ input[type='text'] {
   .card-wide {
     grid-column: 1 / -1;
   }
+  /* Radial es alto: ocupa dos filas y a su lado van Compact y la tarjeta de instalación. */
+  .card-tall {
+    grid-row: span 2;
+  }
 }
 .card {
   min-width: 0;
@@ -489,6 +493,18 @@ input[type='text'] {
 }
 .card-wide .card-demo .when-visible > .cg-root:not(.cg-terminal) {
   width: auto;
+}
+
+.card-cta-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  margin-top: auto;
+  padding: 20px;
+}
+.card-cta-body .pm-code {
+  align-self: stretch;
 }
 
 /* ---------- Página de variante ---------- */
