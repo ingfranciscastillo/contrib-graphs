@@ -61,6 +61,17 @@ describe('contrib-graphs svg', () => {
     expect(out[0]).toMatch(/from github-graphql/)
   })
 
+  test('si la API falla con el token, avisa y usa la página pública', async () => {
+    const page = await readFile(new URL('./fixtures/contributions-page.html', import.meta.url), 'utf8')
+    const fetchMock = vi.fn(async (url: string) =>
+      url.includes('graphql') ? new Response('{"message":"Resource not accessible by integration"}', { status: 403 }) : new Response(page),
+    )
+    vi.stubGlobal('fetch', fetchMock)
+    await run(['svg', '--user', 'octocat'], { ...io(), env: { GITHUB_TOKEN: 'de-actions' } })
+    expect(fetchMock.mock.calls.map((c) => String((c as unknown[])[0]))).toEqual(['https://api.github.com/graphql', 'https://github.com/users/octocat/contributions'])
+    expect(err[0]).toMatch(/^Warning: the GitHub API failed \(GitHub API 403\); using the public contributions page instead\.$/)
+  })
+
   test('sin token lee la página pública', async () => {
     const html = (await readFile(new URL('./fixtures/contributions-page.html', import.meta.url), 'utf8')).repeat(1)
     const fetchMock = vi.fn(async () => new Response(html))
