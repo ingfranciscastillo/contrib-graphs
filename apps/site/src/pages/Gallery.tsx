@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { ArrowDown, BookOpen, SlidersHorizontal } from '@phosphor-icons/react'
-import { CompactGraph, IsometricGraph } from 'contrib-graphs'
+import { IsometricGraph } from 'contrib-graphs'
 import { useLang, useLocaleParams } from '../i18n'
 import { useT } from '../messages'
 import { githubData, useDemo } from '../search'
@@ -29,25 +29,25 @@ export function Gallery() {
                 {t.hero.seeVariants}
               </a>
             </div>
-            <div className="hero-compact">
-              <CompactGraph data={data} theme={theme} {...locale} days={28} animate />
-              <p className="data-source">
-                {profile === 'github' ? (
-                  <>
-                    {t.hero.realData}{' '}
-                    <a href={`https://github.com/${githubData.username}`} target="_blank" rel="noreferrer">
-                      @{githubData.username}
-                    </a>
-                    {t.hero.updated(new Date(githubData.generatedAt).toLocaleDateString(lang, { day: 'numeric', month: 'long', year: 'numeric' }))}
-                  </>
-                ) : (
-                  t.hero.sampleData
-                )}
-              </p>
+            <div className="hero-install">
+              <PmCommand kind="install" arg="contrib-graphs" />
             </div>
           </div>
           <div className="hero-art">
             <IsometricGraph data={data} theme={theme} {...locale} weeks={30} tileSize={14} maxHeight={60} showStats={false} showLegend={false} animate />
+            <p className="data-source">
+              {profile === 'github' ? (
+                <>
+                  {t.hero.realData}{' '}
+                  <a href={`https://github.com/${githubData.username}`} target="_blank" rel="noreferrer">
+                    @{githubData.username}
+                  </a>
+                  {t.hero.updated(new Date(githubData.generatedAt).toLocaleDateString(lang, { day: 'numeric', month: 'long', year: 'numeric' }))}
+                </>
+              ) : (
+                t.hero.sampleData
+              )}
+            </p>
           </div>
         </div>
       </section>
