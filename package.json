@@ -15,6 +15,7 @@
     "build:package": "npm run build -w contrib-graphs",
     "data": "npm run data -w site",
     "typecheck": "npm run typecheck --workspaces --if-present",
-    "test": "npm run typecheck && npm test --workspaces --if-present"
+    "test": "npm run typecheck && npm test --workspaces --if-present",
+    "api": "npm run api -w site"
   }
 }
