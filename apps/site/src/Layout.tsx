@@ -71,7 +71,7 @@ function DocumentLanguage() {
         link.hreflang = hreflang
         document.head.appendChild(link)
       }
-      link.href = new URL(path, location.origin).href
+      link.href = new URL(import.meta.env.BASE_URL.replace(/\/$/, '') + path, location.origin).href
     }
   }, [lang, pathname, t])
   return null

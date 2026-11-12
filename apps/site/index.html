@@ -20,13 +20,15 @@
       // Idioma: inglés en la raíz, español en /es. Se respeta la elección guardada;
       // en la primera visita se usa el idioma del navegador. Corre antes de cargar la app.
       try {
-        var path = location.pathname
+        // Rutas relativas a la base del sitio ('/' en local, '/contrib-graphs/' en GitHub Pages).
+        var base = '%BASE_URL%'.replace(/\/$/, '')
+        var path = location.pathname.slice(base.length) || '/'
         var isEs = path === '/es' || path.indexOf('/es/') === 0
         var saved = null
         try { saved = localStorage.getItem('cg-site-lang') } catch (e) {}
         var wanted = saved || ((navigator.language || '').toLowerCase().indexOf('es') === 0 ? 'es' : 'en')
-        if (wanted === 'es' && !isEs) location.replace('/es' + (path === '/' ? '' : path) + location.search + location.hash)
-        else if (saved === 'en' && isEs) location.replace((path.slice(3) || '/') + location.search + location.hash)
+        if (wanted === 'es' && !isEs) location.replace(base + '/es' + (path === '/' ? '' : path) + location.search + location.hash)
+        else if (saved === 'en' && isEs) location.replace(base + (path.slice(3) || '/') + location.search + location.hash)
         document.documentElement.lang = isEs ? 'es' : 'en'
       } catch (e) {}
     </script>
