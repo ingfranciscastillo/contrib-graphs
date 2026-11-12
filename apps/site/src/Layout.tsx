@@ -106,7 +106,7 @@ function Footer() {
               </Link>
             </li>
             <li>
-              <Link to="/{-$locale}/docs" params={lp} hash="temas" search={(p) => p}>
+              <Link to="/{-$locale}/docs" params={lp} hash="themes" search={(p) => p}>
                 {t.footer.themes}
               </Link>
             </li>
