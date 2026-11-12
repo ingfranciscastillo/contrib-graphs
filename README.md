@@ -1,43 +1,25 @@
 # contrib/graphs
 
-Componentes de contribution graph para portfolios (React + TypeScript), con un sitio de demo en Vite + TanStack Router.
-
-## Correr
-
-Requiere Node 18+ (Vite 6). Con nvm: `nvm use 22`.
-
-```bash
-npm install
-npm run dev        # http://localhost:5173
-npm run build      # typecheck + build de producción
-```
+Componentes de contribution graph para React (estilo GitHub/GitLab) en siete diseños, y el sitio de demo y documentación.
 
 ## Estructura
 
 ```
-src/
-  components/contribution-graph/   ← la librería (copiable a cualquier proyecto React 18+)
-    index.ts                       exports públicos + CSS
-    types.ts                       ContributionDay, BaseGraphProps…
-    utils.ts                       calendario, niveles, recorte, estadísticas, formato
-    core.tsx                       interacción (hover/teclado), tooltip, shell común
-    themes.ts                      7 presets claro/oscuro → CSS variables
-    contribution-graph.css
-    adapters/                      GitHub, GitLab, fromDates, mergeSources
-    sample.ts                      datos de ejemplo deterministas
-    variants/                      Classic, Dots, Isometric, Terminal, Radial, Skyline, Compact
-  site/                            demo: galería, playground por variante, docs
-    router.tsx                     rutas code-based de TanStack Router
-    search.ts                      estado global (tema, datos, idioma) en la URL
-    variants.tsx                   registro de variantes + controles del playground
+packages/contrib-graphs/   paquete de npm `contrib-graphs` (tsdown: ESM + CJS + tipos)
+apps/site/                 sitio: Vite + React + TanStack Router
 ```
 
-## Uso
+## Desarrollo
 
-```tsx
-import { ClassicGraph } from '@/components/contribution-graph'
+Requiere Node 20.19+ (`nvm use` lee `.nvmrc`).
 
-<ClassicGraph data={[{ date: '2026-11-11', count: 4 }]} theme="github" animate />
+```bash
+npm install
+npm run dev            # sitio en http://localhost:5173, usa el código fuente del paquete
+npm run build          # compila el paquete y luego el sitio (que usa el dist del paquete)
+npm run data           # actualiza los datos reales de GitHub (ver apps/site/.env.example)
+npm run typecheck
 ```
 
-Ver `/docs` en el sitio para adapters (GitHub/GitLab), temas propios, i18n y accesibilidad.
+El sitio importa `contrib-graphs` igual que lo haría cualquier proyecto. En desarrollo Vite lo apunta a
+`packages/contrib-graphs/src` para tener HMR; en `vite build` usa el `dist` compilado.
