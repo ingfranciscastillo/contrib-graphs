@@ -7,6 +7,7 @@ import { useT } from './messages'
 import { routeMeta } from './seo.ts'
 import { useDemo } from './search'
 import { LanguageSwitch, Logo, ModeToggle } from './ui'
+import { PmIcon, pmCommand, usePackageManager } from './pm'
 import { variants } from './variants'
 
 export function Layout() {
@@ -197,7 +198,6 @@ function Footer() {
           {t.footer.copyright(year)}. {t.footer.license}.
         </span>
         <span className="footer-base-end">
-          <span>{t.footer.builtWith}</span>
           <a className="footer-icon" href={REPO} target="_blank" rel="noreferrer" aria-label={t.footer.githubLabel} title={t.footer.githubLabel}>
             <GithubLogo size={20} weight="fill" aria-hidden="true" />
           </a>
@@ -210,7 +210,8 @@ function Footer() {
 /** Comando de instalación con botón de copiar. */
 function InstallCommand({ label }: { label: string }) {
   const [copied, setCopied] = useState(false)
-  const command = 'npm i contrib-graphs'
+  const [pm] = usePackageManager()
+  const command = pmCommand(pm, 'install', 'contrib-graphs')
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(command)
@@ -222,6 +223,7 @@ function InstallCommand({ label }: { label: string }) {
   }
   return (
     <button className="install-cmd" onClick={copy} aria-label={`${label}: ${command}`}>
+      <PmIcon pm={pm} size={15} />
       <code>{command}</code>
       {copied ? <Check size={15} aria-hidden="true" /> : <Copy size={15} aria-hidden="true" />}
     </button>

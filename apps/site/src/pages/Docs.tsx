@@ -5,6 +5,7 @@ import { useMemo, type ReactNode } from 'react'
 import { useLang, useLocaleParams } from '../i18n'
 import { useDemo } from '../search'
 import { CodeBlock, Section, registryUrl } from '../ui'
+import { PmCommand } from '../pm'
 
 /** Anclas iguales en los dos idiomas: un enlace a #themes funciona en /docs y en /es/docs. */
 const toc = [
@@ -77,7 +78,7 @@ export function Docs() {
               'Instala el paquete e importa los estilos una sola vez, por ejemplo en tu layout o en el archivo de entrada. Las actualizaciones llegan con npm.',
             )}
           </p>
-          <CodeBlock label="bash" code={`npm install contrib-graphs`} />
+          <PmCommand kind="install" arg="contrib-graphs" />
           <CodeBlock
             label="tsx"
             code={`import { ClassicGraph } from 'contrib-graphs'
@@ -94,7 +95,7 @@ export function Activity({ contributions }) {
               'Usa el CLI de shadcn para copiar el código de las variantes que quieras a components/contrib-graphs y editarlo como código tuyo. Cada variante trae consigo el núcleo compartido. Necesita un components.json, que crea npx shadcn@latest init.',
             )}
           </p>
-          <CodeBlock label="bash" code={`npx shadcn@latest add ${registryUrl('classic-graph')}`} />
+          <PmCommand kind="dlx" arg={`shadcn@latest add ${registryUrl('classic-graph')}`} />
           <CodeBlock
             label="tsx"
             code={`import { ClassicGraph } from '@/components/contrib-graphs/variants/GridGraph'
@@ -103,7 +104,7 @@ import '@/components/contrib-graphs/styles.css'`}
           <p>
             {L('The GitHub, GitLab and sample data helpers are a separate item:', 'Los adaptadores de GitHub y GitLab y los datos de ejemplo son un item aparte:')}
           </p>
-          <CodeBlock label="bash" code={`npx shadcn@latest add ${registryUrl('contrib-graphs-data')}`} />
+          <PmCommand kind="dlx" arg={`shadcn@latest add ${registryUrl('contrib-graphs-data')}`} />
         </Section>
 
         <Section id="frameworks" title={title('frameworks')}>

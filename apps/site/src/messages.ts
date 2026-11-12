@@ -29,7 +29,6 @@ const en = {
     install: 'Install',
     themes: 'Custom themes',
     frameworks: 'Next.js and Astro',
-    builtWith: 'Built with React, TypeScript, Vite and TanStack Router',
   },
   notFound: { title: 'Not found', text: "That page doesn't exist.", back: 'Back to the gallery' },
   toolbar: {
@@ -45,7 +44,7 @@ const en = {
       sparse: 'Sparse',
     },
   },
-  code: { copy: 'Copy', copied: 'Copied' },
+  code: { copy: 'Copy', copied: 'Copied', packageManager: 'Package manager' },
   hero: {
     title: 'Contribution graphs for your portfolio',
     lead: 'React components you install or copy and make your own. One data format for GitHub, GitLab or anything you track, with themes, dark mode, keyboard and screen reader support built in.',
@@ -99,7 +98,6 @@ const es = {
     install: 'Instalar',
     themes: 'Temas propios',
     frameworks: 'Next.js y Astro',
-    builtWith: 'Hecho con React, TypeScript, Vite y TanStack Router',
   },
   notFound: { title: 'No encontrado', text: 'Esa página no existe.', back: 'Volver a la galería' },
   toolbar: {
@@ -115,7 +113,7 @@ const es = {
       sparse: 'Esporádico',
     },
   },
-  code: { copy: 'Copiar', copied: 'Copiado' },
+  code: { copy: 'Copiar', copied: 'Copiado', packageManager: 'Gestor de paquetes' },
   hero: {
     title: 'Contribution graphs para tu portfolio',
     lead: 'Componentes de React que instalas o copias y haces tuyos. Un mismo formato de datos para GitHub, GitLab o lo que quieras medir, con temas, modo oscuro, teclado y lector de pantalla incluidos.',

@@ -1053,7 +1053,7 @@ input[type='checkbox'][role='switch']:checked::after {
     display: inline;
   }
   .lang-switch a {
-    padding: 0 7px;
+    padding: 0 5px;
   }
 }
 
@@ -1218,4 +1218,60 @@ input[type='checkbox'][role='switch']:checked::after {
   margin: 4px 0 -4px;
   font-size: 13.5px;
   color: var(--text-2);
+}
+
+/* ---------- Comandos por gestor de paquetes ---------- */
+.pm-code .code-head {
+  padding-left: 4px;
+}
+.pm-tabs {
+  display: flex;
+  gap: 2px;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.pm-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 7px;
+  background: none;
+  color: var(--text-3);
+  font: 12px var(--mono);
+  cursor: pointer;
+}
+.pm-tab:hover {
+  color: var(--text);
+}
+.pm-tab[aria-selected='true'] {
+  background: var(--bg);
+  color: var(--text);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.pm-tab:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+.install-cmd svg:first-child {
+  flex: none;
+  color: var(--text-3);
+}
+@media (max-width: 480px) {
+  .pm-tab {
+    gap: 4px;
+    padding: 0 5px;
+  }
+  /* El texto de copiar se oculta solo visualmente: el lector de pantalla lo sigue leyendo. */
+  .pm-copy span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
 }
