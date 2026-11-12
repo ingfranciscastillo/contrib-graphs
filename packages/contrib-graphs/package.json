@@ -1,6 +1,6 @@
 {
   "name": "contrib-graphs",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Contribution graph components for React: GitHub-style heatmaps in seven designs, with themes, dark mode, keyboard navigation and screen reader support.",
   "keywords": [
     "react",

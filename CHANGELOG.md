@@ -4,6 +4,8 @@ All notable changes to the `contrib-graphs` package are listed here. The format 
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-11-12
+
 ### Fixed
 
 - Cropped graphs grow back when there is room again. Inside a centering flex container, `ClassicGraph`, `DotsGraph` and `SkylineGraph` stayed cropped after the window got narrower and then wider, for example after rotating a phone.
@@ -35,6 +37,7 @@ First release.
 - Server rendering support: components are marked `'use client'` for the Next.js App Router, and `contrib-graphs/data` works in Server Components.
 - ESM and CommonJS builds with TypeScript types, and a single `styles.css`.
 
-[Unreleased]: https://github.com/ingfranciscastillo/contrib-graphs/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/ingfranciscastillo/contrib-graphs/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/ingfranciscastillo/contrib-graphs/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/ingfranciscastillo/contrib-graphs/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/ingfranciscastillo/contrib-graphs/releases/tag/v0.1.0
