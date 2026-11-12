@@ -3,12 +3,28 @@ import { GraphShell, cellDelay, describeDay, summaryOf, useCalendarGraph } from 
 import type { BaseGraphProps } from '../types'
 import { formatNumber, pluralize } from '../utils'
 
+/** Props of `RadialGraph`. */
 export interface RadialGraphProps extends BaseGraphProps {
-  /** Diámetro en px (default 320) */
+  /**
+   * Diameter in px.
+   * @default 320
+   */
   size?: number
-  /** Radio interior como fracción del radio total (default 0.38) */
+  /**
+   * Inner radius as a fraction of the outer radius.
+   * @default 0.38
+   */
   innerRadius?: number
+  /**
+   * Show month labels around the ring.
+   * @default true
+   */
   showMonths?: boolean
+  /**
+   * Show the header with the total. The total is already in the center of the ring.
+   * @default false
+   */
+  showTotal?: boolean
 }
 
 function sector(cx: number, cy: number, r0: number, r1: number, a0: number, a1: number) {
@@ -16,7 +32,7 @@ function sector(cx: number, cy: number, r0: number, r1: number, a0: number, a1: 
   return `M${p(r1, a0)}A${r1} ${r1} 0 0 1 ${p(r1, a1)}L${p(r0, a1)}A${r0} ${r0} 0 0 0 ${p(r0, a0)}Z`
 }
 
-/** El año como un anillo: cada semana es una porción y cada día de la semana un aro. */
+/** The year as a ring: each week is a slice and each weekday a band. */
 export function RadialGraph(props: RadialGraphProps) {
   const { size = 320, innerRadius = 0.38, showMonths = true } = props
   const { calendar, interaction } = useCalendarGraph(props)

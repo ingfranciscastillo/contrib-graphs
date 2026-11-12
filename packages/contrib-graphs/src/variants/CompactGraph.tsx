@@ -3,21 +3,51 @@ import { GraphShell, cellDelay, describeDay, useGraphInteraction } from '../core
 import type { BaseGraphProps, CalendarDay } from '../types'
 import { buildCalendar, computeStats, formatNumber, makeLevelFn, pluralize } from '../utils'
 
-export interface CompactGraphProps extends Omit<BaseGraphProps, 'weeks' | 'weekStart'> {
-  /** Días a mostrar (default 30) */
+/** Props of `CompactGraph`. It shows days rather than weeks, so `weeks`, `weekStart` and `periodLabel` don't apply. */
+export interface CompactGraphProps extends Omit<BaseGraphProps, 'weeks' | 'weekStart' | 'periodLabel'> {
+  /**
+   * Number of days to show.
+   * @default 30
+   */
   days?: number
+  /**
+   * Size of each cell in px.
+   * @default 10
+   */
   cellSize?: number
+  /**
+   * Space between cells in px.
+   * @default 3
+   */
   gap?: number
+  /**
+   * Corner radius in px.
+   * @default 2
+   */
   radius?: number
-  /** Muestra la racha actual junto al total. */
+  /**
+   * Show the current streak next to the total.
+   * @default true
+   */
   showStreak?: boolean
-  /** Texto para la racha, recibe el número. Default `"N day streak"`. */
+  /**
+   * Streak text, given the number of days.
+   * @default (n) => `${n} day streak`
+   */
   streakLabel?: (n: number) => string
-  /** Texto tras el total, recibe los días. Default `"in the last N days"`. */
+  /**
+   * Text after the total, given the number of days.
+   * @default (days) => `in the last ${days} days`
+   */
   rangeLabel?: (days: number) => string
+  /**
+   * Show the Less–More legend.
+   * @default false
+   */
+  showLegend?: boolean
 }
 
-/** Una sola fila con los últimos N días. Pensado para headers, tarjetas y footers. */
+/** A single row with the last N days, for headers, cards and footers. */
 export function CompactGraph(props: CompactGraphProps) {
   const { days: n = 30, cellSize = 10, gap = 3, radius = 2, showStreak = true } = props
   const rootRef = useRef<HTMLDivElement>(null)
