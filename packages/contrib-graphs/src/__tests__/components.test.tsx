@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { cleanup, fireEvent, render, screen } from '@testing-library/react'
+import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 import type { ComponentType } from 'react'
 import { afterEach, describe, expect, test, vi } from 'vitest'
 import {
@@ -102,6 +102,42 @@ describe.each(dayVariants)('%s', (_name, Graph, expectedCells) => {
     expect(r.dataset.mode).toBe('dark')
     expect(r.classList.contains('extra')).toBe(true)
     expect(r.style.getPropertyValue('--cg-l4-dark')).toBe(themes.ember.dark.levels[4])
+  })
+})
+
+describe('foco', () => {
+  test('entrar con el teclado activa el último día; con el mouse no', () => {
+    const { container } = render(<ClassicGraph {...base} />)
+    const r = root(container)
+    // jsdom no sabe si el foco vino del teclado: se simula con matches(':focus-visible').
+    const matches = r.matches.bind(r)
+    r.matches = (sel: string) => (sel === ':focus-visible' ? true : matches(sel))
+    act(() => r.focus())
+    expect(cell(container, 367).hasAttribute('data-active')).toBe(true)
+    act(() => r.blur())
+    expect(container.querySelector('[data-active]')).toBeNull()
+
+    r.matches = (sel: string) => (sel === ':focus-visible' ? false : matches(sel))
+    act(() => r.focus())
+    expect(container.querySelector('[data-active]')).toBeNull()
+  })
+
+  test('no falla si el navegador no soporta :focus-visible', () => {
+    const { container } = render(<ClassicGraph {...base} />)
+    const r = root(container)
+    r.matches = () => {
+      throw new SyntaxError("':focus-visible' is not a valid selector")
+    }
+    const errors: unknown[] = []
+    const onError = (e: ErrorEvent) => {
+      errors.push(e.error)
+      e.preventDefault()
+    }
+    window.addEventListener('error', onError)
+    act(() => r.focus())
+    window.removeEventListener('error', onError)
+    expect(errors).toEqual([]) // React reporta como error global lo que lanza un handler
+    expect(container.querySelector('[data-active]')).toBeNull()
   })
 })
 
