@@ -14,6 +14,7 @@ export default defineConfig(({ command }) => ({
         ? [
             { find: /^contrib-graphs$/, replacement: pkg('src/index.ts') },
             { find: /^contrib-graphs\/styles\.css$/, replacement: pkg('src/styles.css') },
+            { find: /^contrib-graphs\/data$/, replacement: pkg('src/data.ts') },
           ]
         : [],
   },
