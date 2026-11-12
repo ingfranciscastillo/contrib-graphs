@@ -2,6 +2,13 @@ import type { Calendar, CalendarDay, ContributionDay, Level, LevelScale, MonthLa
 
 const DAY_MS = 86_400_000
 
+/**
+ * Locale por defecto. Fijo (no el del navegador) para que el HTML del servidor
+ * y el del cliente coincidan al hidratar, y para que fechas y textos (en inglés
+ * por defecto) estén en el mismo idioma. Pasa `locale` para cambiarlo.
+ */
+export const DEFAULT_LOCALE = 'en'
+
 // Todas las fechas se manejan en UTC para evitar saltos por zona horaria / DST.
 export function parseISO(s: string): Date {
   const [y, m, d] = s.split('-').map(Number)
@@ -147,7 +154,7 @@ export function cropCalendar(cal: Calendar, n: number, locale?: string): Calenda
 }
 
 function monthLabels(weeks: (CalendarDay | null)[][], locale?: string): MonthLabel[] {
-  const fmt = new Intl.DateTimeFormat(locale, { month: 'short', timeZone: 'UTC' })
+  const fmt = new Intl.DateTimeFormat(locale ?? DEFAULT_LOCALE, { month: 'short', timeZone: 'UTC' })
   const out: MonthLabel[] = []
   weeks.forEach((week, w) => {
     const days = week.filter((d): d is CalendarDay => d !== null)
@@ -199,16 +206,16 @@ export function formatDate(
   locale?: string,
   opts: Intl.DateTimeFormatOptions = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' },
 ): string {
-  return new Intl.DateTimeFormat(locale, { ...opts, timeZone: 'UTC' }).format(parseISO(iso))
+  return new Intl.DateTimeFormat(locale ?? DEFAULT_LOCALE, { ...opts, timeZone: 'UTC' }).format(parseISO(iso))
 }
 
 export function formatNumber(n: number, locale?: string): string {
-  return new Intl.NumberFormat(locale).format(n)
+  return new Intl.NumberFormat(locale ?? DEFAULT_LOCALE).format(n)
 }
 
 /** Nombres cortos de los 7 días empezando por `weekStart`. */
 export function weekdayLabels(locale?: string, weekStart: 0 | 1 = 0): string[] {
-  const fmt = new Intl.DateTimeFormat(locale, { weekday: 'short', timeZone: 'UTC' })
+  const fmt = new Intl.DateTimeFormat(locale ?? DEFAULT_LOCALE, { weekday: 'short', timeZone: 'UTC' })
   // 2023-01-01 fue domingo
   return Array.from({ length: 7 }, (_, i) => fmt.format(new Date(Date.UTC(2023, 0, 1 + ((i + weekStart) % 7)))))
 }

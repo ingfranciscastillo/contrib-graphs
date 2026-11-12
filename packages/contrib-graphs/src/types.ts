@@ -58,12 +58,15 @@ export interface BaseGraphProps {
   colorMode?: ColorMode
   /** Semanas a mostrar (default 53). */
   weeks?: number
-  /** Último día del calendario (default: hoy). */
+  /**
+   * Último día del calendario (default: hoy). Con render en servidor pásalo
+   * siempre: el servidor y el navegador pueden estar en días distintos.
+   */
   endDate?: string | Date
   /** 0 = domingo, 1 = lunes */
   weekStart?: 0 | 1
   scale?: LevelScale
-  /** Locale para fechas y números (default: el del navegador). */
+  /** Locale para fechas y números (default `'en'`, igual en servidor y cliente). */
   locale?: string
   /** Animación de entrada escalonada. Respeta `prefers-reduced-motion`. */
   animate?: boolean
