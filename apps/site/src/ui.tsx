@@ -214,3 +214,9 @@ export function WhenVisible({ children, minHeight }: { children: ReactNode; minH
     </div>
   )
 }
+
+/** URL pública de un item del registry de copiables (publicado con el sitio en /r/). */
+export function registryUrl(item: string): string {
+  const origin = typeof location === 'undefined' ? 'https://ingfranciscastillo.github.io' : location.origin
+  return `${origin}${import.meta.env.BASE_URL}r/${item}.json`
+}

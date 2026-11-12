@@ -24,6 +24,7 @@ Show your activity on your site or portfolio with a graph that fits its design. 
 - **Accessible**: a single tab stop with arrow-key navigation, announced days and a text summary. Respects `prefers-reduced-motion`.
 - **Responsive**: drops the oldest weeks on narrow screens instead of scrolling, or scales to fit.
 - **Server rendering**: components are marked `"use client"` for Next.js, and the data helpers have no React dependency.
+- **Install or copy**: use the npm package, or copy the source into your project with the shadcn CLI.
 - **Data adapters** for GitHub, GitLab, plain dates and merged sources.
 - **Localizable**: dates and numbers through `Intl`, every label as a prop.
 
@@ -34,6 +35,24 @@ npm install contrib-graphs
 ```
 
 React 18 or later is the only dependency.
+
+### Or copy the source into your project
+
+Prefer to own the code? Every variant is also published as a [shadcn](https://ui.shadcn.com) registry item. The CLI copies it into `components/contrib-graphs`, along with the shared core it needs:
+
+```bash
+npx shadcn@latest add https://ingfranciscastillo.github.io/contrib-graphs/r/classic-graph.json
+```
+
+```tsx
+import { ClassicGraph } from '@/components/contrib-graphs/variants/GridGraph'
+import '@/components/contrib-graphs/styles.css'
+```
+
+Items: `classic-graph`, `dots-graph`, `isometric-graph`, `terminal-graph`, `radial-graph`, `skyline-graph`, `compact-graph`, and `contrib-graphs-data` for the data helpers.
+
+> [!NOTE]
+> The shadcn CLI needs a `components.json`. Run `npx shadcn@latest init` first if your project doesn't have one.
 
 ## Usage
 
