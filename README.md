@@ -18,6 +18,7 @@ npm install
 npm run dev            # sitio en http://localhost:5173, usa el código fuente del paquete
 npm run build          # compila el paquete y luego el sitio (que usa el dist del paquete)
 npm run data           # actualiza los datos reales de GitHub (ver apps/site/.env.example)
+npm run api            # regenera la referencia de la API desde los tipos (un test avisa si hace falta)
 npm run typecheck
 npm test               # tipos + tests del paquete (Vitest) + tests del script de datos (node --test)
 ```
