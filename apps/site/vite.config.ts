@@ -5,6 +5,8 @@ import { fileURLToPath, URL } from 'node:url'
 const pkg = (p: string) => fileURLToPath(new URL(`../../packages/contrib-graphs/${p}`, import.meta.url))
 
 export default defineConfig(({ command }) => ({
+  // GitHub Pages sirve el sitio en /<repositorio>/: el workflow pasa BASE_PATH=/contrib-graphs/.
+  base: process.env.BASE_PATH ?? '/',
   plugins: [react()],
   resolve: {
     // En desarrollo se usa el código fuente del paquete (HMR sin compilarlo).

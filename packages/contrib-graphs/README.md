@@ -46,7 +46,7 @@ export default async function Page() {
 
 Tested with Next.js 16 (React 19) and Astro 6.
 
-More designs, the full API reference and examples: [github.com/ingfranciscastillo/contrib-graphs](https://github.com/ingfranciscastillo/contrib-graphs).
+Live gallery, playground and full API reference: [ingfranciscastillo.github.io/contrib-graphs](https://ingfranciscastillo.github.io/contrib-graphs/). Source and more designs: [github.com/ingfranciscastillo/contrib-graphs](https://github.com/ingfranciscastillo/contrib-graphs).
 
 ## License
 

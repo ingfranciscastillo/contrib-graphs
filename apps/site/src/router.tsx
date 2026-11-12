@@ -54,6 +54,8 @@ const routeTree = rootRoute.addChildren([localeRoute.addChildren([indexRoute, va
 
 export const router = createRouter({
   routeTree,
+  // Igual que `base` de Vite: '/' en local y '/contrib-graphs/' en GitHub Pages.
+  basepath: import.meta.env.BASE_URL,
   defaultPreload: 'intent',
   scrollRestoration: true,
 })

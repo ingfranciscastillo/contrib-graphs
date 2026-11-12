@@ -6,7 +6,7 @@
 
 _Contribution graph components for React: GitHub-style activity heatmaps in seven designs._
 
-[Features](#features) • [Installation](#installation) • [Usage](#usage) • [Variants](#variants) • [Data sources](#data-sources) • [Next.js and Astro](#nextjs-and-astro) • [Development](#development)
+[Live demo](https://ingfranciscastillo.github.io/contrib-graphs/) • [Features](#features) • [Installation](#installation) • [Usage](#usage) • [Variants](#variants) • [Data sources](#data-sources) • [Next.js and Astro](#nextjs-and-astro) • [Development](#development)
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/images/isometric-dark.svg">
@@ -57,7 +57,7 @@ Dates use the ISO format `YYYY-MM-DD` and are read as UTC. Missing days count as
 
 ## Variants
 
-Every graph accepts the shared props (`data`, `theme`, `colorMode`, `weeks`, `endDate`, `locale`, `onDayClick`…) plus its own. The site's API reference lists all of them.
+Every graph accepts the shared props (`data`, `theme`, `colorMode`, `weeks`, `endDate`, `locale`, `onDayClick`…) plus its own. The [API reference](https://ingfranciscastillo.github.io/contrib-graphs/docs/api) lists all of them, and the [playground](https://ingfranciscastillo.github.io/contrib-graphs/variants/classic) lets you try them.
 
 ### `ClassicGraph`
 
