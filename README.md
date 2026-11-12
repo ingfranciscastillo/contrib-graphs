@@ -19,6 +19,7 @@ npm run dev            # sitio en http://localhost:5173, usa el código fuente d
 npm run build          # compila el paquete y luego el sitio (que usa el dist del paquete)
 npm run data           # actualiza los datos reales de GitHub (ver apps/site/.env.example)
 npm run typecheck
+npm test               # tipos + tests del paquete (Vitest) + tests del script de datos (node --test)
 ```
 
 El sitio importa `contrib-graphs` igual que lo haría cualquier proyecto. En desarrollo Vite lo apunta a
