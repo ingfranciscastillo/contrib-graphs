@@ -24,6 +24,26 @@ Every component takes the same `{ date, count }[]` data. Adapters for GitHub and
 
 Requires React 18 or later.
 
+## Next.js, Astro and server rendering
+
+- `contrib-graphs` exports the components and starts with `"use client"`, so you can render them straight from a Next.js Server Component.
+- `contrib-graphs/data` exports everything else (calendar helpers, themes, adapters, sample data) with no React dependency. Use it on the server, for example `fetchGitHubContributions` in a Server Component or an Astro page.
+- In Astro (with `@astrojs/react`), a graph without a `client:*` directive ships as static HTML with no JavaScript; add `client:visible` for tooltips and keyboard navigation. Functions can't be passed to islands, so wrap the graph in a React component to use `onDayClick`.
+- When rendering on the server, pass `endDate` (for real data, the last date in it): the server and the browser may be on different days. Dates and numbers default to the `en` locale on both sides.
+
+```tsx
+// app/page.tsx (Next.js)
+import { ClassicGraph } from 'contrib-graphs'
+import { fetchGitHubContributions } from 'contrib-graphs/data'
+
+export default async function Page() {
+  const data = await fetchGitHubContributions('your-username', process.env.GITHUB_TOKEN!)
+  return <ClassicGraph data={data} endDate={data.at(-1)?.date} />
+}
+```
+
+Tested with Next.js 16 (React 19) and Astro 6.
+
 ## License
 
 MIT
