@@ -1,5 +1,6 @@
 import {
   useCallback,
+  useEffect,
   useId,
   useLayoutEffect,
   useMemo,
@@ -14,6 +15,12 @@ import {
 import { resolveTheme, themeVars } from './themes'
 import type { BaseGraphProps, Calendar, CalendarDay, Level } from './types'
 import { buildCalendar, cropCalendar, formatDate, formatNumber, pluralize } from './utils'
+
+/**
+ * useLayoutEffect en el navegador (mide antes de pintar) y useEffect en el
+ * servidor, donde los efectos no corren y React avisaría por cada componente.
+ */
+export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
 /* --------------------------------------------------------- Interacción */
 
@@ -57,7 +64,7 @@ export function useGraphInteraction(opts: {
 
   // Marca la celda activa. Sin deps a propósito (vuelve a marcarla si el SVG se
   // re-renderiza), por eso aquí NO se toca el estado.
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const root = rootRef.current
     if (!root) return
     const el = index == null ? null : root.querySelector(`[data-cg-i="${index}"]`)
@@ -66,7 +73,7 @@ export function useGraphInteraction(opts: {
   })
 
   // Posición del tooltip: solo cuando cambia la celda activa o el número de celdas.
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const root = rootRef.current
     const el = index == null || !root ? null : root.querySelector(`[data-cg-i="${index}"]`)
     if (!root || !el) {
@@ -142,7 +149,7 @@ export function useFitWeeks(
   enabled: boolean,
 ): number {
   const [fit, setFit] = useState(requested)
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const el = ref.current
     if (!enabled || !el || typeof ResizeObserver === 'undefined') {
       setFit(requested)
@@ -286,7 +293,7 @@ export function GraphShell({
   const [shift, setShift] = useState(0)
 
   // Mantiene el tooltip dentro del contenedor.
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const tip = tipRef.current
     const root = interaction.rootRef.current
     if (!tip || !root || !pos) return
