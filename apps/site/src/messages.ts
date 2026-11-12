@@ -43,7 +43,7 @@ const en = {
   hero: {
     title: 'Contribution graphs for your portfolio',
     lead: 'React components you install or copy and make your own. One data format for GitHub, GitLab or anything you track, with themes, dark mode, keyboard and screen reader support built in.',
-    start: 'Get started',
+    start: 'Read the docs',
     seeVariants: 'See variants',
     realData: 'Real data from',
     updated: (date: string) => `, updated ${date}.`,
@@ -106,7 +106,7 @@ const es = {
   hero: {
     title: 'Contribution graphs para tu portfolio',
     lead: 'Componentes de React que instalas o copias y haces tuyos. Un mismo formato de datos para GitHub, GitLab o lo que quieras medir, con temas, modo oscuro, teclado y lector de pantalla incluidos.',
-    start: 'Empezar',
+    start: 'Leer la documentación',
     seeVariants: 'Ver variantes',
     realData: 'Datos reales de',
     updated: (date: string) => `, actualizados el ${date}.`,

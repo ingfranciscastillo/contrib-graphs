@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { Check, Copy, Desktop, Moon, Shuffle, Sun } from '@phosphor-icons/react'
 import { themeNames, themes, themeVars } from 'contrib-graphs'
 import { Link } from '@tanstack/react-router'
@@ -162,6 +162,8 @@ export function LanguageSwitch() {
           search={(p) => p}
           hrefLang={l}
           lang={l}
+          // En móvil solo se ve la abreviatura (EN/ES): el nombre completo va en aria-label.
+          aria-label={langNames[l]}
           aria-current={l === lang ? 'true' : undefined}
           onClick={() => {
             try {
@@ -178,5 +180,37 @@ export function LanguageSwitch() {
         </Link>
       ))}
     </nav>
+  )
+}
+
+/**
+ * Monta su contenido cuando está por entrar en pantalla. Mientras, reserva `minHeight`
+ * para no mover el diseño (CLS). Evita renderizar y animar gráficos que nadie ve aún.
+ */
+export function WhenVisible({ children, minHeight }: { children: ReactNode; minHeight: number }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [visible, setVisible] = useState(false)
+  useEffect(() => {
+    const el = ref.current
+    if (!el || typeof IntersectionObserver === 'undefined') {
+      setVisible(true)
+      return
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true)
+          io.disconnect()
+        }
+      },
+      { rootMargin: '300px 0px' },
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
+  return (
+    <div ref={ref} className="when-visible" style={visible ? undefined : { minHeight }}>
+      {visible ? children : null}
+    </div>
   )
 }

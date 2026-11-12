@@ -4,7 +4,7 @@ import { CompactGraph, IsometricGraph } from 'contrib-graphs'
 import { useLang, useLocaleParams } from '../i18n'
 import { useT } from '../messages'
 import { githubData, useDemo } from '../search'
-import { DemoToolbar } from '../ui'
+import { DemoToolbar, WhenVisible } from '../ui'
 import { tr, variants } from '../variants'
 
 export function Gallery() {
@@ -73,7 +73,9 @@ export function Gallery() {
                 </Link>
               </header>
               <div className="card-demo">
-                <C data={data} theme={theme} {...locale} animate weeks={v.id === 'radial' ? 53 : undefined} size={v.id === 'radial' ? 300 : undefined} />
+                <WhenVisible minHeight={previewHeight[v.id] ?? 200}>
+                  <C data={data} theme={theme} {...locale} animate weeks={v.id === 'radial' ? 53 : undefined} size={v.id === 'radial' ? 300 : undefined} />
+                </WhenVisible>
               </div>
             </article>
           )
@@ -81,4 +83,15 @@ export function Gallery() {
       </div>
     </>
   )
+}
+
+/** Altura aproximada de cada gráfico en su tarjeta: reserva el espacio antes de montarlo. */
+const previewHeight: Record<string, number> = {
+  classic: 172,
+  dots: 172,
+  isometric: 290,
+  terminal: 230,
+  radial: 330,
+  skyline: 190,
+  compact: 50,
 }

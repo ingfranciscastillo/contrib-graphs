@@ -141,7 +141,9 @@ export function TerminalGraph(props: TerminalGraphProps) {
           <b>{prompt}</b> {command}
         </span>
         {'\n\n'}
-        {body}
+        {/* La cuadrícula es un dibujo: como el <svg> de las demás variantes, se oculta a los lectores
+            de pantalla, que reciben el resumen y el día activo (aria-live) del contenedor. */}
+        <span aria-hidden="true">{body}</span>
         {'\n'}
         {(props.showTotal !== false || props.showLegend !== false) && (
           // Total y leyenda: en la misma línea si caben, una debajo de otra si no.
