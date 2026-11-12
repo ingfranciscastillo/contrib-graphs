@@ -984,3 +984,15 @@ input[type='checkbox'][role='switch']:checked::after {
     padding: 0 7px;
   }
 }
+
+@media (max-width: 420px) {
+  /* Con el selector de idioma no cabe todo: en teléfonos pequeños queda solo el logo. */
+  .topbar .brand > span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+}

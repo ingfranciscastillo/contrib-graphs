@@ -1,8 +1,8 @@
-import { Link, Outlet } from '@tanstack/react-router'
-import { useMemo } from 'react'
+import { Link, Outlet, useLocation } from '@tanstack/react-router'
+import { useEffect, useMemo } from 'react'
 import { BookOpen, SquaresFour } from '@phosphor-icons/react'
 import { buildCalendar, themes, themeVars } from 'contrib-graphs'
-import { useLocaleParams } from './i18n'
+import { useLang, useLocaleParams } from './i18n'
 import { useT } from './messages'
 import { useDemo } from './search'
 import { LanguageSwitch, Logo, ModeToggle } from './ui'
@@ -15,6 +15,7 @@ export function Layout() {
   return (
     // `tv` resuelve los colores del tema (claro/oscuro) como --t0…--t4 para todo el sitio.
     <div className="app tv" style={themeVars(themes[theme])}>
+      <DocumentLanguage />
       <a className="skip" href="#main">
         {t.skip}
       </a>
@@ -46,6 +47,30 @@ export function Layout() {
       <Footer />
     </div>
   )
+}
+
+/** <html lang>, meta description y enlaces hreflang según el idioma de la página. */
+function DocumentLanguage() {
+  const lang = useLang()
+  const t = useT()
+  const { pathname } = useLocation()
+  useEffect(() => {
+    document.documentElement.lang = lang
+    document.querySelector('meta[name="description"]')?.setAttribute('content', t.meta.description)
+    const base = pathname.replace(/^\/es(?=\/|$)/, '') || '/'
+    const urls = { en: base, es: base === '/' ? '/es' : `/es${base}`, 'x-default': base }
+    for (const [hreflang, path] of Object.entries(urls)) {
+      let link = document.head.querySelector<HTMLLinkElement>(`link[rel="alternate"][hreflang="${hreflang}"]`)
+      if (!link) {
+        link = document.createElement('link')
+        link.rel = 'alternate'
+        link.hreflang = hreflang
+        document.head.appendChild(link)
+      }
+      link.href = new URL(path, location.origin).href
+    }
+  }, [lang, pathname, t])
+  return null
 }
 
 function Footer() {

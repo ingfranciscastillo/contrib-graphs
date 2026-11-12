@@ -5,6 +5,9 @@ import { useLang, type Lang } from './i18n'
  * (`satisfies Messages`), así TypeScript avisa si falta una traducción.
  */
 const en = {
+  meta: {
+    description: 'Contribution graph components for React: GitHub-style heatmaps in seven designs, with themes, dark mode and keyboard support.',
+  },
   skip: 'Skip to content',
   nav: { label: 'Main', gallery: 'Gallery', docs: 'Docs' },
   mode: {
@@ -64,6 +67,9 @@ const en = {
 export type Messages = typeof en
 
 const es = {
+  meta: {
+    description: 'Componentes de contribution graph para React: mapas de actividad estilo GitHub en siete diseños, con temas, modo oscuro y teclado.',
+  },
   skip: 'Saltar al contenido',
   nav: { label: 'Principal', gallery: 'Galería', docs: 'Docs' },
   mode: {

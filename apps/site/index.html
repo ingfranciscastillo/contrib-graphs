@@ -1,10 +1,11 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contribution Graphs</title>
+    <title>contrib/graphs</title>
+    <meta name="description" content="Contribution graph components for React: GitHub-style heatmaps in seven designs, with themes, dark mode and keyboard support." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -15,6 +16,18 @@
       try {
         var m = localStorage.getItem('cg-site-mode')
         if (m === 'light' || m === 'dark') document.documentElement.dataset.theme = m
+      } catch (e) {}
+      // Idioma: inglés en la raíz, español en /es. Se respeta la elección guardada;
+      // en la primera visita se usa el idioma del navegador. Corre antes de cargar la app.
+      try {
+        var path = location.pathname
+        var isEs = path === '/es' || path.indexOf('/es/') === 0
+        var saved = null
+        try { saved = localStorage.getItem('cg-site-lang') } catch (e) {}
+        var wanted = saved || ((navigator.language || '').toLowerCase().indexOf('es') === 0 ? 'es' : 'en')
+        if (wanted === 'es' && !isEs) location.replace('/es' + (path === '/' ? '' : path) + location.search + location.hash)
+        else if (saved === 'en' && isEs) location.replace((path.slice(3) || '/') + location.search + location.hash)
+        document.documentElement.lang = isEs ? 'es' : 'en'
       } catch (e) {}
     </script>
   </head>
