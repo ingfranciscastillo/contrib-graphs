@@ -3,18 +3,38 @@ import { GraphShell, cellDelay, defaultTitle, summaryOf, useFitWeeks, useGraphIn
 import type { BaseGraphProps, CalendarDay, Level } from '../types'
 import { buildCalendar, cropCalendar, formatDate, formatNumber, makeLevelFn, pluralize } from '../utils'
 
-export interface SkylineGraphProps extends BaseGraphProps {
-  /** Altura máxima de los edificios (default 110) */
+/** Props of `SkylineGraph`. It works by week, so it takes `onWeekClick` instead of `onDayClick`. */
+export interface SkylineGraphProps extends Omit<BaseGraphProps, 'onDayClick'> {
+  /**
+   * Height of the tallest building in px.
+   * @default 110
+   */
   height?: number
+  /**
+   * Width of each building in px.
+   * @default 9
+   */
   barWidth?: number
+  /**
+   * Space between buildings in px.
+   * @default 3
+   */
   gap?: number
-  /** Dibuja 7 ventanas por edificio, encendidas en los días con actividad. */
+  /**
+   * Draw seven windows per building, lit on the days with activity.
+   * @default true
+   */
   windows?: boolean
+  /**
+   * On narrow screens, `crop` drops the oldest weeks and `scale` shrinks the SVG.
+   * @default 'crop'
+   */
   fit?: 'crop' | 'scale'
-  /** Se llama al hacer clic en una semana. */
+  /** Called when a week is clicked, or with Enter or Space while it is focused. */
   onWeekClick?: (week: SkylineWeek) => void
 }
 
+/** A week as passed to `onWeekClick`. */
 export interface SkylineWeek {
   index: number
   days: CalendarDay[]
@@ -23,7 +43,7 @@ export interface SkylineWeek {
   level: Level
 }
 
-/** Una barra por semana: la silueta de tu año como una ciudad. */
+/** One building per week: your year as a city skyline. */
 export function SkylineGraph(props: SkylineGraphProps) {
   const { height = 110, barWidth = 9, gap = 3, windows = true, fit = 'crop' } = props
   const pitch = barWidth + gap

@@ -3,9 +3,8 @@ import type { Calendar, CalendarDay, ContributionDay, Level, LevelScale, MonthLa
 const DAY_MS = 86_400_000
 
 /**
- * Locale por defecto. Fijo (no el del navegador) para que el HTML del servidor
- * y el del cliente coincidan al hidratar, y para que fechas y textos (en inglés
- * por defecto) estén en el mismo idioma. Pasa `locale` para cambiarlo.
+ * Default locale. Fixed, rather than the browser's, so server and client HTML
+ * match when hydrating and dates match the English default labels.
  */
 export const DEFAULT_LOCALE = 'en'
 
@@ -23,7 +22,7 @@ export function addDays(d: Date, n: number): Date {
   return new Date(d.getTime() + n * DAY_MS)
 }
 
-/** Hoy (fecha local del usuario) como medianoche UTC. */
+/** Today (the user's local date) as midnight UTC. */
 export function todayUTC(): Date {
   const n = new Date()
   return new Date(Date.UTC(n.getFullYear(), n.getMonth(), n.getDate()))
@@ -34,6 +33,7 @@ function toUTCDate(d: string | Date): Date {
   return new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()))
 }
 
+/** Returns a function that maps a count to a level from 0 to 4 for the given counts and scale. */
 export function makeLevelFn(counts: readonly number[], scale: LevelScale = 'quantile'): (n: number) => Level {
   if (typeof scale !== 'string') {
     const [a, b, c, d] = scale
@@ -52,6 +52,7 @@ export function makeLevelFn(counts: readonly number[], scale: LevelScale = 'quan
   return (n) => (n <= 0 ? 0 : n <= q1 ? 1 : n <= q2 ? 2 : n <= q3 ? 3 : 4)
 }
 
+/** Options of `buildCalendar`. They match the graph props of the same name. */
 export interface CalendarOptions {
   weeks?: number
   endDate?: string | Date
@@ -60,7 +61,7 @@ export interface CalendarOptions {
   locale?: string
 }
 
-/** Convierte una lista de días en una cuadrícula semanas × 7 con niveles y etiquetas de mes. */
+/** Lays out days as a weeks × 7 grid with levels, totals and month labels. Dates are handled in UTC. */
 export function buildCalendar(data: readonly ContributionDay[], opts: CalendarOptions = {}): Calendar {
   const weekCount = Math.max(1, Math.floor(opts.weeks ?? 53))
   const weekStart = opts.weekStart ?? 0
@@ -127,10 +128,7 @@ export function buildCalendar(data: readonly ContributionDay[], opts: CalendarOp
   }
 }
 
-/**
- * Conserva solo las últimas `n` semanas. Los niveles se mantienen los del
- * calendario completo, así que recortar no cambia los colores.
- */
+/** Keeps the last `n` weeks. Levels come from the full calendar, so cropping doesn't change colors. */
 export function cropCalendar(cal: Calendar, n: number, locale?: string): Calendar {
   if (n >= cal.weeks.length) return cal
   const days: CalendarDay[] = []
@@ -170,6 +168,7 @@ function monthLabels(weeks: (CalendarDay | null)[][], locale?: string): MonthLab
   return out
 }
 
+/** Totals and streaks of a list of days. */
 export interface GraphStats {
   total: number
   activeDays: number
@@ -178,6 +177,7 @@ export interface GraphStats {
   currentStreak: number
 }
 
+/** Total, active days, best day, longest streak and current streak. A current streak isn't broken by a quiet today. */
 export function computeStats(days: readonly CalendarDay[]): GraphStats {
   let total = 0
   let activeDays = 0
@@ -201,6 +201,7 @@ export function computeStats(days: readonly CalendarDay[]): GraphStats {
   return { total, activeDays, best, longestStreak: longest, currentStreak: current }
 }
 
+/** Formats an ISO date with `Intl`, in UTC so the day never shifts. */
 export function formatDate(
   iso: string,
   locale?: string,
@@ -209,17 +210,19 @@ export function formatDate(
   return new Intl.DateTimeFormat(locale ?? DEFAULT_LOCALE, { ...opts, timeZone: 'UTC' }).format(parseISO(iso))
 }
 
+/** Formats a number with `Intl`. */
 export function formatNumber(n: number, locale?: string): string {
   return new Intl.NumberFormat(locale ?? DEFAULT_LOCALE).format(n)
 }
 
-/** Nombres cortos de los 7 días empezando por `weekStart`. */
+/** Short names of the 7 weekdays starting at `weekStart`. */
 export function weekdayLabels(locale?: string, weekStart: 0 | 1 = 0): string[] {
   const fmt = new Intl.DateTimeFormat(locale ?? DEFAULT_LOCALE, { weekday: 'short', timeZone: 'UTC' })
   // 2023-01-01 fue domingo
   return Array.from({ length: 7 }, (_, i) => fmt.format(new Date(Date.UTC(2023, 0, 1 + ((i + weekStart) % 7)))))
 }
 
+/** Picks the singular or plural unit for a count. */
 export function pluralize(n: number, unit: readonly [string, string] = ['contribution', 'contributions']): string {
   return n === 1 ? unit[0] : unit[1]
 }

@@ -12,21 +12,44 @@ export const terminalCharsets = {
 
 export type TerminalCharset = keyof typeof terminalCharsets
 
+/** Props of `TerminalGraph`. */
 export interface TerminalGraphProps extends BaseGraphProps {
+  /**
+   * Characters for each level: `blocks` (░▒▓█), `squares`, `ascii` or `dots`.
+   * @default 'blocks'
+   */
   charset?: TerminalCharset
-  /** Comando que aparece en el prompt. */
+  /**
+   * Command shown in the first prompt line.
+   * @default "git log --since='1 year ago' | heatmap"
+   */
   command?: string
-  /** Texto antes del comando (default `~ $`). */
+  /**
+   * Text before the command.
+   * @default '~ $'
+   */
   prompt?: string
-  /** Colorea los caracteres con el tema. `false` = monocromo. */
+  /**
+   * Color the characters with the theme; `false` is monochrome.
+   * @default true
+   */
   colored?: boolean
+  /**
+   * On narrow screens, `crop` drops the oldest weeks and `scale` shrinks the text (down to 6px, then crops).
+   * @default 'crop'
+   */
   fit?: 'crop' | 'scale'
+  /**
+   * Labels at both ends of the legend.
+   * @default ['less', 'more']
+   */
+  legendLabels?: readonly [string, string]
 }
 
 const CHAR_W = 7.22 // ancho aprox. de un carácter monospace a 12px
 const MIN_FONT = 6 // por debajo de esto ya no se lee: mejor recortar semanas
 
-/** Bloques de texto en monospace, para portfolios con estética de terminal. */
+/** Real monospace text, for portfolios with a terminal look. */
 export function TerminalGraph(props: TerminalGraphProps) {
   const {
     charset = 'blocks',

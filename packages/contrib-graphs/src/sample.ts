@@ -1,9 +1,10 @@
 import type { ContributionDay } from './types'
 import { addDays, toISO, todayUTC } from './utils'
 
+/** Shape of the generated activity. */
 export type SampleProfile = 'steady' | 'burst' | 'weekend' | 'sparse'
 
-/** Perfiles de actividad disponibles, con una descripción corta en inglés. */
+/** Available sample profiles with a short English label. */
 export const sampleProfiles: Record<SampleProfile, string> = {
   steady: 'Steady',
   burst: 'Bursts',
@@ -22,7 +23,7 @@ function mulberry32(seed: number) {
   }
 }
 
-/** Datos de ejemplo deterministas (misma semilla → mismos datos). Útil para demos y tests. */
+/** Deterministic sample data: the same seed always gives the same days. Useful for demos and tests. */
 export function generateSampleData({
   seed = 7,
   profile = 'steady',

@@ -3,21 +3,38 @@ import { GraphShell, cellDelay, defaultTitle, describeDay, summaryOf, useCalenda
 import type { BaseGraphProps } from '../types'
 import { computeStats, formatDate, formatNumber } from '../utils'
 
+/** Props of `IsometricGraph`. */
 export interface IsometricGraphProps extends BaseGraphProps {
-  /** Ancho de cada baldosa en px (default 12) */
+  /**
+   * Width of each tile in px.
+   * @default 12
+   */
   tileSize?: number
-  /** Altura máxima de una columna en px (default 48) */
+  /**
+   * Height of the tallest column in px.
+   * @default 48
+   */
   maxHeight?: number
-  /** `count` usa el conteo real; `level` usa 5 alturas fijas. */
+  /**
+   * `count` scales columns by the actual count; `level` uses five fixed heights.
+   * @default 'count'
+   */
   heightBy?: 'count' | 'level'
+  /**
+   * Show longest streak, current streak and best day in the header.
+   * @default true
+   */
   showStats?: boolean
-  /** Etiquetas de las estadísticas. Default `['longest streak', 'current streak', 'best day']`. */
+  /**
+   * Labels of the three stats.
+   * @default ['longest streak', 'current streak', 'best day']
+   */
   statLabels?: readonly [string, string, string]
 }
 
 const shade = (level: number, pct: number) => `color-mix(in oklab, var(--cg-l${level}) ${pct}%, var(--cg-mix))`
 
-/** Columnas en perspectiva isométrica; la altura indica la actividad del día. */
+/** Isometric columns whose height shows each day's activity. */
 export function IsometricGraph(props: IsometricGraphProps) {
   const { tileSize = 12, maxHeight = 48, heightBy = 'count', showStats = true, statLabels = ['longest streak', 'current streak', 'best day'] } = props
   const { calendar, periodTotal, interaction } = useCalendarGraph(props)

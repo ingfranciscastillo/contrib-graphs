@@ -1,17 +1,20 @@
 import type { CSSProperties } from 'react'
 
+/** Colors of levels 0 to 4. */
 export type LevelColors = readonly [string, string, string, string, string]
 
+/** Colors for one color mode. */
 export interface ThemePalette {
-  /** Colores de los niveles 0 → 4 */
+  /** Colors of levels 0 to 4. */
   levels: LevelColors
   text: string
   muted: string
-  /** Fondo para variantes con superficie propia (terminal, tarjetas). */
+  /** Background of variants with their own surface, such as Terminal. */
   surface: string
   border: string
 }
 
+/** A theme: a name plus a light and a dark palette. */
 export interface GraphTheme {
   name: string
   light: ThemePalette
@@ -21,6 +24,7 @@ export interface GraphTheme {
 const lightBase = { text: '#1f2328', muted: '#656d76', surface: '#ffffff', border: '#d0d7de' }
 const darkBase = { text: '#e6edf3', muted: '#8d96a0', surface: '#0d1117', border: '#30363d' }
 
+/** Built-in themes: `github`, `gitlab`, `frost`, `ember`, `violet` and `mono`. */
 export const themes = {
   github: {
     name: 'GitHub',
@@ -54,17 +58,20 @@ export const themes = {
   },
 } satisfies Record<string, GraphTheme>
 
+/** Name of a built-in theme. */
 export type ThemeName = keyof typeof themes
 
+/** Names of the built-in themes. */
 export const themeNames = Object.keys(themes) as ThemeName[]
 
+/** Returns the theme object for a preset name or a custom theme; unknown names fall back to `github`. */
 export function resolveTheme(theme: ThemeName | GraphTheme | undefined): GraphTheme {
   if (!theme) return themes.github
   if (typeof theme === 'string') return themes[theme] ?? themes.github
   return theme
 }
 
-/** Expone el tema como CSS variables; el CSS de la librería elige claro/oscuro. */
+/** Turns a theme into CSS variables (`--cg-l0-light`, `--cg-l0-dark`…); the stylesheet picks light or dark. */
 export function themeVars(theme: GraphTheme): CSSProperties {
   const vars: Record<string, string> = {}
   for (const mode of ['light', 'dark'] as const) {

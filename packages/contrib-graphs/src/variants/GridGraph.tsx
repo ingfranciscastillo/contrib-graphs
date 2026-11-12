@@ -3,18 +3,42 @@ import { GraphShell, cellDelay, defaultTitle, describeDay, summaryOf, useCalenda
 import type { BaseGraphProps, Level } from '../types'
 import { weekdayLabels } from '../utils'
 
+/** Props of `ClassicGraph` and `DotsGraph`. */
 export interface GridGraphProps extends BaseGraphProps {
-  /** Tamaño de cada celda en px (default 11) */
+  /**
+   * Size of each cell in px.
+   * @default 11
+   */
   cellSize?: number
-  /** Separación entre celdas (default 3) */
+  /**
+   * Space between cells in px.
+   * @default 3
+   */
   gap?: number
-  /** Radio de las esquinas; usa `cellSize / 2` para círculos (default 2) */
+  /**
+   * Corner radius in px; use `cellSize / 2` for circles. Classic only.
+   * @default 2
+   */
   radius?: number
+  /**
+   * Show Mon/Wed/Fri labels.
+   * @default true
+   */
   showWeekdays?: boolean
+  /**
+   * Show month labels.
+   * @default true
+   */
   showMonths?: boolean
-  /** Brillo en las celdas más activas. */
+  /**
+   * Add a glow to the busiest days.
+   * @default false
+   */
   glow?: boolean
-  /** `crop` recorta semanas antiguas en pantallas angostas; `scale` encoge el SVG. */
+  /**
+   * On narrow screens, `crop` drops the oldest weeks and `scale` shrinks the SVG.
+   * @default 'crop'
+   */
   fit?: 'crop' | 'scale'
 }
 
@@ -133,12 +157,12 @@ const dotsShape: Shape = {
   }),
 }
 
-/** La cuadrícula clásica semanas × días. */
+/** The classic weeks × days grid. */
 export function ClassicGraph(props: GridGraphProps) {
   return useGrid(props, classicShape)
 }
 
-/** Círculos cuyo tamaño también codifica la intensidad. */
+/** Circles whose size also encodes intensity, so it still reads in monochrome. */
 export function DotsGraph(props: GridGraphProps) {
   return useGrid(props, dotsShape)
 }
