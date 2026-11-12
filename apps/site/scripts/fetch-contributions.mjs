@@ -17,6 +17,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { parseContributionsPage } from './parse-contributions-page.mjs'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const OUT = resolve(ROOT, 'src/data/contributions.json')
@@ -57,32 +58,7 @@ async function fromGraphQL() {
 async function fromPublicPage() {
   const res = await fetch(`https://github.com/users/${encodeURIComponent(username)}/contributions`, { headers: UA })
   if (!res.ok) throw new Error(`Página pública respondió ${res.status}`)
-  const html = await res.text()
-
-  // <td ... data-date="2025-11-09" id="contribution-day-component-0-0" ...>
-  const dateById = new Map()
-  for (const m of html.matchAll(/<td\b[^>]*>/g)) {
-    const tag = m[0]
-    const date = tag.match(/data-date="(\d{4}-\d{2}-\d{2})"/)?.[1]
-    const id = tag.match(/\bid="([^"]+)"/)?.[1]
-    if (date && id) dateById.set(id, date)
-  }
-  // <tool-tip for="contribution-day-component-0-0" ...>3 contributions on …</tool-tip>
-  const countById = new Map()
-  for (const m of html.matchAll(/<tool-tip\b[^>]*\bfor="([^"]+)"[^>]*>([^<]*)<\/tool-tip>/g)) {
-    const text = m[2].trim()
-    const n = text.match(/^([\d,]+)\s+contributions?/)
-    countById.set(m[1], n ? Number(n[1].replace(/,/g, '')) : /^No contributions/.test(text) ? 0 : NaN)
-  }
-
-  const days = []
-  for (const [id, date] of dateById) {
-    const count = countById.get(id)
-    if (!Number.isFinite(count)) throw new Error(`No se pudo leer el conteo del ${date}: GitHub cambió el formato de la página`)
-    days.push({ date, count })
-  }
-  if (days.length < 300) throw new Error(`Se esperaban ~365 días y se leyeron ${days.length}`)
-  days.sort((a, b) => (a.date < b.date ? -1 : 1))
+  const days = parseContributionsPage(await res.text())
   return { source: 'github-public-page', total: days.reduce((s, d) => s + d.count, 0), days }
 }
 
