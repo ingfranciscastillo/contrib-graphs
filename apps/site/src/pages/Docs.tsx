@@ -1,7 +1,8 @@
+import { Link } from '@tanstack/react-router'
 import { ClassicGraph } from 'contrib-graphs'
 import { fromDates } from 'contrib-graphs/data'
 import { useMemo, type ReactNode } from 'react'
-import { useLang } from '../i18n'
+import { useLang, useLocaleParams } from '../i18n'
 import { useDemo } from '../search'
 import { CodeBlock, Section } from '../ui'
 
@@ -21,6 +22,7 @@ const toc = [
 export function Docs() {
   const { theme, locale } = useDemo()
   const lang = useLang()
+  const lp = useLocaleParams()
   /** Elige el contenido del idioma actual. */
   const L = <T extends ReactNode>(en: T, es: T): T => (lang === 'es' ? es : en)
   const title = (id: (typeof toc)[number][0]) => {
@@ -55,7 +57,10 @@ export function Docs() {
           {L(
             'Every variant is a standalone React component. They share the same data format, themes and interaction model, so switching designs is a one-line change.',
             'Cada variante es un componente React independiente. Comparten el mismo formato de datos, los temas y el sistema de interacción, así que cambiar de diseño es cambiar una línea.',
-          )}
+          )}{' '}
+          <Link to="/{-$locale}/docs/api" params={lp} search={(p) => p}>
+            {L('Every prop is in the API reference.', 'Todas las props están en la referencia de la API.')}
+          </Link>
         </p>
 
         <Section id="installation" title={title('installation')}>
@@ -68,7 +73,8 @@ export function Docs() {
           <CodeBlock label="bash" code={`npm install contrib-graphs`} />
           <CodeBlock
             label="tsx"
-            code={`import { ClassicGraph } from 'contrib-graphs'
+            code={`import { Link } from '@tanstack/react-router'
+import { ClassicGraph } from 'contrib-graphs'
 import 'contrib-graphs/styles.css'
 
 export function Activity({ contributions }) {
@@ -102,7 +108,8 @@ export function Activity({ contributions }) {
           )}
           <CodeBlock
             label="app/page.tsx"
-            code={`import { ClassicGraph } from 'contrib-graphs'
+            code={`import { Link } from '@tanstack/react-router'
+import { ClassicGraph } from 'contrib-graphs'
 import { fetchGitHubContributions } from 'contrib-graphs/data'
 
 export const revalidate = 3600 // ${L('refetch the data every hour', 'vuelve a pedir los datos cada hora')}
@@ -139,6 +146,7 @@ export default async function Page() {
             label="src/pages/index.astro"
             code={`---
 import 'contrib-graphs/styles.css'
+import { Link } from '@tanstack/react-router'
 import { ClassicGraph } from 'contrib-graphs'
 import { fetchGitHubContributions } from 'contrib-graphs/data'
 

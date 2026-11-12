@@ -1,6 +1,6 @@
 import { Link, Outlet, useLocation } from '@tanstack/react-router'
 import { useEffect, useMemo } from 'react'
-import { BookOpen, SquaresFour } from '@phosphor-icons/react'
+import { BookOpen, BracketsCurly, SquaresFour } from '@phosphor-icons/react'
 import { buildCalendar, themes, themeVars } from 'contrib-graphs'
 import { useLang, useLocaleParams } from './i18n'
 import { useT } from './messages'
@@ -32,9 +32,13 @@ export function Layout() {
               <SquaresFour size={16} aria-hidden="true" />
               {t.nav.gallery}
             </Link>
-            <Link to="/{-$locale}/docs" params={lp} search={(p) => p} activeProps={{ 'aria-current': 'page' }}>
+            <Link to="/{-$locale}/docs" params={lp} search={(p) => p} activeOptions={{ exact: true, includeSearch: false }} activeProps={{ 'aria-current': 'page' }}>
               <BookOpen size={16} aria-hidden="true" />
               {t.nav.docs}
+            </Link>
+            <Link to="/{-$locale}/docs/api" params={lp} search={(p) => p} activeOptions={{ includeSearch: false }} activeProps={{ 'aria-current': 'page' }}>
+              <BracketsCurly size={16} aria-hidden="true" />
+              {t.nav.api}
             </Link>
           </nav>
           <LanguageSwitch />
@@ -118,6 +122,11 @@ function Footer() {
             <li>
               <Link to="/{-$locale}/docs" params={lp} search={(p) => p}>
                 {t.footer.docs}
+              </Link>
+            </li>
+            <li>
+              <Link to="/{-$locale}/docs/api" params={lp} search={(p) => p}>
+                {t.footer.api}
               </Link>
             </li>
             <li>
