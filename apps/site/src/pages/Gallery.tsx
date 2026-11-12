@@ -1,9 +1,10 @@
 import { Link } from '@tanstack/react-router'
-import { ArrowDown, SlidersHorizontal } from '@phosphor-icons/react'
+import { ArrowDown, BookOpen, SlidersHorizontal } from '@phosphor-icons/react'
 import { CompactGraph, IsometricGraph } from 'contrib-graphs'
 import { useLang, useLocaleParams } from '../i18n'
 import { useT } from '../messages'
 import { githubData, useDemo } from '../search'
+import { PmCommand } from '../pm'
 import { DemoToolbar, WhenVisible } from '../ui'
 import { tr, variants } from '../variants'
 
@@ -58,10 +59,10 @@ export function Gallery() {
       </div>
 
       <div className="container gallery">
-        {variants.map((v) => {
+        {galleryOrder.map((v) => {
           const C = v.component
           return (
-            <article key={v.id} className={`card${v.wide ? ' card-wide' : ''}`}>
+            <article key={v.id} className={`card${v.wide ? ' card-wide' : ''}${v.id === 'radial' ? ' card-tall' : ''}`}>
               <header className="card-head">
                 <div>
                   <h2>{v.name}</h2>
@@ -80,10 +81,32 @@ export function Gallery() {
             </article>
           )
         })}
+        <article className="card card-cta">
+          <header className="card-head">
+            <div>
+              <h2>{t.gallery.useIt}</h2>
+              <p>{t.gallery.useItText}</p>
+            </div>
+          </header>
+          <div className="card-cta-body">
+            <PmCommand kind="install" arg="contrib-graphs" />
+            <Link to="/{-$locale}/docs" params={lp} hash="installation" search={(p) => p} className="btn">
+              <BookOpen size={15} aria-hidden="true" />
+              {t.gallery.readDocs}
+            </Link>
+          </div>
+        </article>
       </div>
     </>
   )
 }
+
+/**
+ * Orden de la galería en escritorio (dos columnas): Radial ocupa dos filas y a su
+ * derecha van Compact y la tarjeta de instalación, así ninguna tarjeta queda sola.
+ */
+const ORDER = ['classic', 'dots', 'isometric', 'terminal', 'skyline', 'radial', 'compact']
+const galleryOrder = [...variants].sort((a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id))
 
 /** Altura aproximada de cada gráfico en su tarjeta: reserva el espacio antes de montarlo. */
 const previewHeight: Record<string, number> = {

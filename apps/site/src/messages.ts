@@ -54,7 +54,12 @@ const en = {
     updated: (date: string) => `, updated ${date}.`,
     sampleData: 'Sample data generated in your browser.',
   },
-  gallery: { customize: 'Customize' },
+  gallery: {
+    customize: 'Customize',
+    useIt: 'Use it in your project',
+    useItText: 'Install the package, or copy the source of any variant with the shadcn CLI and make it yours.',
+    readDocs: 'Read the docs',
+  },
   playground: {
     breadcrumb: 'Breadcrumb',
     previewWidth: 'Preview width',
@@ -123,7 +128,12 @@ const es = {
     updated: (date: string) => `, actualizados el ${date}.`,
     sampleData: 'Datos de ejemplo generados en tu navegador.',
   },
-  gallery: { customize: 'Personalizar' },
+  gallery: {
+    customize: 'Personalizar',
+    useIt: 'Úsalo en tu proyecto',
+    useItText: 'Instala el paquete, o copia el código de cualquier variante con el CLI de shadcn y hazlo tuyo.',
+    readDocs: 'Leer la documentación',
+  },
   playground: {
     breadcrumb: 'Migas',
     previewWidth: 'Ancho de la vista previa',
