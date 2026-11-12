@@ -8,10 +8,7 @@ _Contribution graph components for React: GitHub-style activity heatmaps in seve
 
 [Live demo](https://ingfranciscastillo.github.io/contrib-graphs/) • [Features](#features) • [Installation](#installation) • [Usage](#usage) • [Variants](#variants) • [Data sources](#data-sources) • [Next.js and Astro](#nextjs-and-astro) • [Development](#development)
 
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/images/isometric-dark.svg">
-  <img alt="Isometric contribution graph with columns whose height shows each day's activity" src="docs/images/isometric-light.svg">
-</picture>
+<img src="docs/images/demo.gif" alt="The playground: a tooltip moves across a classic contribution graph, the theme changes from GitHub to Ember, Frost and Violet, then the graph switches to the Isometric, Terminal, Radial, Skyline, Dots and Compact designs" width="800">
 
 </div>
 
