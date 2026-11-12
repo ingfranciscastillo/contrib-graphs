@@ -5,13 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build && node scripts/prerender.mjs",
+    "build": "node scripts/build-registry.mjs && tsc --noEmit && vite build && node scripts/prerender.mjs",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "data": "node --env-file-if-exists=.env.local scripts/fetch-contributions.mjs",
     "test": "node --test 'scripts/**/*.test.mjs'",
     "api": "node scripts/extract-api.mjs",
-    "images": "node scripts/readme-images.mjs"
+    "images": "node scripts/readme-images.mjs",
+    "registry": "node scripts/build-registry.mjs"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",

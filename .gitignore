@@ -3,3 +3,4 @@ dist
 .env.local
 .env*.local
 .claude/launch.json
+apps/site/public/r
