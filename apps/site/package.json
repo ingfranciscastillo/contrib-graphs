@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "data": "node --env-file-if-exists=.env.local scripts/fetch-contributions.mjs",
     "test": "node --test 'scripts/**/*.test.mjs'",
-    "api": "node scripts/extract-api.mjs"
+    "api": "node scripts/extract-api.mjs",
+    "images": "node scripts/readme-images.mjs"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",
