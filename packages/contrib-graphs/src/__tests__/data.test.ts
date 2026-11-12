@@ -90,7 +90,7 @@ describe('adaptadores', () => {
     const fetchMock = vi.fn(async () => new Response(JSON.stringify({ '2026-01-05': 4 }), { status: 200 }))
     vi.stubGlobal('fetch', fetchMock)
     expect(await fetchGitLabContributions('a b/c', 'https://git.example.com')).toEqual([{ date: '2026-01-05', count: 4 }])
-    expect(fetchMock.mock.calls[0][0]).toBe('https://git.example.com/users/a%20b%2Fc/calendar.json')
+    expect((fetchMock.mock.calls[0] as unknown as [string])[0]).toBe('https://git.example.com/users/a%20b%2Fc/calendar.json')
   })
 })
 
