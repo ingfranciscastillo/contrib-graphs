@@ -1,7 +1,8 @@
 import { Link } from '@tanstack/react-router'
 import { ArrowDown, SlidersHorizontal } from '@phosphor-icons/react'
 import { CompactGraph, IsometricGraph } from 'contrib-graphs'
-import { useLocaleParams } from '../i18n'
+import { useLang, useLocaleParams } from '../i18n'
+import { useT } from '../messages'
 import { githubData, useDemo } from '../search'
 import { DemoToolbar } from '../ui'
 import { variants } from '../variants'
@@ -9,23 +10,22 @@ import { variants } from '../variants'
 export function Gallery() {
   const { data, theme, locale, profile } = useDemo()
   const lp = useLocaleParams()
+  const t = useT()
+  const lang = useLang()
   return (
     <>
       <section className="hero">
         <div className="container hero-inner">
           <div className="hero-copy">
-            <h1>Contribution graphs para tu portfolio</h1>
-            <p className="lead">
-              Componentes que copias a tu proyecto y personalizas. Un mismo formato de datos para GitHub, GitLab o lo que quieras medir,
-              con temas, modo oscuro, teclado y lector de pantalla incluidos.
-            </p>
+            <h1>{t.hero.title}</h1>
+            <p className="lead">{t.hero.lead}</p>
             <div className="hero-actions">
               <Link to="/{-$locale}/docs" params={lp} search={(p) => p} className="btn btn-primary">
-                Empezar
+                {t.hero.start}
               </Link>
-              <a href="#galeria" className="btn">
+              <a href="#variants" className="btn">
                 <ArrowDown size={15} aria-hidden="true" />
-                Ver variantes
+                {t.hero.seeVariants}
               </a>
             </div>
             <div className="hero-compact">
@@ -33,14 +33,14 @@ export function Gallery() {
               <p className="data-source">
                 {profile === 'github' ? (
                   <>
-                    Datos reales de{' '}
+                    {t.hero.realData}{' '}
                     <a href={`https://github.com/${githubData.username}`} target="_blank" rel="noreferrer">
                       @{githubData.username}
                     </a>
-                    , actualizados el {new Date(githubData.generatedAt).toLocaleDateString('es', { day: 'numeric', month: 'long', year: 'numeric' })}.
+                    {t.hero.updated(new Date(githubData.generatedAt).toLocaleDateString(lang, { day: 'numeric', month: 'long', year: 'numeric' }))}
                   </>
                 ) : (
-                  'Datos de ejemplo generados en tu navegador.'
+                  t.hero.sampleData
                 )}
               </p>
             </div>
@@ -51,7 +51,7 @@ export function Gallery() {
         </div>
       </section>
 
-      <div className="toolbar-wrap" id="galeria">
+      <div className="toolbar-wrap" id="variants">
         <div className="container">
           <DemoToolbar />
         </div>
@@ -69,7 +69,7 @@ export function Gallery() {
                 </div>
                 <Link to="/{-$locale}/variants/$variantId" params={{ ...lp, variantId: v.id }} search={(p) => p} className="btn btn-sm">
                   <SlidersHorizontal size={14} aria-hidden="true" />
-                  Personalizar
+                  {t.gallery.customize}
                 </Link>
               </header>
               <div className="card-demo">

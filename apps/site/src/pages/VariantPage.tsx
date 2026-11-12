@@ -4,6 +4,7 @@ import { ArrowCounterClockwise, CaretLeft, CaretRight, Desktop, DeviceMobile, De
 import type { CalendarDay, SkylineWeek } from 'contrib-graphs'
 import { formatDate } from 'contrib-graphs'
 import { useLocaleParams } from '../i18n'
+import { useT } from '../messages'
 import { useDemo } from '../search'
 import { CodeBlock, DemoToolbar } from '../ui'
 import { usageSnippet, variants, variantsById, type Control, type Values, type VariantDef } from '../variants'
@@ -18,6 +19,7 @@ export function VariantPage() {
 function Playground({ def }: { def: VariantDef }) {
   const { data, theme, locale } = useDemo()
   const lp = useLocaleParams()
+  const t = useT()
   const [values, setValues] = useState<Values>(def.defaults)
   const [clicked, setClicked] = useState<CalendarDay | null>(null)
   const [replay, setReplay] = useState(0)
@@ -31,9 +33,9 @@ function Playground({ def }: { def: VariantDef }) {
 
   return (
     <div className="container page">
-      <nav className="crumbs" aria-label="Migas">
+      <nav className="crumbs" aria-label={t.playground.breadcrumb}>
         <Link to="/{-$locale}" params={lp} search={(p) => p}>
-          Galería
+          {t.nav.gallery}
         </Link>
         <span aria-hidden="true">/</span>
         <span aria-current="page">{def.name}</span>
@@ -60,15 +62,15 @@ function Playground({ def }: { def: VariantDef }) {
       <div className="playground">
         <div className="preview-col">
           <div className="preview-bar">
-            <div className="segmented" role="radiogroup" aria-label="Ancho de la vista previa">
-              {devices.map(({ id, label, Icon }) => (
+            <div className="segmented" role="radiogroup" aria-label={t.playground.previewWidth}>
+              {devices.map(({ id, Icon }) => (
                 <button key={id} role="radio" aria-checked={device === id} onClick={() => setDevice(id)}>
                   <Icon size={15} aria-hidden="true" />
-                  <span className="hide-sm">{label}</span>
+                  <span className="hide-sm">{t.playground.devices[id]}</span>
                 </button>
               ))}
             </div>
-            <span className="preview-size">{device === 'desktop' ? 'Ancho completo' : `${deviceWidth[device]} px`}</span>
+            <span className="preview-size">{device === 'desktop' ? t.playground.fullWidth : `${deviceWidth[device]} px`}</span>
           </div>
           <div className="preview" data-device={device}>
             <div className="device-frame" style={{ maxWidth: deviceWidth[device] }}>
@@ -86,15 +88,15 @@ function Playground({ def }: { def: VariantDef }) {
           <div className="preview-meta">
             <span>
               {def.id === 'skyline' && week
-                ? `onWeekClick({ total: ${week.total}, activeDays: ${week.activeDays}, level: ${week.level} }), semana del ${formatDate(week.days[0]?.date ?? '', locale.locale)}`
+                ? `onWeekClick({ total: ${week.total}, activeDays: ${week.activeDays}, level: ${week.level} }), ${t.playground.weekOf} ${formatDate(week.days[0]?.date ?? '', locale.locale)}`
                 : clicked
                 ? `onDayClick({ date: '${clicked.date}', count: ${clicked.count}, level: ${clicked.level} }), ${formatDate(clicked.date, locale.locale)}`
-                : `Pasa el cursor o entra con Tab y usa las flechas. Clic o Enter llama a ${def.id === 'skyline' ? 'onWeekClick' : 'onDayClick'}.`}
+                : t.playground.hint(def.id === 'skyline' ? 'onWeekClick' : 'onDayClick')}
             </span>
             {values.animate === true && (
               <button className="btn btn-ghost btn-sm" onClick={() => setReplay((r) => r + 1)}>
                 <ArrowCounterClockwise size={14} aria-hidden="true" />
-                Repetir animación
+                {t.playground.replay}
               </button>
             )}
           </div>
@@ -106,7 +108,7 @@ function Playground({ def }: { def: VariantDef }) {
             <h2>Props</h2>
             <button className="btn btn-ghost btn-sm" onClick={() => setValues(def.defaults)} disabled={!changed}>
               <ArrowCounterClockwise size={14} aria-hidden="true" />
-              Restablecer
+              {t.playground.reset}
             </button>
           </div>
           {def.controls.map((c) => (
@@ -175,7 +177,7 @@ function ControlField({ control: c, value, onChange }: { control: Control; value
 type Device = 'desktop' | 'tablet' | 'mobile'
 const deviceWidth: Record<Device, number | undefined> = { desktop: undefined, tablet: 768, mobile: 375 }
 const devices = [
-  { id: 'desktop', label: 'Escritorio', Icon: Desktop },
-  { id: 'tablet', label: 'Tablet', Icon: DeviceTablet },
-  { id: 'mobile', label: 'Móvil', Icon: DeviceMobile },
+  { id: 'desktop', Icon: Desktop },
+  { id: 'tablet', Icon: DeviceTablet },
+  { id: 'mobile', Icon: DeviceMobile },
 ] as const

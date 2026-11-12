@@ -3,7 +3,8 @@ import { Check, Copy, Desktop, Moon, Shuffle, Sun } from '@phosphor-icons/react'
 import { themeNames, themes, themeVars } from 'contrib-graphs'
 import { Link } from '@tanstack/react-router'
 import { langs, useLang, type Lang } from './i18n'
-import { profiles, useDemo, type Profile } from './search'
+import { useT } from './messages'
+import { githubData, profileKeys, useDemo, type Profile } from './search'
 
 /* ---------------------------------------------------------- Modo del sitio */
 
@@ -30,11 +31,12 @@ export function ModeToggle() {
       /* almacenamiento no disponible */
     }
   }, [mode])
+  const t = useT()
   const next: Record<SiteMode, SiteMode> = { system: 'light', light: 'dark', dark: 'system' }
-  const label = { system: 'Sistema', light: 'Claro', dark: 'Oscuro' }[mode]
+  const label = t.mode[mode]
   const Icon = { system: Desktop, light: Sun, dark: Moon }[mode]
   return (
-    <button className="btn btn-ghost" onClick={() => setMode(next[mode])} aria-label={`Modo de color: ${label}. Cambiar`}>
+    <button className="btn btn-ghost" onClick={() => setMode(next[mode])} aria-label={t.mode.label(label)}>
       <Icon size={17} aria-hidden="true" />
       <span className="hide-sm">{label}</span>
     </button>
@@ -45,9 +47,10 @@ export function ModeToggle() {
 
 export function DemoToolbar() {
   const { theme, profile, seed, set } = useDemo()
+  const t = useT()
   return (
-    <div className="toolbar" role="toolbar" aria-label="Opciones del demo">
-      <div className="toolbar-group chips" role="radiogroup" aria-label="Tema">
+    <div className="toolbar" role="toolbar" aria-label={t.toolbar.label}>
+      <div className="toolbar-group chips" role="radiogroup" aria-label={t.toolbar.theme}>
         {themeNames.map((t) => (
           <button
             key={t}
@@ -69,11 +72,11 @@ export function DemoToolbar() {
       </div>
       <div className="toolbar-group">
         <label className="field-inline">
-          <span>Datos</span>
+          <span>{t.toolbar.data}</span>
           <select value={profile} onChange={(e) => set({ profile: e.target.value as Profile })}>
-            {Object.entries(profiles).map(([k, v]) => (
+            {profileKeys.map((k) => (
               <option key={k} value={k}>
-                {v}
+                {k === 'github' ? t.toolbar.profiles.github(githubData.username) : t.toolbar.profiles[k]}
               </option>
             ))}
           </select>
@@ -81,7 +84,7 @@ export function DemoToolbar() {
         {profile !== 'github' && (
           <button className="btn" onClick={() => set({ seed: (seed % 997) + 1 + Math.floor(Math.random() * 50) })}>
             <Shuffle size={15} aria-hidden="true" />
-            Otros datos
+            {t.toolbar.shuffle}
           </button>
         )}
       </div>
@@ -92,6 +95,7 @@ export function DemoToolbar() {
 /* ---------------------------------------------------------- Código */
 
 export function CodeBlock({ code, label }: { code: string; label?: string }) {
+  const t = useT()
   const [copied, setCopied] = useState(false)
   const copy = async () => {
     try {
@@ -108,7 +112,7 @@ export function CodeBlock({ code, label }: { code: string; label?: string }) {
         <span>{label ?? 'tsx'}</span>
         <button className="btn btn-ghost btn-sm" onClick={copy} aria-live="polite">
           {copied ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}
-          {copied ? 'Copiado' : 'Copiar'}
+          {copied ? t.code.copied : t.code.copy}
         </button>
       </div>
       <pre>
