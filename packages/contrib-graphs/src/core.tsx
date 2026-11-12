@@ -156,7 +156,14 @@ export function useGraphInteraction(opts: {
   }
 }
 
-/** Reduces the visible weeks to fit the container width (instead of scrolling). */
+/**
+ * Reduces the visible weeks to fit the container width (instead of scrolling).
+ *
+ * The root is measured, but a root inside a centering flex container is only as wide
+ * as its content: once cropped, it stays narrow when more space appears. So when the
+ * parent or the window gets wider, every week is requested again and the root is
+ * measured once more, now clamped to the space available by `max-width: 100%`.
+ */
 export function useFitWeeks(
   ref: ElementRef<HTMLElement>,
   requested: number,
@@ -165,9 +172,11 @@ export function useFitWeeks(
   enabled: boolean,
 ): number {
   const [fit, setFit] = useState(requested)
+  const measure = useRef<(() => void) | undefined>(undefined)
   useIsomorphicLayoutEffect(() => {
     const el = ref.current
     if (!enabled || !el || typeof ResizeObserver === 'undefined') {
+      measure.current = undefined
       setFit(requested)
       return
     }
@@ -175,11 +184,37 @@ export function useFitWeeks(
       const w = el.clientWidth
       if (w > 0) setFit(Math.max(4, Math.min(requested, Math.floor((w - reserved) / pitch))))
     }
+    measure.current = update
+    const parent = el.parentElement
+    let parentWidth = parent?.clientWidth ?? 0
+    let windowWidth = typeof window === 'undefined' ? 0 : window.innerWidth
+    const grow = () => setFit(requested)
+    const onParent = () => {
+      const w = parent?.clientWidth ?? 0
+      if (w > parentWidth) grow()
+      parentWidth = w
+    }
+    const onWindow = () => {
+      if (window.innerWidth > windowWidth) grow()
+      windowWidth = window.innerWidth
+    }
     update()
     const ro = new ResizeObserver(update)
     ro.observe(el)
-    return () => ro.disconnect()
+    const po = new ResizeObserver(onParent)
+    if (parent) po.observe(parent)
+    window.addEventListener('resize', onWindow)
+    return () => {
+      ro.disconnect()
+      po.disconnect()
+      window.removeEventListener('resize', onWindow)
+    }
   }, [ref, requested, pitch, reserved, enabled])
+  // After growing back to every week, measure again: the root may already be as wide
+  // as it can be, and then its observer wouldn't fire.
+  useIsomorphicLayoutEffect(() => {
+    if (fit === requested) measure.current?.()
+  }, [fit, requested])
   return enabled ? fit : requested
 }
 
