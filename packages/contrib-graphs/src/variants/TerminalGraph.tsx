@@ -1,5 +1,5 @@
-import { Fragment, useLayoutEffect, useMemo, useState } from 'react'
-import { GraphShell, cellDelay, describeDay, periodText, summaryOf, useCalendarGraph } from '../core'
+import { Fragment, useMemo, useState } from 'react'
+import { GraphShell, cellDelay, describeDay, periodText, summaryOf, useCalendarGraph, useIsomorphicLayoutEffect } from '../core'
 import type { BaseGraphProps, Level } from '../types'
 import { formatNumber, pluralize, weekdayLabels } from '../utils'
 
@@ -48,7 +48,7 @@ export function TerminalGraph(props: TerminalGraphProps) {
   const [fontSize, setFontSize] = useState(12)
   const { rootRef } = interaction
   const cols = 5 + calendar.weeks.length * 2
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const el = rootRef.current
     if (fit !== 'scale' || !el || typeof ResizeObserver === 'undefined') {
       setFontSize(12)
