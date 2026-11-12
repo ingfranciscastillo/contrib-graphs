@@ -1,6 +1,6 @@
 import { Link, Outlet, useLocation } from '@tanstack/react-router'
 import { useEffect, useMemo } from 'react'
-import { BookOpen, BracketsCurly, SquaresFour } from '@phosphor-icons/react'
+import { BookOpen, BracketsCurly, GithubLogo, SquaresFour } from '@phosphor-icons/react'
 import { buildCalendar, themes, themeVars } from 'contrib-graphs'
 import { useLang, useLocaleParams } from './i18n'
 import { useT } from './messages'
@@ -39,6 +39,10 @@ export function Layout() {
             <Link to="/{-$locale}/docs/api" params={lp} search={(p) => p} activeOptions={{ includeSearch: false }} activeProps={{ 'aria-current': 'page' }}>
               <BracketsCurly size={16} aria-hidden="true" />
               {t.nav.api}
+            </Link>
+            <Link to="/{-$locale}/readme" params={lp} search={(p) => p} activeOptions={{ includeSearch: false }} activeProps={{ 'aria-current': 'page' }}>
+              <GithubLogo size={16} aria-hidden="true" />
+              {t.nav.readme}
             </Link>
           </nav>
           <LanguageSwitch />
@@ -127,6 +131,11 @@ function Footer() {
             <li>
               <Link to="/{-$locale}/docs/api" params={lp} search={(p) => p}>
                 {t.footer.api}
+              </Link>
+            </li>
+            <li>
+              <Link to="/{-$locale}/readme" params={lp} search={(p) => p}>
+                {t.footer.readme}
               </Link>
             </li>
             <li>

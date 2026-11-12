@@ -3,6 +3,7 @@ import { Layout, NotFound } from './Layout'
 import { ApiPage } from './pages/ApiPage'
 import { Docs } from './pages/Docs'
 import { Gallery } from './pages/Gallery'
+import { ReadmePage } from './pages/ReadmePage'
 import { VariantPage } from './pages/VariantPage'
 import { validateGlobalSearch } from './search'
 import { variantsById } from './variants'
@@ -50,7 +51,13 @@ const apiRoute = createRoute({
   component: ApiPage,
 })
 
-const routeTree = rootRoute.addChildren([localeRoute.addChildren([indexRoute, variantRoute, docsRoute, apiRoute])])
+const readmeRoute = createRoute({
+  getParentRoute: () => localeRoute,
+  path: '/readme',
+  component: ReadmePage,
+})
+
+const routeTree = rootRoute.addChildren([localeRoute.addChildren([indexRoute, variantRoute, docsRoute, apiRoute, readmeRoute])])
 
 export const router = createRouter({
   routeTree,
