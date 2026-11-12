@@ -46,8 +46,8 @@ export interface TerminalGraphProps extends BaseGraphProps {
   legendLabels?: readonly [string, string]
 }
 
-const CHAR_W = 7.22 // ancho aprox. de un carácter monospace a 12px
-const MIN_FONT = 6 // por debajo de esto ya no se lee: mejor recortar semanas
+const CHAR_W = 7.22 // approx. width of a monospace character at 12px
+const MIN_FONT = 6 // below this it can't be read: crop weeks instead
 
 /** Real monospace text, for portfolios with a terminal look. */
 export function TerminalGraph(props: TerminalGraphProps) {
@@ -60,14 +60,14 @@ export function TerminalGraph(props: TerminalGraphProps) {
   } = props
   const chars = terminalCharsets[charset]
   const { calendar, periodTotal, interaction } = useCalendarGraph(props, {
-    // En `scale` solo se recortan semanas si ni con la letra mínima caben.
+    // With `scale`, weeks are cropped only if they don't fit even at the minimum font size.
     fit: (() => {
       const k = fit === 'scale' ? MIN_FONT / 12 : 1
       return { pitch: CHAR_W * 2 * k, reserved: CHAR_W * 5 * k + 34, enabled: true }
     })(),
   })
   const weekdays = useMemo(() => weekdayLabels(props.locale, props.weekStart ?? 0), [props.locale, props.weekStart])
-  // `scale`: en vez de recortar semanas, reduce el tamaño de letra hasta que quepa.
+  // `scale`: instead of cropping weeks, shrink the font size until it fits.
   const [fontSize, setFontSize] = useState(12)
   const { rootRef } = interaction
   const cols = 5 + calendar.weeks.length * 2
@@ -146,7 +146,7 @@ export function TerminalGraph(props: TerminalGraphProps) {
         <span aria-hidden="true">{body}</span>
         {'\n'}
         {(props.showTotal !== false || props.showLegend !== false) && (
-          // Total y leyenda: en la misma línea si caben, una debajo de otra si no.
+          // Total and legend: on one line if they fit, stacked if they don't.
           <span className="cg-foot">
             {props.showTotal !== false && (
               <span className="cg-prompt">

@@ -70,7 +70,7 @@ export async function fetchGitLabContributions(username: string, baseUrl = 'http
   return fromGitLab((await res.json()) as Record<string, number>)
 }
 
-/* ------------------------------------------------------------------ Genéricos */
+/* ------------------------------------------------------------------ Generic */
 
 /** Counts occurrences per day: blog posts, workouts, local commits… Strings are sliced to the date; `Date` objects use the local date. */
 export function fromDates(dates: readonly (string | Date)[]): ContributionDay[] {

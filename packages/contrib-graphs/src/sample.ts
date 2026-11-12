@@ -35,13 +35,13 @@ export function generateSampleData({
   const start = addDays(end, -(days - 1))
   const geo = (mean: number) => Math.floor(-Math.log(1 - rng()) * mean) + 1
 
-  // Vacaciones: un par de huecos sin actividad.
+  // Holidays: a couple of gaps without activity.
   const gaps = Array.from({ length: profile === 'steady' ? 2 : 1 }, () => {
     const s = Math.floor(rng() * (days - 20))
     return [s, s + 6 + Math.floor(rng() * 8)] as const
   })
 
-  // Rachas: periodos de 1–3 semanas con mucha actividad.
+  // Streaks: 1–3 week stretches of heavy activity.
   const sprints: (readonly [number, number])[] = []
   for (let d = 0; d < days; ) {
     d += 10 + Math.floor(rng() * 35)
@@ -76,7 +76,7 @@ export function generateSampleData({
         p = inGap ? 0 : weekend ? 0.3 : 0.78
         mean = weekend ? 2 : 4.5
     }
-    // Ligera tendencia creciente a lo largo del año.
+    // A slight upward trend over the year.
     p = Math.min(1, p * (0.8 + (i / days) * 0.4))
     out.push({ date: toISO(date), count: rng() < p ? geo(mean) : 0 })
   }

@@ -59,7 +59,7 @@ export function SkylineGraph(props: SkylineGraphProps) {
   )
   const calendar = useMemo(() => cropCalendar(full, weeksN, props.locale), [full, weeksN, props.locale])
 
-  // Niveles y altura máxima sobre el periodo completo: recortar no cambia la escala.
+  // Levels and max height over the full period: cropping doesn't change the scale.
   const allWeeks = useMemo<SkylineWeek[]>(() => {
     const raw = full.weeks.map((w, index) => {
       const days = w.filter((d): d is CalendarDay => d !== null)

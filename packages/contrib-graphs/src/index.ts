@@ -1,7 +1,7 @@
 /**
- * `contrib-graphs`: los componentes. El build antepone "use client" a este
- * archivo para que se puedan importar desde Server Components (Next.js).
- * En código de servidor usa `contrib-graphs/data`.
+ * `contrib-graphs`: the components. The build prepends "use client" to this
+ * file so they can be imported from Server Components (Next.js).
+ * In server code, use `contrib-graphs/data`.
  */
 export { ClassicGraph, DotsGraph, type GridGraphProps } from './variants/GridGraph'
 export { IsometricGraph, type IsometricGraphProps } from './variants/IsometricGraph'
@@ -10,5 +10,5 @@ export { SkylineGraph, type SkylineGraphProps, type SkylineWeek } from './varian
 export { TerminalGraph, terminalCharsets, type TerminalGraphProps, type TerminalCharset } from './variants/TerminalGraph'
 export { CompactGraph, type CompactGraphProps } from './variants/CompactGraph'
 
-// También desde aquí por comodidad en apps solo cliente (Vite, CRA…).
+// Also exported here for convenience in client-only apps (Vite, CRA…).
 export * from './data'
