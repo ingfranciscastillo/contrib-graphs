@@ -25,3 +25,11 @@ test('canonical, hreflang con barra final y escape de HTML', () => {
   assert.match(html, /hreflang="x-default" href="https:\/\/example\.github\.io\/repo\/docs\/api\/"/)
   assert.doesNotMatch(pageHtml(template, '/', 'en'), /content="[^"]*<[^"]*"/)
 })
+
+test('imagen para redes con URL absoluta y tarjeta grande', () => {
+  const html = pageHtml(template, '/variants/classic', 'es')
+  assert.match(html, /property="og:image" content="https:\/\/example\.github\.io\/repo\/og\.png"/)
+  assert.match(html, /property="og:url" content="https:\/\/example\.github\.io\/repo\/es\/variants\/classic\/"/)
+  assert.match(html, /name="twitter:card" content="summary_large_image"/)
+  assert.match(html, /property="og:image:alt" content="[^"]+"/)
+})

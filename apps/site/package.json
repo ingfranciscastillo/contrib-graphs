@@ -12,7 +12,8 @@
     "test": "node --test 'scripts/**/*.test.mjs'",
     "api": "node scripts/extract-api.mjs",
     "images": "node scripts/readme-images.mjs",
-    "registry": "node scripts/build-registry.mjs"
+    "registry": "node scripts/build-registry.mjs",
+    "og": "node scripts/og-image.mjs"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",

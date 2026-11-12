@@ -18,6 +18,8 @@ import { routeMeta, routes } from '../src/seo.ts'
 const DIST = resolve(dirname(fileURLToPath(import.meta.url)), '../dist')
 const SITE_URL = process.env.SITE_URL?.replace(/\/?$/, '/')
 
+const OG_ALT = 'contrib/graphs: an isometric and a classic contribution graph next to the title Contribution graphs for React'
+
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 /**
  * Ruta relativa a la base, con barra final: GitHub Pages sirve docs/index.html en /docs/
@@ -34,6 +36,14 @@ export function pageHtml(template, path, lang) {
     `<meta property="og:title" content="${esc(title)}" />`,
     `<meta property="og:description" content="${esc(description)}" />`,
     `<meta property="og:type" content="website" />`,
+    `<meta property="og:site_name" content="contrib/graphs" />`,
+    `<meta name="twitter:card" content="summary_large_image" />`,
+    SITE_URL && `<meta property="og:url" content="${url(path, lang)}" />`,
+    // Social preview (scripts/og-image.mjs). Networks need an absolute URL, so it requires SITE_URL.
+    SITE_URL && `<meta property="og:image" content="${new URL('og.png', SITE_URL).href}" />`,
+    SITE_URL && `<meta property="og:image:width" content="1200" />`,
+    SITE_URL && `<meta property="og:image:height" content="630" />`,
+    SITE_URL && `<meta property="og:image:alt" content="${esc(OG_ALT)}" />`,
     SITE_URL && `<link rel="canonical" href="${url(path, lang)}" />`,
     SITE_URL && `<link rel="alternate" hreflang="en" href="${url(path, 'en')}" />`,
     SITE_URL && `<link rel="alternate" hreflang="es" href="${url(path, 'es')}" />`,

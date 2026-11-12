@@ -202,5 +202,7 @@ Some files are generated, and a test fails when they get out of date:
 | `npm run images` | The README images in `docs/images`, from the components |
 | `npm run data` | The site's real GitHub data (see `apps/site/.env.example`) |
 
+The social preview image, `apps/site/public/og.png`, is a screenshot of the real components. Regenerate it with `npm run og` when the design changes. It needs a Chromium-based browser; set `CHROME` to its path if it isn't found.
+
 > [!NOTE]
 > If `npm install` fails with `Cannot read properties of null (reading 'edgesOut')`, use npm 11: `npx npm@11 install`.
