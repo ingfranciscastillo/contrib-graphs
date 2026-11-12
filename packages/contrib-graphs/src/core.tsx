@@ -40,6 +40,15 @@ export interface Interaction {
   }
 }
 
+/** `:focus-visible` no existe en navegadores viejos (Safari < 15.4) ni en algunos entornos de test. */
+function isFocusVisible(el: Element): boolean {
+  try {
+    return el.matches(':focus-visible')
+  } catch {
+    return false
+  }
+}
+
 const indexOf = (target: EventTarget | null): number | null => {
   const el = (target as Element | null)?.closest?.('[data-cg-i]')
   return el ? Number(el.getAttribute('data-cg-i')) : null
@@ -132,7 +141,8 @@ export function useGraphInteraction(opts: {
         if (i != null) onActivate?.(i)
       },
       onFocus: (e) => {
-        if (e.target === e.currentTarget && e.currentTarget.matches(':focus-visible'))
+        // Al entrar con Tab se activa el último día; con un clic no (el puntero ya lo hace).
+        if (e.target === e.currentTarget && isFocusVisible(e.currentTarget))
           setState((s) => s ?? { index: count - 1, via: 'keyboard' })
       },
       onBlur: () => setState((s) => (s?.via === 'keyboard' ? null : s)),
