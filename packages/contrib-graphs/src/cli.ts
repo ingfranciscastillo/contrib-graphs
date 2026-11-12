@@ -60,7 +60,13 @@ interface Loaded {
   days: ContributionDay[]
 }
 
-async function loadData(user: string | undefined, input: string | undefined, env: Record<string, string | undefined>, cwd: string): Promise<Loaded> {
+async function loadData(
+  user: string | undefined,
+  input: string | undefined,
+  env: Record<string, string | undefined>,
+  cwd: string,
+  warn: (msg: string) => void,
+): Promise<Loaded> {
   if (input) {
     const json = JSON.parse(await readFile(resolve(cwd, input), 'utf8'))
     const days: unknown = Array.isArray(json) ? json : json?.days
@@ -69,7 +75,14 @@ async function loadData(user: string | undefined, input: string | undefined, env
   }
   if (!user) throw new Error('Pass --user <github-username> or --input <file>')
   const token = env.GITHUB_TOKEN?.trim()
-  if (token) return { source: 'github-graphql', days: await fetchGitHubContributions(user, token) }
+  if (token) {
+    try {
+      return { source: 'github-graphql', days: await fetchGitHubContributions(user, token) }
+    } catch (e) {
+      // Un token sin permisos (p. ej. el de Actions en algunas configuraciones) no debe romper la actualización diaria.
+      warn(`Warning: the GitHub API failed (${(e as Error).message}); using the public contributions page instead.`)
+    }
+  }
   return { source: 'github-public-page', days: await fetchContributionsPage(user) }
 }
 
@@ -120,7 +133,7 @@ export async function run(argv: string[], opts: RunOptions = {}): Promise<number
     const weeks = v.weeks === undefined ? undefined : Number(v.weeks)
     if (weeks !== undefined && !(Number.isInteger(weeks) && weeks >= 1 && weeks <= 53)) return fail('--weeks must be a whole number from 1 to 53')
     try {
-      const { source, days } = await loadData(v.user, v.input, env, cwd)
+      const { source, days } = await loadData(v.user, v.input, env, cwd, error)
       const endDate = days.reduce((last, d) => (d.date > last ? d.date : last), '') || undefined
       const outDir = resolve(cwd, v['out-dir']!)
       await mkdir(outDir, { recursive: true })
@@ -149,7 +162,7 @@ export async function run(argv: string[], opts: RunOptions = {}): Promise<number
   if (command === 'json') {
     const out = resolve(cwd, v.out!)
     try {
-      const { source, days } = await loadData(v.user, v.input, env, cwd)
+      const { source, days } = await loadData(v.user, v.input, env, cwd, error)
       const total = days.reduce((s, d) => s + d.count, 0)
       await mkdir(dirname(out), { recursive: true })
       await writeFile(out, JSON.stringify({ username: v.user ?? null, generatedAt: now().toISOString(), source, total, days }, null, 2) + '\n')
