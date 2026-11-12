@@ -1275,3 +1275,57 @@ input[type='checkbox'][role='switch']:checked::after {
     white-space: nowrap;
   }
 }
+
+/* ---------- Coloreado de sintaxis ----------
+   Contraste mínimo 4.5:1 sobre --bg-2 en los dos modos. */
+:root {
+  --tk-keyword: #b0421f;
+  --tk-string: #2d7a32;
+  --tk-class: #1f5fa6;
+  --tk-entity: #0d7268;
+  --tk-property: #7247c4;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --tk-keyword: #f0907a;
+    --tk-string: #8fcf7e;
+    --tk-class: #86bdf5;
+    --tk-entity: #6fd0c2;
+    --tk-property: #bba4f5;
+  }
+}
+:root[data-theme='dark'] {
+  --tk-keyword: #f0907a;
+  --tk-string: #8fcf7e;
+  --tk-class: #86bdf5;
+  --tk-entity: #6fd0c2;
+  --tk-property: #bba4f5;
+}
+.code pre code {
+  color: var(--text);
+}
+.tk-keyword {
+  color: var(--tk-keyword);
+}
+.tk-string {
+  color: var(--tk-string);
+}
+.tk-class {
+  color: var(--tk-class);
+}
+.tk-entity {
+  color: var(--tk-entity);
+}
+.tk-property {
+  color: var(--tk-property);
+}
+.tk-jsxliterals {
+  color: var(--text-2);
+}
+.tk-sign,
+.tk-comment {
+  color: var(--text-3);
+}
+.tk-comment {
+  font-style: italic;
+}
