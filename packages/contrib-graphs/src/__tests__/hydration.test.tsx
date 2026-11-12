@@ -54,6 +54,10 @@ describe.each(variants)('%s', (_name, Graph) => {
 })
 
 test('control: si el servidor y el cliente usan otro día, el test sí lo detecta', () => {
+  // El error de hidratación es el resultado esperado: se cancela para que jsdom no lo imprima.
+  const silence = (e: ErrorEvent) => e.preventDefault()
+  window.addEventListener('error', silence)
   const errors = hydrate(<ClassicGraph data={data} endDate="2026-01-07" />, <ClassicGraph data={data} endDate="2026-01-08" />)
+  window.removeEventListener('error', silence)
   expect(errors.length).toBeGreaterThan(0)
 })
