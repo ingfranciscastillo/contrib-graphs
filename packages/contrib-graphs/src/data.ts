@@ -6,5 +6,4 @@ export { themes, themeNames, resolveTheme, themeVars, type GraphTheme, type Them
 export { buildCalendar, cropCalendar, computeStats, makeLevelFn, formatDate, type CalendarOptions, type GraphStats } from './utils'
 export { generateSampleData, sampleProfiles, type SampleProfile } from './sample'
 export * from './adapters'
-export { renderIsometricSvg, type IsometricSvgOptions } from './svg'
 export type * from './types'
