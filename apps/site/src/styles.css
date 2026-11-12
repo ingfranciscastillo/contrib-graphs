@@ -947,3 +947,8 @@ input[type='checkbox'][role='switch']:checked::after {
   text-decoration-color: var(--accent);
   text-underline-offset: 3px;
 }
+
+.doc-section h3 {
+  font-size: 17px;
+  margin: 22px 0 6px;
+}

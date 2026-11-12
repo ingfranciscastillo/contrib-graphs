@@ -5,6 +5,7 @@ import { CodeBlock, Section } from '../ui'
 
 const toc = [
   ['instalacion', 'Instalación'],
+  ['frameworks', 'Next.js y Astro'],
   ['datos', 'Formato de datos'],
   ['github', 'GitHub'],
   ['gitlab', 'GitLab'],
@@ -58,6 +59,63 @@ export function Activity({ contributions }) {
   return <ClassicGraph data={contributions} theme="github" animate />
 }`}
           />
+        </Section>
+
+        <Section id="frameworks" title="Next.js y Astro">
+          <p>
+            El paquete tiene dos entradas. <code>contrib-graphs</code> son los componentes y lleva <code>"use client"</code>.{' '}
+            <code>contrib-graphs/data</code> es todo lo demás (calendario, temas, adaptadores, datos de ejemplo) y funciona en el servidor.
+          </p>
+          <h3>Next.js (App Router)</h3>
+          <p>
+            Importa los gráficos directamente en un Server Component, sin envolverlos. Obtén los datos en el servidor con{' '}
+            <code>contrib-graphs/data</code>: las funciones exportadas desde un archivo <code>"use client"</code> no se pueden ejecutar en el
+            servidor.
+          </p>
+          <CodeBlock
+            label="app/page.tsx"
+            code={`import { ClassicGraph } from 'contrib-graphs'
+import { fetchGitHubContributions } from 'contrib-graphs/data'
+
+export const revalidate = 3600 // vuelve a pedir los datos cada hora
+
+export default async function Page() {
+  const data = await fetchGitHubContributions('tu-usuario', process.env.GITHUB_TOKEN!)
+  return <ClassicGraph data={data} endDate={data.at(-1)?.date} />
+}`}
+          />
+          <p>
+            Importa <code>contrib-graphs/styles.css</code> en <code>app/layout.tsx</code>. Para usar <code>onDayClick</code> u otras funciones,
+            renderiza el gráfico dentro de un componente con <code>"use client"</code>.
+          </p>
+          <h3>Astro</h3>
+          <p>
+            Con la integración <code>@astrojs/react</code>, un gráfico sin directiva se envía como HTML estático, sin JavaScript. Añade{' '}
+            <code>client:visible</code> para tener tooltip y teclado. Las funciones no se pueden pasar como props a una isla: para{' '}
+            <code>onDayClick</code>, envuelve el gráfico en un componente React y usa ese componente como isla.
+          </p>
+          <CodeBlock
+            label="src/pages/index.astro"
+            code={`---
+import 'contrib-graphs/styles.css'
+import { ClassicGraph } from 'contrib-graphs'
+import { fetchGitHubContributions } from 'contrib-graphs/data'
+
+const data = await fetchGitHubContributions('tu-usuario', import.meta.env.GITHUB_TOKEN)
+const endDate = data.at(-1)?.date
+---
+<!-- HTML estático, 0 kB de JavaScript -->
+<ClassicGraph data={data} endDate={endDate} />
+
+<!-- Interactivo cuando entra en pantalla -->
+<ClassicGraph client:visible data={data} endDate={endDate} />`}
+          />
+          <h3>Render en servidor: pasa siempre endDate</h3>
+          <p>
+            Sin <code>endDate</code> el calendario termina hoy, y el servidor y el navegador pueden estar en días distintos (zonas horarias,
+            medianoche). Eso causa errores de hidratación. Con datos reales, usa la última fecha de los datos. El idioma no da este problema:
+            sin <code>locale</code> se usa <code>'en'</code> en los dos lados.
+          </p>
         </Section>
 
         <Section id="datos" title="Formato de datos">
