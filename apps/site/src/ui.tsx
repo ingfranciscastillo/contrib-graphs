@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { Check, Copy, Desktop, Moon, Shuffle, Sun } from '@phosphor-icons/react'
-import { themeNames, themes, themeVars } from '@cg/index'
+import { themeNames, themes, themeVars } from 'contrib-graphs'
 import { profiles, useDemo, type Lang, type Profile } from './search'
 
 /* ---------------------------------------------------------- Modo del sitio */

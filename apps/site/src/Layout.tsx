@@ -1,7 +1,7 @@
 import { Link, Outlet } from '@tanstack/react-router'
 import { useMemo } from 'react'
 import { BookOpen, SquaresFour } from '@phosphor-icons/react'
-import { buildCalendar, themes, themeVars } from '@cg/index'
+import { buildCalendar, themes, themeVars } from 'contrib-graphs'
 import { useDemo } from './search'
 import { Logo, ModeToggle } from './ui'
 import { variants } from './variants'

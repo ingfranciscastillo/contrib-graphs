@@ -8,7 +8,7 @@ import {
   SkylineGraph,
   TerminalGraph,
   terminalCharsets,
-} from '@cg/index'
+} from 'contrib-graphs'
 
 export type Control = { key: string; label: string; hint?: string } & (
   | { type: 'range'; min: number; max: number; step?: number }
@@ -246,7 +246,7 @@ export function usageSnippet(def: VariantDef, values: Values, theme: string): st
     else lines.push(`${c.key}={${v}}`)
   }
   return [
-    `import { ${def.importName} } from '@/components/contribution-graph'`,
+    `import { ${def.importName} } from 'contrib-graphs'`,
     '',
     lines.length === 1 ? `<${def.importName} ${lines[0]} />` : `<${def.importName}\n${lines.map((l) => `  ${l}`).join('\n')}\n/>`,
   ].join('\n')

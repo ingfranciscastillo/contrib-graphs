@@ -1,8 +1,9 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { RouterProvider } from '@tanstack/react-router'
-import { router } from './site/router'
-import './site/styles.css'
+import { router } from './router'
+import 'contrib-graphs/styles.css'
+import './styles.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

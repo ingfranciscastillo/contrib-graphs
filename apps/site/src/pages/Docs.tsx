@@ -1,4 +1,4 @@
-import { ClassicGraph, fromDates } from '@cg/index'
+import { ClassicGraph, fromDates } from 'contrib-graphs'
 import { useMemo } from 'react'
 import { useDemo } from '../search'
 import { CodeBlock, Section } from '../ui'
@@ -45,13 +45,14 @@ export function Docs() {
 
         <Section id="instalacion" title="Instalación">
           <p>
-            Por ahora la librería vive en <code>src/components/contribution-graph</code>. Copia la carpeta a tu proyecto (estilo shadcn/ui): no tiene
-            dependencias aparte de React 18+.
+            Instala el paquete e importa los estilos una sola vez, por ejemplo en tu layout o en el archivo de entrada. La única dependencia es
+            React 18 o superior.
           </p>
+          <CodeBlock label="bash" code={`npm install contrib-graphs`} />
           <CodeBlock
             label="tsx"
-            code={`import { ClassicGraph } from '@/components/contribution-graph'
-// el index importa contribution-graph.css automáticamente
+            code={`import { ClassicGraph } from 'contrib-graphs'
+import 'contrib-graphs/styles.css'
 
 export function Activity({ contributions }) {
   return <ClassicGraph data={contributions} theme="github" animate />
@@ -83,7 +84,7 @@ const data: ContributionDay[] = [
           <CodeBlock
             label="scripts/fetch-contributions.ts"
             code={`import { writeFile } from 'node:fs/promises'
-import { fetchGitHubContributions } from '../src/components/contribution-graph/adapters'
+import { fetchGitHubContributions } from 'contrib-graphs'
 
 const data = await fetchGitHubContributions('tu-usuario', process.env.GITHUB_TOKEN!)
 await writeFile('public/contributions.json', JSON.stringify(data))`}
@@ -101,7 +102,7 @@ await writeFile('public/contributions.json', JSON.stringify(data))`}
           </p>
           <CodeBlock
             label="ts"
-            code={`import { fetchGitLabContributions, fetchGitHubContributions, mergeSources } from '@/components/contribution-graph'
+            code={`import { fetchGitLabContributions, fetchGitHubContributions, mergeSources } from 'contrib-graphs'
 
 const gitlab = await fetchGitLabContributions('tu-usuario')
 const github = await fetchGitHubContributions('tu-usuario', token)
@@ -128,7 +129,7 @@ const all = mergeSources(github, gitlab)`}
           </p>
           <CodeBlock
             label="ts"
-            code={`import type { GraphTheme } from '@/components/contribution-graph'
+            code={`import type { GraphTheme } from 'contrib-graphs'
 
 const brand: GraphTheme = {
   name: 'Brand',

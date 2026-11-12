@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { useNavigate, useSearch } from '@tanstack/react-router'
-import { generateSampleData, sampleProfiles, themeNames, type ContributionDay, type SampleProfile, type ThemeName } from '@cg/index'
+import { generateSampleData, sampleProfiles, themeNames, type ContributionDay, type SampleProfile, type ThemeName } from 'contrib-graphs'
 import github from './data/contributions.json'
 
 export type Lang = 'es' | 'en'

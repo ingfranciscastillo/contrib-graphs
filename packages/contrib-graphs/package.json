@@ -1,0 +1,48 @@
+{
+  "name": "contrib-graphs",
+  "version": "0.1.0",
+  "description": "Contribution graph components for React: GitHub-style heatmaps in seven designs, with themes, dark mode, keyboard navigation and screen reader support.",
+  "keywords": [
+    "react",
+    "contribution-graph",
+    "heatmap",
+    "github",
+    "gitlab",
+    "calendar",
+    "portfolio",
+    "svg"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.31",
+    "react": "18.3.1",
+    "tsdown": "^0.23.0",
+    "typescript": "^5.9.3"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.cts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json",
+    "./styles.css": "./dist/styles.css"
+  }
+}

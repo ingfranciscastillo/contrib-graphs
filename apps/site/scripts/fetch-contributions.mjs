@@ -19,7 +19,7 @@ import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
-const OUT = resolve(ROOT, 'src/site/data/contributions.json')
+const OUT = resolve(ROOT, 'src/data/contributions.json')
 const DEFAULT_USER = 'ingfranciscastillo'
 
 const username = process.argv[2] || process.env.GITHUB_USERNAME || DEFAULT_USER
