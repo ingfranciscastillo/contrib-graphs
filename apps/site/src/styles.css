@@ -1115,3 +1115,23 @@ input[type='checkbox'][role='switch']:checked::after {
   margin: 4px 0 0;
   color: var(--text-2);
 }
+
+.props-reference {
+  margin-top: 12px;
+}
+.props-reference h2 {
+  margin: 12px 0 0;
+  font-size: 20px;
+}
+.props-reference details {
+  margin: 4px 0 14px;
+}
+.props-reference summary {
+  cursor: pointer;
+  padding: 6px 0;
+  color: var(--text-2);
+  font-weight: 500;
+}
+.props-reference summary:hover {
+  color: var(--text);
+}
