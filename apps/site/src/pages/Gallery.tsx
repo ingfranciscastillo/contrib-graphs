@@ -1,12 +1,14 @@
 import { Link } from '@tanstack/react-router'
 import { ArrowDown, SlidersHorizontal } from '@phosphor-icons/react'
 import { CompactGraph, IsometricGraph } from 'contrib-graphs'
+import { useLocaleParams } from '../i18n'
 import { githubData, useDemo } from '../search'
 import { DemoToolbar } from '../ui'
 import { variants } from '../variants'
 
 export function Gallery() {
   const { data, theme, locale, profile } = useDemo()
+  const lp = useLocaleParams()
   return (
     <>
       <section className="hero">
@@ -18,7 +20,7 @@ export function Gallery() {
               con temas, modo oscuro, teclado y lector de pantalla incluidos.
             </p>
             <div className="hero-actions">
-              <Link to="/docs" search={(p) => p} className="btn btn-primary">
+              <Link to="/{-$locale}/docs" params={lp} search={(p) => p} className="btn btn-primary">
                 Empezar
               </Link>
               <a href="#galeria" className="btn">
@@ -65,7 +67,7 @@ export function Gallery() {
                   <h2>{v.name}</h2>
                   <p>{v.tagline}</p>
                 </div>
-                <Link to="/variants/$variantId" params={{ variantId: v.id }} search={(p) => p} className="btn btn-sm">
+                <Link to="/{-$locale}/variants/$variantId" params={{ ...lp, variantId: v.id }} search={(p) => p} className="btn btn-sm">
                   <SlidersHorizontal size={14} aria-hidden="true" />
                   Personalizar
                 </Link>

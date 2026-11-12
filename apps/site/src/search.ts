@@ -2,8 +2,7 @@ import { useMemo } from 'react'
 import { useNavigate, useSearch } from '@tanstack/react-router'
 import { generateSampleData, sampleProfiles, themeNames, type ContributionDay, type SampleProfile, type ThemeName } from 'contrib-graphs'
 import github from './data/contributions.json'
-
-export type Lang = 'es' | 'en'
+import { useLang, type Lang } from './i18n'
 
 /** Datos reales generados con `npm run data` (scripts/fetch-contributions.mjs). */
 export const githubData = github as { username: string; generatedAt: string; source: string; total: number; days: ContributionDay[] }
@@ -17,7 +16,6 @@ export interface GlobalSearch {
   theme?: ThemeName
   profile?: Profile
   seed?: number
-  lang?: Lang
 }
 
 export function validateGlobalSearch(s: Record<string, unknown>): GlobalSearch {
@@ -26,7 +24,6 @@ export function validateGlobalSearch(s: Record<string, unknown>): GlobalSearch {
     theme: themeNames.includes(s.theme as ThemeName) ? (s.theme as ThemeName) : undefined,
     profile: typeof s.profile === 'string' && s.profile in profiles ? (s.profile as Profile) : undefined,
     seed: Number.isInteger(seed) && seed > 0 ? seed : undefined,
-    lang: s.lang === 'en' || s.lang === 'es' ? s.lang : undefined,
   }
 }
 
@@ -36,7 +33,8 @@ export function useDemo() {
   const theme = search.theme ?? 'github'
   const profile = search.profile ?? 'github'
   const seed = search.seed ?? 7
-  const lang = search.lang ?? 'es'
+  // El idioma de los gráficos es el de la página (/ o /es).
+  const lang = useLang()
   const data = useMemo(() => (profile === 'github' ? githubData.days : generateSampleData({ seed, profile })), [seed, profile])
   // GitHub fecha en UTC: su último día puede ser "mañana" en tu zona horaria. El calendario termina ahí.
   const endDate = profile === 'github' ? githubData.days[githubData.days.length - 1]?.date : undefined
@@ -49,7 +47,7 @@ export function useDemo() {
   return { theme, profile, seed, lang, data, endDate, set, locale }
 }
 
-/** Props de idioma para los componentes: muestra cómo se localizan. */
+/** Props de idioma que el sitio pasa a los gráficos: muestra cómo se localizan. */
 export const i18n = {
   es: {
     locale: 'es',

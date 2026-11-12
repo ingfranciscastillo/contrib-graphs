@@ -952,3 +952,35 @@ input[type='checkbox'][role='switch']:checked::after {
   font-size: 17px;
   margin: 22px 0 6px;
 }
+
+/* ---------- Selector de idioma ---------- */
+.lang-switch a {
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 7px;
+  color: var(--text-2);
+  font-size: 12.5px;
+  font-weight: 500;
+  text-decoration: none;
+}
+.lang-switch a:hover {
+  color: var(--text);
+}
+.lang-switch a[aria-current='true'] {
+  background: var(--bg-2);
+  color: var(--text);
+  box-shadow: inset 0 0 0 1px var(--line-2);
+}
+.show-sm {
+  display: none;
+}
+@media (max-width: 560px) {
+  .show-sm {
+    display: inline;
+  }
+  .lang-switch a {
+    padding: 0 7px;
+  }
+}

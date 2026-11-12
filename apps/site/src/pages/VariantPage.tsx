@@ -3,12 +3,13 @@ import { useState } from 'react'
 import { ArrowCounterClockwise, CaretLeft, CaretRight, Desktop, DeviceMobile, DeviceTablet } from '@phosphor-icons/react'
 import type { CalendarDay, SkylineWeek } from 'contrib-graphs'
 import { formatDate } from 'contrib-graphs'
+import { useLocaleParams } from '../i18n'
 import { useDemo } from '../search'
 import { CodeBlock, DemoToolbar } from '../ui'
 import { usageSnippet, variants, variantsById, type Control, type Values, type VariantDef } from '../variants'
 
 export function VariantPage() {
-  const { variantId } = useParams({ from: '/variants/$variantId' })
+  const { variantId } = useParams({ from: '/{-$locale}/variants/$variantId' })
   const def = variantsById[variantId]
   // `key` reinicia los controles al cambiar de variante.
   return <Playground key={def.id} def={def} />
@@ -16,6 +17,7 @@ export function VariantPage() {
 
 function Playground({ def }: { def: VariantDef }) {
   const { data, theme, locale } = useDemo()
+  const lp = useLocaleParams()
   const [values, setValues] = useState<Values>(def.defaults)
   const [clicked, setClicked] = useState<CalendarDay | null>(null)
   const [replay, setReplay] = useState(0)
@@ -30,7 +32,7 @@ function Playground({ def }: { def: VariantDef }) {
   return (
     <div className="container page">
       <nav className="crumbs" aria-label="Migas">
-        <Link to="/" search={(p) => p}>
+        <Link to="/{-$locale}" params={lp} search={(p) => p}>
           Galería
         </Link>
         <span aria-hidden="true">/</span>
@@ -42,11 +44,11 @@ function Playground({ def }: { def: VariantDef }) {
           <p className="lead">{def.description}</p>
         </div>
         <div className="pager">
-          <Link to="/variants/$variantId" params={{ variantId: prev.id }} search={(p) => p} className="btn btn-sm">
+          <Link to="/{-$locale}/variants/$variantId" params={{ ...lp, variantId: prev.id }} search={(p) => p} className="btn btn-sm">
             <CaretLeft size={14} aria-hidden="true" />
             {prev.name}
           </Link>
-          <Link to="/variants/$variantId" params={{ variantId: next.id }} search={(p) => p} className="btn btn-sm">
+          <Link to="/{-$locale}/variants/$variantId" params={{ ...lp, variantId: next.id }} search={(p) => p} className="btn btn-sm">
             {next.name}
             <CaretRight size={14} aria-hidden="true" />
           </Link>
