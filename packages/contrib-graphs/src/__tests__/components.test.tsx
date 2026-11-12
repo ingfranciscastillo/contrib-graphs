@@ -237,7 +237,7 @@ describe('props de cada variante', () => {
     expect(container.querySelector('.cg-header')!.textContent).toMatch(/en 14 días/)
     const lastDays = data.slice(-14)
     const total = lastDays.reduce((s, d) => s + d.count, 0)
-    expect(container.querySelector('.cg-title strong')!.textContent).toBe(total.toLocaleString())
+    expect(container.querySelector('.cg-title strong')!.textContent).toBe(total.toLocaleString('en'))
     expect(container.querySelector('.cg-legend')).toBeNull() // leyenda oculta por defecto
   })
 

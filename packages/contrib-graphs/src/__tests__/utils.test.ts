@@ -234,6 +234,12 @@ describe('formato', () => {
     expect(b).toBe('Mar 1')
   })
 
+  test("sin locale se usa 'en' (no el del sistema), igual en servidor y navegador", () => {
+    expect(formatDate('2026-03-01', undefined, { month: 'short', day: 'numeric' })).toBe('Mar 1')
+    expect(weekdayLabels()[0]).toBe('Sun')
+    expect(buildCalendar([], { endDate: '2026-03-31' }).months.at(-1)?.label).toBe('Mar')
+  })
+
   test('pluralize', () => {
     expect(pluralize(1)).toBe('contribution')
     expect(pluralize(0)).toBe('contributions')
