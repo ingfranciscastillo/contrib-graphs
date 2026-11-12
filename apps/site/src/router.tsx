@@ -1,5 +1,6 @@
 import { createRootRoute, createRoute, createRouter, notFound } from '@tanstack/react-router'
 import { Layout, NotFound } from './Layout'
+import { ApiPage } from './pages/ApiPage'
 import { Docs } from './pages/Docs'
 import { Gallery } from './pages/Gallery'
 import { VariantPage } from './pages/VariantPage'
@@ -43,7 +44,13 @@ const docsRoute = createRoute({
   component: Docs,
 })
 
-const routeTree = rootRoute.addChildren([localeRoute.addChildren([indexRoute, variantRoute, docsRoute])])
+const apiRoute = createRoute({
+  getParentRoute: () => localeRoute,
+  path: '/docs/api',
+  component: ApiPage,
+})
+
+const routeTree = rootRoute.addChildren([localeRoute.addChildren([indexRoute, variantRoute, docsRoute, apiRoute])])
 
 export const router = createRouter({
   routeTree,

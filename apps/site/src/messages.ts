@@ -9,7 +9,7 @@ const en = {
     description: 'Contribution graph components for React: GitHub-style heatmaps in seven designs, with themes, dark mode and keyboard support.',
   },
   skip: 'Skip to content',
-  nav: { label: 'Main', gallery: 'Gallery', docs: 'Docs' },
+  nav: { label: 'Main', gallery: 'Gallery', docs: 'Docs', api: 'API' },
   mode: {
     system: 'System',
     light: 'Light',
@@ -21,6 +21,7 @@ const en = {
     variants: 'Variants',
     resources: 'Resources',
     docs: 'Documentation',
+    api: 'API reference',
     github: 'GitHub data',
     gitlab: 'GitLab data',
     themes: 'Custom themes',
@@ -71,7 +72,7 @@ const es = {
     description: 'Componentes de contribution graph para React: mapas de actividad estilo GitHub en siete diseños, con temas, modo oscuro y teclado.',
   },
   skip: 'Saltar al contenido',
-  nav: { label: 'Principal', gallery: 'Galería', docs: 'Docs' },
+  nav: { label: 'Principal', gallery: 'Galería', docs: 'Docs', api: 'API' },
   mode: {
     system: 'Sistema',
     light: 'Claro',
@@ -83,6 +84,7 @@ const es = {
     variants: 'Variantes',
     resources: 'Recursos',
     docs: 'Documentación',
+    api: 'Referencia de la API',
     github: 'Datos de GitHub',
     gitlab: 'Datos de GitLab',
     themes: 'Temas propios',
