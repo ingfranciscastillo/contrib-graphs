@@ -1,4 +1,4 @@
-import { Fragment, useMemo } from 'react'
+import { Fragment, useLayoutEffect, useMemo, useState } from 'react'
 import { GraphShell, cellDelay, describeDay, summaryOf, useCalendarGraph } from '../core'
 import type { BaseGraphProps, Level } from '../types'
 import { formatNumber, pluralize, weekdayLabels } from '../utils'
@@ -24,6 +24,7 @@ export interface TerminalGraphProps extends BaseGraphProps {
 }
 
 const CHAR_W = 7.22 // ancho aprox. de un carácter monospace a 12px
+const MIN_FONT = 6 // por debajo de esto ya no se lee: mejor recortar semanas
 
 /** Bloques de texto en monospace, para portfolios con estética de terminal. */
 export function TerminalGraph(props: TerminalGraphProps) {
@@ -36,9 +37,33 @@ export function TerminalGraph(props: TerminalGraphProps) {
   } = props
   const chars = terminalCharsets[charset]
   const { calendar, periodTotal, interaction } = useCalendarGraph(props, {
-    fit: { pitch: CHAR_W * 2, reserved: CHAR_W * 5 + 34, enabled: fit === 'crop' },
+    // En `scale` solo se recortan semanas si ni con la letra mínima caben.
+    fit: (() => {
+      const k = fit === 'scale' ? MIN_FONT / 12 : 1
+      return { pitch: CHAR_W * 2 * k, reserved: CHAR_W * 5 * k + 34, enabled: true }
+    })(),
   })
   const weekdays = useMemo(() => weekdayLabels(props.locale, props.weekStart ?? 0), [props.locale, props.weekStart])
+  // `scale`: en vez de recortar semanas, reduce el tamaño de letra hasta que quepa.
+  const [fontSize, setFontSize] = useState(12)
+  const { rootRef } = interaction
+  const cols = 5 + calendar.weeks.length * 2
+  useLayoutEffect(() => {
+    const el = rootRef.current
+    if (fit !== 'scale' || !el || typeof ResizeObserver === 'undefined') {
+      setFontSize(12)
+      return
+    }
+    const update = () => {
+      const avail = el.clientWidth - 34
+      if (avail > 0) setFontSize(Math.max(MIN_FONT, Math.min(12, (avail / cols) * (12 / CHAR_W))))
+    }
+    update()
+    const ro = new ResizeObserver(update)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [fit, cols, rootRef])
+
   const color = (l: Level) => (colored ? `var(--cg-l${l === 0 ? 2 : l})` : 'var(--cg-text)')
   const op = (l: Level) => (l === 0 ? 0.35 : colored ? 1 : 0.4 + l * 0.15)
 
@@ -88,32 +113,35 @@ export function TerminalGraph(props: TerminalGraphProps) {
       describe={(i) => describeDay(calendar.days[i], props)}
       summary={summaryOf(calendar, props)}
     >
-      <pre className="cg-term">
-        <span className="cg-prompt">
+      <pre className="cg-term" style={fontSize !== 12 ? { fontSize } : undefined}>
+        <span className="cg-prompt cg-wrap">
           <b>{prompt}</b> {command}
         </span>
         {'\n\n'}
         {body}
         {'\n'}
-        {props.showTotal !== false && (
-          <span className="cg-prompt">
-            {'     '}
-            {props.title ?? `${formatNumber(periodTotal, props.locale)} ${pluralize(periodTotal, props.unit)} ${props.periodLabel ?? 'in the last year'}`}
+        {(props.showTotal !== false || props.showLegend !== false) && (
+          // Total y leyenda: en la misma línea si caben, una debajo de otra si no.
+          <span className="cg-foot">
+            {props.showTotal !== false && (
+              <span className="cg-prompt">
+                {props.title ??
+                  `${formatNumber(periodTotal, props.locale)} ${pluralize(periodTotal, props.unit)} ${props.periodLabel ?? 'in the last year'}`}
+              </span>
+            )}
+            {props.showLegend !== false && (
+              <span>
+                {less}{' '}
+                {([0, 1, 2, 3, 4] as const).map((l) => (
+                  <span key={l} style={{ color: color(l), opacity: op(l) }}>
+                    {chars[l]}
+                  </span>
+                ))}
+                {more}
+              </span>
+            )}
           </span>
         )}
-        {props.showLegend !== false && (
-          <>
-            {'   '}
-            {less}{' '}
-            {([0, 1, 2, 3, 4] as const).map((l) => (
-              <span key={l} style={{ color: color(l), opacity: op(l) }}>
-                {chars[l]}
-              </span>
-            ))}
-            {more}
-          </>
-        )}
-        {'\n'}
         <span className="cg-prompt">
           <b>{prompt}</b> <span className="cg-caret" />
         </span>

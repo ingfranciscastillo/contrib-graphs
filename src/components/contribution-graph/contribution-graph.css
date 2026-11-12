@@ -227,6 +227,17 @@
 .cg-terminal .cg-prompt {
   color: var(--cg-text);
 }
+/* Las líneas de texto pueden partirse; la cuadrícula no (se recorta o escala). */
+.cg-terminal .cg-wrap {
+  white-space: pre-wrap;
+}
+.cg-terminal .cg-foot {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 3ch;
+  padding-left: 5ch;
+  white-space: pre-wrap;
+}
 .cg-terminal .cg-prompt b {
   color: var(--cg-l4);
   font-weight: 600;
