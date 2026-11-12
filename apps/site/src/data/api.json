@@ -1464,6 +1464,11 @@
       "description": "Adds several sources day by day (for example GitHub plus GitLab), sorted by date."
     },
     {
+      "name": "renderIsometricSvg",
+      "signature": "renderIsometricSvg(data: readonly ContributionDay[], options?: IsometricSvgOptions): string",
+      "description": "Renders the isometric graph as a standalone SVG string: no JavaScript, no external CSS and colors already resolved, so it works as an image in a GitHub README. For light and dark READMEs, render once per `mode` and use a `<picture>` element."
+    },
+    {
       "name": "resolveTheme",
       "signature": "resolveTheme(theme: GraphTheme | \"github\" | \"gitlab\" | \"frost\" | \"ember\" | \"violet\" | \"mono\" | undefined): GraphTheme",
       "description": "Returns the theme object for a preset name or a custom theme; unknown names fall back to `github`."

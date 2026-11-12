@@ -57,5 +57,8 @@
     },
     "./package.json": "./package.json",
     "./styles.css": "./dist/styles.css"
+  },
+  "bin": {
+    "contrib-graphs": "./dist/bin.js"
   }
 }
