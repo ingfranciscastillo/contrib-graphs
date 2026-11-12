@@ -13,7 +13,10 @@
     "skipLibCheck": true,
     "noEmit": true,
     "baseUrl": ".",
-    "paths": { "contrib-graphs": ["../../packages/contrib-graphs/src/index.ts"] }
+    "paths": {
+      "contrib-graphs": ["../../packages/contrib-graphs/src/index.ts"],
+      "contrib-graphs/data": ["../../packages/contrib-graphs/src/data.ts"]
+    }
   },
   "include": ["src", "vite.config.ts"]
 }
