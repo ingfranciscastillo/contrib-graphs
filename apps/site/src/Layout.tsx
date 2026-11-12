@@ -1,6 +1,6 @@
 import { Link, Outlet, useLocation } from '@tanstack/react-router'
-import { useEffect, useMemo } from 'react'
-import { BookOpen, BracketsCurly, SquaresFour } from '@phosphor-icons/react'
+import { useEffect, useMemo, useState } from 'react'
+import { ArrowUpRight, BookOpen, BracketsCurly, Check, Copy, GithubLogo, SquaresFour } from '@phosphor-icons/react'
 import { buildCalendar, themes, themeVars } from 'contrib-graphs'
 import { useLang, useLocaleParams } from './i18n'
 import { useT } from './messages'
@@ -83,11 +83,15 @@ function DocumentLanguage() {
   return null
 }
 
+/** Repositorio del proyecto. */
+const REPO = 'https://github.com/ingfranciscastillo/contrib-graphs'
+
 function Footer() {
   const { data, endDate } = useDemo()
   const lp = useLocaleParams()
   const t = useT()
   const calendar = useMemo(() => buildCalendar(data, { weeks: 53, endDate }), [data, endDate])
+  const year = new Date().getFullYear()
   return (
     <footer className="footer">
       {/* Decorativo: el año de los datos del demo, con los colores del tema. */}
@@ -100,6 +104,7 @@ function Footer() {
           </div>
         ))}
       </div>
+
       <div className="container footer-inner">
         <div className="footer-brand">
           <Link to="/{-$locale}" params={lp} search={(p) => p} className="brand">
@@ -109,7 +114,15 @@ function Footer() {
             </span>
           </Link>
           <p>{t.footer.tagline}</p>
+          <div className="footer-cta">
+            <a className="btn" href={REPO} target="_blank" rel="noreferrer">
+              <GithubLogo size={18} weight="fill" aria-hidden="true" />
+              {t.footer.viewOnGithub}
+            </a>
+            <InstallCommand label={t.footer.install} />
+          </div>
         </div>
+
         <nav className="footer-nav" aria-label={t.footer.variants}>
           <p>{t.footer.variants}</p>
           <ul>
@@ -122,6 +135,7 @@ function Footer() {
             ))}
           </ul>
         </nav>
+
         <nav className="footer-nav" aria-label={t.footer.resources}>
           <p>{t.footer.resources}</p>
           <ul>
@@ -137,12 +151,7 @@ function Footer() {
             </li>
             <li>
               <Link to="/{-$locale}/docs" params={lp} hash="github" search={(p) => p}>
-                {t.footer.github}
-              </Link>
-            </li>
-            <li>
-              <Link to="/{-$locale}/docs" params={lp} hash="gitlab" search={(p) => p}>
-                {t.footer.gitlab}
+                {t.footer.dataSources}
               </Link>
             </li>
             <li>
@@ -157,9 +166,65 @@ function Footer() {
             </li>
           </ul>
         </nav>
+
+        <nav className="footer-nav" aria-label={t.footer.project}>
+          <p>{t.footer.project}</p>
+          <ul>
+            <li>
+              <a href={REPO} target="_blank" rel="noreferrer">
+                GitHub
+                <ArrowUpRight size={13} aria-hidden="true" />
+              </a>
+            </li>
+            <li>
+              <a href={`${REPO}/issues`} target="_blank" rel="noreferrer">
+                {t.footer.issues}
+                <ArrowUpRight size={13} aria-hidden="true" />
+              </a>
+            </li>
+            <li>
+              <a href={`${REPO}/blob/main/LICENSE`} target="_blank" rel="noreferrer">
+                {t.footer.license}
+                <ArrowUpRight size={13} aria-hidden="true" />
+              </a>
+            </li>
+          </ul>
+        </nav>
       </div>
-      <div className="container footer-base">{t.footer.builtWith}</div>
+
+      <div className="container footer-base">
+        <span>
+          {t.footer.copyright(year)}. {t.footer.license}.
+        </span>
+        <span className="footer-base-end">
+          <span>{t.footer.builtWith}</span>
+          <a className="footer-icon" href={REPO} target="_blank" rel="noreferrer" aria-label={t.footer.githubLabel} title={t.footer.githubLabel}>
+            <GithubLogo size={20} weight="fill" aria-hidden="true" />
+          </a>
+        </span>
+      </div>
     </footer>
+  )
+}
+
+/** Comando de instalación con botón de copiar. */
+function InstallCommand({ label }: { label: string }) {
+  const [copied, setCopied] = useState(false)
+  const command = 'npm i contrib-graphs'
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(command)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 1400)
+    } catch {
+      /* sin permiso de portapapeles */
+    }
+  }
+  return (
+    <button className="install-cmd" onClick={copy} aria-label={`${label}: ${command}`}>
+      <code>{command}</code>
+      {copied ? <Check size={15} aria-hidden="true" /> : <Copy size={15} aria-hidden="true" />}
+    </button>
   )
 }
 

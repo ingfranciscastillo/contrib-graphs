@@ -881,9 +881,21 @@ input[type='checkbox'][role='switch']:checked::after {
   padding-top: 36px;
   padding-bottom: 28px;
 }
-@media (min-width: 720px) {
+/* Tablet: la marca ocupa todo el ancho y las tres columnas de enlaces van debajo. */
+@media (min-width: 640px) {
   .footer-inner {
-    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+}
+@media (min-width: 960px) {
+  .footer-inner {
+    grid-template-columns: 1.8fr 1fr 1fr 1fr;
+  }
+  .footer-brand {
+    grid-column: auto;
   }
 }
 .footer-brand .brand {
@@ -906,7 +918,42 @@ input[type='checkbox'][role='switch']:checked::after {
   gap: 6px;
 }
 .footer-nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   text-decoration: none;
+}
+.footer-nav a svg {
+  color: var(--text-3);
+}
+.footer-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+.install-cmd {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 34px;
+  padding: 0 12px;
+  border: 1px dashed var(--line-2);
+  border-radius: 9px;
+  background: var(--bg-2);
+  color: var(--text-2);
+  cursor: pointer;
+}
+.install-cmd:hover {
+  color: var(--text);
+  border-color: var(--text-3);
+}
+.install-cmd code {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-size: 13px;
 }
 .footer-nav a:hover {
   color: var(--text);
@@ -915,11 +962,33 @@ input[type='checkbox'][role='switch']:checked::after {
   text-underline-offset: 3px;
 }
 .footer-base {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px 24px;
   padding-top: 18px;
   padding-bottom: 28px;
   border-top: 1px solid var(--line);
   color: var(--text-3);
   font-size: 13px;
+}
+.footer-base-end {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+.footer-icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  color: var(--text-2);
+}
+.footer-icon:hover {
+  color: var(--text);
+  background: var(--bg-2);
 }
 
 @media (max-width: 560px) {
