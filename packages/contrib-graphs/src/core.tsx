@@ -17,18 +17,18 @@ import type { BaseGraphProps, Calendar, CalendarDay, Level } from './types'
 import { buildCalendar, cropCalendar, formatDate, formatNumber, pluralize } from './utils'
 
 /**
- * El tipo de `useRef<T>(null)` en la versión de React instalada: `RefObject<T>` en React 18
- * y `RefObject<T | null>` en React 19. Así el código compila con ambos (importa al copiarlo).
+ * The type of `useRef<T>(null)` in the installed React version: `RefObject<T>` in React 18
+ * and `RefObject<T | null>` in React 19. This keeps the code compiling with both (it matters when copied).
  */
 type ElementRef<T> = ReturnType<typeof createRef<T>>
 
 /**
- * useLayoutEffect en el navegador (mide antes de pintar) y useEffect en el
- * servidor, donde los efectos no corren y React avisaría por cada componente.
+ * useLayoutEffect in the browser (measure before paint) and useEffect on the
+ * server, where effects don't run and React would warn once per component.
  */
 export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
-/* --------------------------------------------------------- Interacción */
+/* --------------------------------------------------------- Interaction */
 
 export interface Interaction {
   rootRef: ElementRef<HTMLDivElement>
@@ -46,7 +46,7 @@ export interface Interaction {
   }
 }
 
-/** `:focus-visible` no existe en navegadores viejos (Safari < 15.4) ni en algunos entornos de test. */
+/** `:focus-visible` doesn't exist in old browsers (Safari < 15.4) or in some test environments. */
 function isFocusVisible(el: Element): boolean {
   try {
     return el.matches(':focus-visible')
@@ -61,9 +61,9 @@ const indexOf = (target: EventTarget | null): number | null => {
 }
 
 /**
- * Hover + navegación con teclado usando delegación de eventos: las celdas solo
- * llevan `data-cg-i`, así que no se crean cientos de handlers. Flechas izquierda/derecha
- * avanzan `stepX` elementos y arriba/abajo `stepY`.
+ * Hover and keyboard navigation through event delegation: cells only carry
+ * `data-cg-i`, so hundreds of handlers are never created. Left/right arrows move
+ * `stepX` items and up/down move `stepY`.
  */
 export function useGraphInteraction(opts: {
   rootRef: ElementRef<HTMLDivElement>
@@ -77,8 +77,8 @@ export function useGraphInteraction(opts: {
   const [pos, setPos] = useState<{ x: number; y: number } | null>(null)
   const index = state && state.index < count ? state.index : null
 
-  // Marca la celda activa. Sin deps a propósito (vuelve a marcarla si el SVG se
-  // re-renderiza), por eso aquí NO se toca el estado.
+  // Mark the active cell. No deps on purpose (it marks it again if the SVG
+  // re-renders), which is why this effect must NOT set state.
   useIsomorphicLayoutEffect(() => {
     const root = rootRef.current
     if (!root) return
@@ -87,7 +87,7 @@ export function useGraphInteraction(opts: {
     el?.setAttribute('data-active', '')
   })
 
-  // Posición del tooltip: solo cuando cambia la celda activa o el número de celdas.
+  // Tooltip position: only when the active cell or the number of cells changes.
   useIsomorphicLayoutEffect(() => {
     const root = rootRef.current
     const el = index == null || !root ? null : root.querySelector(`[data-cg-i="${index}"]`)
@@ -147,7 +147,7 @@ export function useGraphInteraction(opts: {
         if (i != null) onActivate?.(i)
       },
       onFocus: (e) => {
-        // Al entrar con Tab se activa el último día; con un clic no (el puntero ya lo hace).
+        // Tabbing in activates the last day; a click does not (the pointer already does).
         if (e.target === e.currentTarget && isFocusVisible(e.currentTarget))
           setState((s) => s ?? { index: count - 1, via: 'keyboard' })
       },
@@ -156,7 +156,7 @@ export function useGraphInteraction(opts: {
   }
 }
 
-/** Reduce las semanas visibles al ancho del contenedor (en vez de hacer scroll). */
+/** Reduces the visible weeks to fit the container width (instead of scrolling). */
 export function useFitWeeks(
   ref: ElementRef<HTMLElement>,
   requested: number,
@@ -183,7 +183,7 @@ export function useFitWeeks(
   return enabled ? fit : requested
 }
 
-/** Monta calendario + interacción. Es la base de todas las variantes por día. */
+/** Builds the calendar and the interaction. The base of every per-day variant. */
 export function useCalendarGraph(
   props: BaseGraphProps,
   opts: { stepX?: number; stepY?: number; fit?: { pitch: number; reserved: number; enabled: boolean } } = {},
@@ -208,11 +208,11 @@ export function useCalendarGraph(
     stepY: opts.stepY ?? 1,
     onActivate,
   })
-  /** `periodTotal` es el total del periodo pedido aunque se muestren menos semanas. */
+  /** `periodTotal` is the total of the requested period, even when fewer weeks are shown. */
   return { calendar, periodTotal: full.total, interaction, theme: resolveTheme(props.theme) }
 }
 
-/* --------------------------------------------------------- Presentación */
+/* --------------------------------------------------------- Presentation */
 
 export interface Description {
   title: string
@@ -227,7 +227,7 @@ export function describeDay(day: CalendarDay, props: BaseGraphProps): Descriptio
   }
 }
 
-/** Texto del periodo según las semanas pedidas (no las recortadas por ancho). */
+/** Period text from the requested weeks (not the ones cropped to fit). */
 export function periodText(props: BaseGraphProps): string {
   const weeks = props.weeks ?? 53
   const p = props.periodLabel
@@ -246,7 +246,7 @@ export function defaultTitle(total: number, props: BaseGraphProps): ReactNode {
 
 export const cellDelay = (w: number) => ({ '--cg-w': w }) as CSSProperties
 
-/** Id estable y válido para usar en `url(#...)` dentro de SVG. */
+/** Stable id that is valid inside SVG `url(#...)`. */
 export function useSvgId(prefix: string) {
   return `${prefix}-${useId().replace(/[^a-zA-Z0-9_-]/g, '')}`
 }
@@ -285,8 +285,8 @@ export interface ShellProps {
 }
 
 /**
- * Contenedor común: tema, modo claro/oscuro, encabezado, leyenda, tooltip
- * y región aria-live para anunciar el día activo al navegar con teclado.
+ * Shared container: theme, light/dark mode, header, legend, tooltip and an
+ * aria-live region that announces the active day during keyboard navigation.
  */
 export function GraphShell({
   props,
@@ -308,7 +308,7 @@ export function GraphShell({
   const tipRef = useRef<HTMLDivElement>(null)
   const [shift, setShift] = useState(0)
 
-  // Mantiene el tooltip dentro del contenedor.
+  // Keep the tooltip inside the container.
   useIsomorphicLayoutEffect(() => {
     const tip = tipRef.current
     const root = interaction.rootRef.current

@@ -11,7 +11,7 @@ export interface IsometricOptions {
 
 export interface IsometricTile {
   day: CalendarDay
-  /** Altura de la columna en px; 0 para días sin actividad (solo la cara superior). */
+  /** Column height in px; 0 for days without activity (top face only). */
   height: number
   top: string
   left: string
@@ -21,9 +21,9 @@ export interface IsometricTile {
 const r = (v: number) => Math.round(v * 100) / 100
 
 /**
- * Geometría de la vista isométrica, compartida por `IsometricGraph` y por
- * `renderIsometricSvg`: así el componente y el SVG estático se ven igual.
- * Las baldosas vienen ordenadas de atrás hacia adelante (orden de pintado).
+ * Geometry of the isometric view, shared by `IsometricGraph` and
+ * `renderIsometricSvg` so the component and the static SVG look the same.
+ * Tiles are sorted back to front (paint order).
  */
 export function isometricLayout(calendar: Calendar, { tileSize = 12, maxHeight = 48, heightBy = 'count' }: IsometricOptions = {}) {
   const tw = tileSize
@@ -53,5 +53,5 @@ export function isometricLayout(calendar: Calendar, { tileSize = 12, maxHeight =
   return { width, height, tiles }
 }
 
-/** Porcentaje de color de la cara izquierda y derecha (el resto se mezcla con negro). */
+/** Color percentage of the left and right faces (the rest is mixed with black). */
 export const ISO_SHADES = { left: 78, right: 60 } as const

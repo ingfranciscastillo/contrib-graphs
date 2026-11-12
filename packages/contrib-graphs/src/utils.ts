@@ -8,7 +8,7 @@ const DAY_MS = 86_400_000
  */
 export const DEFAULT_LOCALE = 'en'
 
-// Todas las fechas se manejan en UTC para evitar saltos por zona horaria / DST.
+// Every date is handled in UTC so time zones and DST never shift a day.
 export function parseISO(s: string): Date {
   const [y, m, d] = s.split('-').map(Number)
   return new Date(Date.UTC(y, (m ?? 1) - 1, d ?? 1))
@@ -157,13 +157,13 @@ function monthLabels(weeks: (CalendarDay | null)[][], locale?: string): MonthLab
   weeks.forEach((week, w) => {
     const days = week.filter((d): d is CalendarDay => d !== null)
     if (!days.length) return
-    // Se etiqueta la semana que contiene el día 1 del mes (o la primera semana).
+    // Label the week that contains the 1st of the month (or the first week).
     const target = w === 0 ? days[0] : days.find((d) => d.date.endsWith('-01'))
     if (!target) return
     const dt = parseISO(target.date)
     out.push({ label: fmt.format(dt), weekIndex: w, month: dt.getUTCMonth(), year: dt.getUTCFullYear() })
   })
-  // Evita que la primera etiqueta se encime con la segunda.
+  // Keep the first label from overlapping the second.
   if (out.length > 1 && out[1].weekIndex - out[0].weekIndex < 3) out.shift()
   return out
 }
@@ -193,7 +193,7 @@ export function computeStats(days: readonly CalendarDay[]): GraphStats {
       if (!best || d.count > best.count) best = d
     } else run = 0
   }
-  // La racha actual no se rompe si hoy todavía no hay actividad.
+  // The current streak isn't broken if there is no activity yet today.
   let current = 0
   let i = days.length - 1
   if (i >= 0 && days[i].count === 0) i--
@@ -218,7 +218,7 @@ export function formatNumber(n: number, locale?: string): string {
 /** Short names of the 7 weekdays starting at `weekStart`. */
 export function weekdayLabels(locale?: string, weekStart: 0 | 1 = 0): string[] {
   const fmt = new Intl.DateTimeFormat(locale ?? DEFAULT_LOCALE, { weekday: 'short', timeZone: 'UTC' })
-  // 2023-01-01 fue domingo
+  // 2023-01-01 was a Sunday
   return Array.from({ length: 7 }, (_, i) => fmt.format(new Date(Date.UTC(2023, 0, 1 + ((i + weekStart) % 7)))))
 }
 
