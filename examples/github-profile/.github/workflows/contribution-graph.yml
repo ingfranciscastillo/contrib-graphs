@@ -1,0 +1,29 @@
+name: Gráfico de contribuciones
+
+on:
+  # Todos los días a las 06:00 UTC, y a mano desde la pestaña Actions
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - run: npx --yes contrib-graphs@latest svg --user ingfranciscastillo --out-dir img --lang es
+        env:
+          # Opcional: un token clásico con read:user en el secret CONTRIB_TOKEN incluye las contribuciones privadas
+          GITHUB_TOKEN: ${{ secrets.CONTRIB_TOKEN || secrets.GITHUB_TOKEN }}
+      # Sube los SVG solo si cambiaron
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add img
+          git diff --staged --quiet || (git commit -m "chore: update contribution graph" && git push)
