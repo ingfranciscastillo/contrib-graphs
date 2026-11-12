@@ -32,6 +32,10 @@ Show your activity on your site or portfolio with a graph that fits its design. 
 
 ```bash
 npm install contrib-graphs
+# or
+pnpm add contrib-graphs
+yarn add contrib-graphs
+bun add contrib-graphs
 ```
 
 React 18 or later is the only dependency.
