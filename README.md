@@ -4,7 +4,7 @@
 
 # contrib/graphs
 
-_Contribution graph components for React: GitHub-style activity heatmaps in seven designs._
+_Seven React components that draw your GitHub, GitLab or any other activity as a calendar._
 
 [Live demo](https://ingfranciscastillo.github.io/contrib-graphs/) • [Features](#features) • [Installation](#installation) • [Usage](#usage) • [Variants](#variants) • [Data sources](#data-sources) • [Next.js and Astro](#nextjs-and-astro) • [Development](#development)
 

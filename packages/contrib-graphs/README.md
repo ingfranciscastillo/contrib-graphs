@@ -2,7 +2,7 @@
 
 ![The seven designs and four of the themes in the playground](https://raw.githubusercontent.com/ingfranciscastillo/contrib-graphs/main/docs/images/demo.gif)
 
-Contribution graph components for React: GitHub-style activity heatmaps in seven designs (Classic, Dots, Isometric, Terminal, Radial, Skyline, Compact), with themes, light/dark mode, keyboard navigation and screen reader support.
+Seven React components (Classic, Dots, Isometric, Terminal, Radial, Skyline and Compact) that draw your GitHub, GitLab or any other activity as a calendar. Each one works with a keyboard and a screen reader.
 
 ```bash
 npm install contrib-graphs

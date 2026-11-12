@@ -187,7 +187,7 @@ export const variants: VariantDef[] = [
     id: 'radial',
     name: 'Radial',
     importName: 'RadialGraph',
-    tagline: { en: 'The year comes full circle.', es: 'El año da la vuelta completa.' },
+    tagline: { en: 'The year as a ring.', es: 'El año en forma de anillo.' },
     description: { en: 'Each week is a slice of the ring and each weekday a band. A good centerpiece for an "about me" section.', es: 'Cada semana es una porción del anillo y cada día de la semana un aro. Ideal como pieza central de una sección "sobre mí".' },
     component: RadialGraph,
     defaults: { ...commonDefaults, ...calendarDefaults, size: 320, innerRadius: 0.38, showMonths: true, showTotal: false },
