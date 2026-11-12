@@ -6,6 +6,10 @@ Contribution graph components for React: GitHub-style activity heatmaps in seven
 
 ```bash
 npm install contrib-graphs
+# or
+pnpm add contrib-graphs
+yarn add contrib-graphs
+bun add contrib-graphs
 ```
 
 ```tsx
