@@ -5,7 +5,7 @@ import { useLang, useLocaleParams } from '../i18n'
 import { useT } from '../messages'
 import { githubData, useDemo } from '../search'
 import { DemoToolbar } from '../ui'
-import { variants } from '../variants'
+import { tr, variants } from '../variants'
 
 export function Gallery() {
   const { data, theme, locale, profile } = useDemo()
@@ -65,7 +65,7 @@ export function Gallery() {
               <header className="card-head">
                 <div>
                   <h2>{v.name}</h2>
-                  <p>{v.tagline}</p>
+                  <p>{tr(v.tagline, lang)}</p>
                 </div>
                 <Link to="/{-$locale}/variants/$variantId" params={{ ...lp, variantId: v.id }} search={(p) => p} className="btn btn-sm">
                   <SlidersHorizontal size={14} aria-hidden="true" />

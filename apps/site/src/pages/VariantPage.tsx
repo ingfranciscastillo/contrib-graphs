@@ -3,11 +3,11 @@ import { useState } from 'react'
 import { ArrowCounterClockwise, CaretLeft, CaretRight, Desktop, DeviceMobile, DeviceTablet } from '@phosphor-icons/react'
 import type { CalendarDay, SkylineWeek } from 'contrib-graphs'
 import { formatDate } from 'contrib-graphs'
-import { useLocaleParams } from '../i18n'
+import { useLang, useLocaleParams, type Lang } from '../i18n'
 import { useT } from '../messages'
 import { useDemo } from '../search'
 import { CodeBlock, DemoToolbar } from '../ui'
-import { usageSnippet, variants, variantsById, type Control, type Values, type VariantDef } from '../variants'
+import { tr, usageSnippet, variants, variantsById, type Control, type Values, type VariantDef } from '../variants'
 
 export function VariantPage() {
   const { variantId } = useParams({ from: '/{-$locale}/variants/$variantId' })
@@ -20,6 +20,7 @@ function Playground({ def }: { def: VariantDef }) {
   const { data, theme, locale } = useDemo()
   const lp = useLocaleParams()
   const t = useT()
+  const lang = useLang()
   const [values, setValues] = useState<Values>(def.defaults)
   const [clicked, setClicked] = useState<CalendarDay | null>(null)
   const [replay, setReplay] = useState(0)
@@ -43,7 +44,7 @@ function Playground({ def }: { def: VariantDef }) {
       <header className="page-head">
         <div>
           <h1>{def.name}</h1>
-          <p className="lead">{def.description}</p>
+          <p className="lead">{tr(def.description, lang)}</p>
         </div>
         <div className="pager">
           <Link to="/{-$locale}/variants/$variantId" params={{ ...lp, variantId: prev.id }} search={(p) => p} className="btn btn-sm">
@@ -112,7 +113,7 @@ function Playground({ def }: { def: VariantDef }) {
             </button>
           </div>
           {def.controls.map((c) => (
-            <ControlField key={c.key} control={c} value={values[c.key]} onChange={(v) => setValues((s) => ({ ...s, [c.key]: v }))} />
+            <ControlField key={c.key} control={c} lang={lang} value={values[c.key]} onChange={(v) => setValues((s) => ({ ...s, [c.key]: v }))} />
           ))}
         </aside>
       </div>
@@ -120,11 +121,11 @@ function Playground({ def }: { def: VariantDef }) {
   )
 }
 
-function ControlField({ control: c, value, onChange }: { control: Control; value: Values[string]; onChange: (v: Values[string]) => void }) {
+function ControlField({ control: c, lang, value, onChange }: { control: Control; lang: Lang; value: Values[string]; onChange: (v: Values[string]) => void }) {
   const id = `ctl-${c.key}`
   const name = (
     <span className="ctl-name">
-      {c.label}
+      {tr(c.label, lang)}
       <code>{c.key}</code>
     </span>
   )
@@ -157,11 +158,11 @@ function ControlField({ control: c, value, onChange }: { control: Control; value
           >
             {c.options.map((o) => (
               <option key={String(o.value)} value={String(o.value)}>
-                {o.label}
+                {tr(o.label, lang)}
               </option>
             ))}
           </select>
-          {c.hint && <small>{c.hint}</small>}
+          {c.hint && <small>{tr(c.hint, lang)}</small>}
         </label>
       )
     case 'text':
