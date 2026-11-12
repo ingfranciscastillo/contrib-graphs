@@ -16,8 +16,6 @@ export interface GraphTheme {
   name: string
   light: ThemePalette
   dark: ThemePalette
-  /** Las variantes que lo soportan añaden un brillo a las celdas activas. */
-  glow?: boolean
 }
 
 const lightBase = { text: '#1f2328', muted: '#656d76', surface: '#ffffff', border: '#d0d7de' }
@@ -53,12 +51,6 @@ export const themes = {
     name: 'Mono',
     light: { ...lightBase, levels: ['#ececec', '#c4c4c4', '#8f8f8f', '#5a5a5a', '#1f1f1f'] },
     dark: { ...darkBase, surface: '#0f0f0f', border: '#2e2e2e', levels: ['#1c1c1c', '#3a3a3a', '#6b6b6b', '#a3a3a3', '#f0f0f0'] },
-  },
-  neon: {
-    name: 'Neon',
-    glow: true,
-    light: { ...lightBase, levels: ['#e8eaf0', '#9ef0f0', '#3ad6e6', '#0aa5c9', '#0a5f8f'] },
-    dark: { ...darkBase, surface: '#0a0c12', border: '#1d2433', text: '#e6f6ff', muted: '#7d8ca3', levels: ['#141824', '#06343f', '#0a6f84', '#14b8d4', '#5ff4ff'] },
   },
 } satisfies Record<string, GraphTheme>
 
