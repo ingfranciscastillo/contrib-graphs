@@ -1,4 +1,5 @@
 import {
+  createRef,
   useCallback,
   useEffect,
   useId,
@@ -10,11 +11,16 @@ import {
   type KeyboardEvent,
   type PointerEvent,
   type ReactNode,
-  type RefObject,
 } from 'react'
 import { resolveTheme, themeVars } from './themes'
 import type { BaseGraphProps, Calendar, CalendarDay, Level } from './types'
 import { buildCalendar, cropCalendar, formatDate, formatNumber, pluralize } from './utils'
+
+/**
+ * El tipo de `useRef<T>(null)` en la versión de React instalada: `RefObject<T>` en React 18
+ * y `RefObject<T | null>` en React 19. Así el código compila con ambos (importa al copiarlo).
+ */
+type ElementRef<T> = ReturnType<typeof createRef<T>>
 
 /**
  * useLayoutEffect en el navegador (mide antes de pintar) y useEffect en el
@@ -25,7 +31,7 @@ export const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayo
 /* --------------------------------------------------------- Interacción */
 
 export interface Interaction {
-  rootRef: RefObject<HTMLDivElement>
+  rootRef: ElementRef<HTMLDivElement>
   active: number | null
   via: 'pointer' | 'keyboard' | null
   pos: { x: number; y: number } | null
@@ -60,7 +66,7 @@ const indexOf = (target: EventTarget | null): number | null => {
  * avanzan `stepX` elementos y arriba/abajo `stepY`.
  */
 export function useGraphInteraction(opts: {
-  rootRef: RefObject<HTMLDivElement>
+  rootRef: ElementRef<HTMLDivElement>
   count: number
   stepX: number
   stepY: number
@@ -152,7 +158,7 @@ export function useGraphInteraction(opts: {
 
 /** Reduce las semanas visibles al ancho del contenedor (en vez de hacer scroll). */
 export function useFitWeeks(
-  ref: RefObject<HTMLElement>,
+  ref: ElementRef<HTMLElement>,
   requested: number,
   pitch: number,
   reserved: number,
