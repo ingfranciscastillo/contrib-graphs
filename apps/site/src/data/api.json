@@ -1,0 +1,1495 @@
+{
+  "components": [
+    {
+      "name": "ClassicGraph",
+      "propsType": "GridGraphProps",
+      "description": "The classic weeks × days grid.",
+      "props": [
+        {
+          "name": "data",
+          "type": "ContributionDay[]",
+          "required": true,
+          "default": null,
+          "description": "Days of activity. Missing days count as 0 and duplicate dates are added up.",
+          "shared": true
+        },
+        {
+          "name": "cellSize",
+          "type": "number",
+          "required": false,
+          "default": "11",
+          "description": "Size of each cell in px.",
+          "shared": false
+        },
+        {
+          "name": "gap",
+          "type": "number",
+          "required": false,
+          "default": "3",
+          "description": "Space between cells in px.",
+          "shared": false
+        },
+        {
+          "name": "radius",
+          "type": "number",
+          "required": false,
+          "default": "2",
+          "description": "Corner radius in px; use `cellSize / 2` for circles. Classic only.",
+          "shared": false
+        },
+        {
+          "name": "showWeekdays",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Show Mon/Wed/Fri labels.",
+          "shared": false
+        },
+        {
+          "name": "showMonths",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Show month labels.",
+          "shared": false
+        },
+        {
+          "name": "glow",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Add a glow to the busiest days.",
+          "shared": false
+        },
+        {
+          "name": "fit",
+          "type": "'crop' | 'scale'",
+          "required": false,
+          "default": "'crop'",
+          "description": "On narrow screens, `crop` drops the oldest weeks and `scale` shrinks the SVG.",
+          "shared": false
+        },
+        {
+          "name": "theme",
+          "type": "ThemeName | GraphTheme",
+          "required": false,
+          "default": "'github'",
+          "description": "A preset name or your own theme object.",
+          "shared": true
+        },
+        {
+          "name": "colorMode",
+          "type": "ColorMode",
+          "required": false,
+          "default": "'auto'",
+          "description": "`auto` follows `prefers-color-scheme`, or `data-theme=\"light|dark\"` on `<html>`.",
+          "shared": true
+        },
+        {
+          "name": "weeks",
+          "type": "number",
+          "required": false,
+          "default": "53",
+          "description": "Number of weeks to show.",
+          "shared": true
+        },
+        {
+          "name": "endDate",
+          "type": "string | Date",
+          "required": false,
+          "default": "today",
+          "description": "Last day of the calendar. When rendering on the server, always pass it:\nthe server and the browser may be on different days.",
+          "shared": true
+        },
+        {
+          "name": "weekStart",
+          "type": "0 | 1",
+          "required": false,
+          "default": "0",
+          "description": "First day of each column: 0 = Sunday, 1 = Monday.",
+          "shared": true
+        },
+        {
+          "name": "scale",
+          "type": "LevelScale",
+          "required": false,
+          "default": "'quantile'",
+          "description": "How counts map to the five color levels.",
+          "shared": true
+        },
+        {
+          "name": "locale",
+          "type": "string",
+          "required": false,
+          "default": "'en'",
+          "description": "Locale for dates and numbers. Fixed by default so server and client HTML match.",
+          "shared": true
+        },
+        {
+          "name": "animate",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Staggered entry animation. Turned off with `prefers-reduced-motion`.",
+          "shared": true
+        },
+        {
+          "name": "showLegend",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Show the Less–More legend.",
+          "shared": true
+        },
+        {
+          "name": "showTotal",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Show the header with the total.",
+          "shared": true
+        },
+        {
+          "name": "title",
+          "type": "ReactNode",
+          "required": false,
+          "default": "'{total} contributions in the last year'",
+          "description": "Replaces the whole header text.",
+          "shared": true
+        },
+        {
+          "name": "unit",
+          "type": "readonly [string, string]",
+          "required": false,
+          "default": "['contribution', 'contributions']",
+          "description": "Singular and plural of the unit being counted.",
+          "shared": true
+        },
+        {
+          "name": "periodLabel",
+          "type": "string | ((weeks: number) => string)",
+          "required": false,
+          "default": "'in the last year' (52+ weeks), otherwise 'in the last {weeks} weeks'",
+          "description": "Text after the total in the header. Can be a function of the weeks shown.",
+          "shared": true
+        },
+        {
+          "name": "legendLabels",
+          "type": "readonly [string, string]",
+          "required": false,
+          "default": "['Less', 'More']",
+          "description": "Labels at both ends of the legend.",
+          "shared": true
+        },
+        {
+          "name": "onDayClick",
+          "type": "(day: CalendarDay) => void",
+          "required": false,
+          "default": null,
+          "description": "Called when a day is clicked, or with Enter or Space while it is focused.",
+          "shared": true
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Extra class name for the root element.",
+          "shared": true
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "default": null,
+          "description": "Inline styles for the root element. Theme CSS variables can be overridden here.",
+          "shared": true
+        },
+        {
+          "name": "aria-label",
+          "type": "string",
+          "required": false,
+          "default": "a summary with the total and the date range",
+          "description": "Accessible name of the graph.",
+          "shared": true
+        }
+      ]
+    },
+    {
+      "name": "DotsGraph",
+      "propsType": "GridGraphProps",
+      "description": "Circles whose size also encodes intensity, so it still reads in monochrome.",
+      "props": [
+        {
+          "name": "data",
+          "type": "ContributionDay[]",
+          "required": true,
+          "default": null,
+          "description": "Days of activity. Missing days count as 0 and duplicate dates are added up.",
+          "shared": true
+        },
+        {
+          "name": "cellSize",
+          "type": "number",
+          "required": false,
+          "default": "11",
+          "description": "Size of each cell in px.",
+          "shared": false
+        },
+        {
+          "name": "gap",
+          "type": "number",
+          "required": false,
+          "default": "3",
+          "description": "Space between cells in px.",
+          "shared": false
+        },
+        {
+          "name": "radius",
+          "type": "number",
+          "required": false,
+          "default": "2",
+          "description": "Corner radius in px; use `cellSize / 2` for circles. Classic only.",
+          "shared": false
+        },
+        {
+          "name": "showWeekdays",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Show Mon/Wed/Fri labels.",
+          "shared": false
+        },
+        {
+          "name": "showMonths",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Show month labels.",
+          "shared": false
+        },
+        {
+          "name": "glow",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Add a glow to the busiest days.",
+          "shared": false
+        },
+        {
+          "name": "fit",
+          "type": "'crop' | 'scale'",
+          "required": false,
+          "default": "'crop'",
+          "description": "On narrow screens, `crop` drops the oldest weeks and `scale` shrinks the SVG.",
+          "shared": false
+        },
+        {
+          "name": "theme",
+          "type": "ThemeName | GraphTheme",
+          "required": false,
+          "default": "'github'",
+          "description": "A preset name or your own theme object.",
+          "shared": true
+        },
+        {
+          "name": "colorMode",
+          "type": "ColorMode",
+          "required": false,
+          "default": "'auto'",
+          "description": "`auto` follows `prefers-color-scheme`, or `data-theme=\"light|dark\"` on `<html>`.",
+          "shared": true
+        },
+        {
+          "name": "weeks",
+          "type": "number",
+          "required": false,
+          "default": "53",
+          "description": "Number of weeks to show.",
+          "shared": true
+        },
+        {
+          "name": "endDate",
+          "type": "string | Date",
+          "required": false,
+          "default": "today",
+          "description": "Last day of the calendar. When rendering on the server, always pass it:\nthe server and the browser may be on different days.",
+          "shared": true
+        },
+        {
+          "name": "weekStart",
+          "type": "0 | 1",
+          "required": false,
+          "default": "0",
+          "description": "First day of each column: 0 = Sunday, 1 = Monday.",
+          "shared": true
+        },
+        {
+          "name": "scale",
+          "type": "LevelScale",
+          "required": false,
+          "default": "'quantile'",
+          "description": "How counts map to the five color levels.",
+          "shared": true
+        },
+        {
+          "name": "locale",
+          "type": "string",
+          "required": false,
+          "default": "'en'",
+          "description": "Locale for dates and numbers. Fixed by default so server and client HTML match.",
+          "shared": true
+        },
+        {
+          "name": "animate",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Staggered entry animation. Turned off with `prefers-reduced-motion`.",
+          "shared": true
+        },
+        {
+          "name": "showLegend",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Show the Less–More legend.",
+          "shared": true
+        },
+        {
+          "name": "showTotal",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Show the header with the total.",
+          "shared": true
+        },
+        {
+          "name": "title",
+          "type": "ReactNode",
+          "required": false,
+          "default": "'{total} contributions in the last year'",
+          "description": "Replaces the whole header text.",
+          "shared": true
+        },
+        {
+          "name": "unit",
+          "type": "readonly [string, string]",
+          "required": false,
+          "default": "['contribution', 'contributions']",
+          "description": "Singular and plural of the unit being counted.",
+          "shared": true
+        },
+        {
+          "name": "periodLabel",
+          "type": "string | ((weeks: number) => string)",
+          "required": false,
+          "default": "'in the last year' (52+ weeks), otherwise 'in the last {weeks} weeks'",
+          "description": "Text after the total in the header. Can be a function of the weeks shown.",
+          "shared": true
+        },
+        {
+          "name": "legendLabels",
+          "type": "readonly [string, string]",
+          "required": false,
+          "default": "['Less', 'More']",
+          "description": "Labels at both ends of the legend.",
+          "shared": true
+        },
+        {
+          "name": "onDayClick",
+          "type": "(day: CalendarDay) => void",
+          "required": false,
+          "default": null,
+          "description": "Called when a day is clicked, or with Enter or Space while it is focused.",
+          "shared": true
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Extra class name for the root element.",
+          "shared": true
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "default": null,
+          "description": "Inline styles for the root element. Theme CSS variables can be overridden here.",
+          "shared": true
+        },
+        {
+          "name": "aria-label",
+          "type": "string",
+          "required": false,
+          "default": "a summary with the total and the date range",
+          "description": "Accessible name of the graph.",
+          "shared": true
+        }
+      ]
+    },
+    {
+      "name": "IsometricGraph",
+      "propsType": "IsometricGraphProps",
+      "description": "Isometric columns whose height shows each day's activity.",
+      "props": [
+        {
+          "name": "data",
+          "type": "ContributionDay[]",
+          "required": true,
+          "default": null,
+          "description": "Days of activity. Missing days count as 0 and duplicate dates are added up.",
+          "shared": true
+        },
+        {
+          "name": "tileSize",
+          "type": "number",
+          "required": false,
+          "default": "12",
+          "description": "Width of each tile in px.",
+          "shared": false
+        },
+        {
+          "name": "maxHeight",
+          "type": "number",
+          "required": false,
+          "default": "48",
+          "description": "Height of the tallest column in px.",
+          "shared": false
+        },
+        {
+          "name": "heightBy",
+          "type": "'count' | 'level'",
+          "required": false,
+          "default": "'count'",
+          "description": "`count` scales columns by the actual count; `level` uses five fixed heights.",
+          "shared": false
+        },
+        {
+          "name": "showStats",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Show longest streak, current streak and best day in the header.",
+          "shared": false
+        },
+        {
+          "name": "statLabels",
+          "type": "readonly [string, string, string]",
+          "required": false,
+          "default": "['longest streak', 'current streak', 'best day']",
+          "description": "Labels of the three stats.",
+          "shared": false
+        },
+        {
+          "name": "theme",
+          "type": "ThemeName | GraphTheme",
+          "required": false,
+          "default": "'github'",
+          "description": "A preset name or your own theme object.",
+          "shared": true
+        },
+        {
+          "name": "colorMode",
+          "type": "ColorMode",
+          "required": false,
+          "default": "'auto'",
+          "description": "`auto` follows `prefers-color-scheme`, or `data-theme=\"light|dark\"` on `<html>`.",
+          "shared": true
+        },
+        {
+          "name": "weeks",
+          "type": "number",
+          "required": false,
+          "default": "53",
+          "description": "Number of weeks to show.",
+          "shared": true
+        },
+        {
+          "name": "endDate",
+          "type": "string | Date",
+          "required": false,
+          "default": "today",
+          "description": "Last day of the calendar. When rendering on the server, always pass it:\nthe server and the browser may be on different days.",
+          "shared": true
+        },
+        {
+          "name": "weekStart",
+          "type": "0 | 1",
+          "required": false,
+          "default": "0",
+          "description": "First day of each column: 0 = Sunday, 1 = Monday.",
+          "shared": true
+        },
+        {
+          "name": "scale",
+          "type": "LevelScale",
+          "required": false,
+          "default": "'quantile'",
+          "description": "How counts map to the five color levels.",
+          "shared": true
+        },
+        {
+          "name": "locale",
+          "type": "string",
+          "required": false,
+          "default": "'en'",
+          "description": "Locale for dates and numbers. Fixed by default so server and client HTML match.",
+          "shared": true
+        },
+        {
+          "name": "animate",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Staggered entry animation. Turned off with `prefers-reduced-motion`.",
+          "shared": true
+        },
+        {
+          "name": "showLegend",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Show the Less–More legend.",
+          "shared": true
+        },
+        {
+          "name": "showTotal",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Show the header with the total.",
+          "shared": true
+        },
+        {
+          "name": "title",
+          "type": "ReactNode",
+          "required": false,
+          "default": "'{total} contributions in the last year'",
+          "description": "Replaces the whole header text.",
+          "shared": true
+        },
+        {
+          "name": "unit",
+          "type": "readonly [string, string]",
+          "required": false,
+          "default": "['contribution', 'contributions']",
+          "description": "Singular and plural of the unit being counted.",
+          "shared": true
+        },
+        {
+          "name": "periodLabel",
+          "type": "string | ((weeks: number) => string)",
+          "required": false,
+          "default": "'in the last year' (52+ weeks), otherwise 'in the last {weeks} weeks'",
+          "description": "Text after the total in the header. Can be a function of the weeks shown.",
+          "shared": true
+        },
+        {
+          "name": "legendLabels",
+          "type": "readonly [string, string]",
+          "required": false,
+          "default": "['Less', 'More']",
+          "description": "Labels at both ends of the legend.",
+          "shared": true
+        },
+        {
+          "name": "onDayClick",
+          "type": "(day: CalendarDay) => void",
+          "required": false,
+          "default": null,
+          "description": "Called when a day is clicked, or with Enter or Space while it is focused.",
+          "shared": true
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Extra class name for the root element.",
+          "shared": true
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "default": null,
+          "description": "Inline styles for the root element. Theme CSS variables can be overridden here.",
+          "shared": true
+        },
+        {
+          "name": "aria-label",
+          "type": "string",
+          "required": false,
+          "default": "a summary with the total and the date range",
+          "description": "Accessible name of the graph.",
+          "shared": true
+        }
+      ]
+    },
+    {
+      "name": "TerminalGraph",
+      "propsType": "TerminalGraphProps",
+      "description": "Real monospace text, for portfolios with a terminal look.",
+      "props": [
+        {
+          "name": "data",
+          "type": "ContributionDay[]",
+          "required": true,
+          "default": null,
+          "description": "Days of activity. Missing days count as 0 and duplicate dates are added up.",
+          "shared": true
+        },
+        {
+          "name": "charset",
+          "type": "TerminalCharset",
+          "required": false,
+          "default": "'blocks'",
+          "description": "Characters for each level: `blocks` (░▒▓█), `squares`, `ascii` or `dots`.",
+          "shared": false
+        },
+        {
+          "name": "command",
+          "type": "string",
+          "required": false,
+          "default": "\"git log --since='1 year ago' | heatmap\"",
+          "description": "Command shown in the first prompt line.",
+          "shared": false
+        },
+        {
+          "name": "prompt",
+          "type": "string",
+          "required": false,
+          "default": "'~ $'",
+          "description": "Text before the command.",
+          "shared": false
+        },
+        {
+          "name": "colored",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Color the characters with the theme; `false` is monochrome.",
+          "shared": false
+        },
+        {
+          "name": "fit",
+          "type": "'crop' | 'scale'",
+          "required": false,
+          "default": "'crop'",
+          "description": "On narrow screens, `crop` drops the oldest weeks and `scale` shrinks the text (down to 6px, then crops).",
+          "shared": false
+        },
+        {
+          "name": "legendLabels",
+          "type": "readonly [string, string]",
+          "required": false,
+          "default": "['less', 'more']",
+          "description": "Labels at both ends of the legend.",
+          "shared": false
+        },
+        {
+          "name": "theme",
+          "type": "ThemeName | GraphTheme",
+          "required": false,
+          "default": "'github'",
+          "description": "A preset name or your own theme object.",
+          "shared": true
+        },
+        {
+          "name": "colorMode",
+          "type": "ColorMode",
+          "required": false,
+          "default": "'auto'",
+          "description": "`auto` follows `prefers-color-scheme`, or `data-theme=\"light|dark\"` on `<html>`.",
+          "shared": true
+        },
+        {
+          "name": "weeks",
+          "type": "number",
+          "required": false,
+          "default": "53",
+          "description": "Number of weeks to show.",
+          "shared": true
+        },
+        {
+          "name": "endDate",
+          "type": "string | Date",
+          "required": false,
+          "default": "today",
+          "description": "Last day of the calendar. When rendering on the server, always pass it:\nthe server and the browser may be on different days.",
+          "shared": true
+        },
+        {
+          "name": "weekStart",
+          "type": "0 | 1",
+          "required": false,
+          "default": "0",
+          "description": "First day of each column: 0 = Sunday, 1 = Monday.",
+          "shared": true
+        },
+        {
+          "name": "scale",
+          "type": "LevelScale",
+          "required": false,
+          "default": "'quantile'",
+          "description": "How counts map to the five color levels.",
+          "shared": true
+        },
+        {
+          "name": "locale",
+          "type": "string",
+          "required": false,
+          "default": "'en'",
+          "description": "Locale for dates and numbers. Fixed by default so server and client HTML match.",
+          "shared": true
+        },
+        {
+          "name": "animate",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Staggered entry animation. Turned off with `prefers-reduced-motion`.",
+          "shared": true
+        },
+        {
+          "name": "showLegend",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Show the Less–More legend.",
+          "shared": true
+        },
+        {
+          "name": "showTotal",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Show the header with the total.",
+          "shared": true
+        },
+        {
+          "name": "title",
+          "type": "ReactNode",
+          "required": false,
+          "default": "'{total} contributions in the last year'",
+          "description": "Replaces the whole header text.",
+          "shared": true
+        },
+        {
+          "name": "unit",
+          "type": "readonly [string, string]",
+          "required": false,
+          "default": "['contribution', 'contributions']",
+          "description": "Singular and plural of the unit being counted.",
+          "shared": true
+        },
+        {
+          "name": "periodLabel",
+          "type": "string | ((weeks: number) => string)",
+          "required": false,
+          "default": "'in the last year' (52+ weeks), otherwise 'in the last {weeks} weeks'",
+          "description": "Text after the total in the header. Can be a function of the weeks shown.",
+          "shared": true
+        },
+        {
+          "name": "onDayClick",
+          "type": "(day: CalendarDay) => void",
+          "required": false,
+          "default": null,
+          "description": "Called when a day is clicked, or with Enter or Space while it is focused.",
+          "shared": true
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Extra class name for the root element.",
+          "shared": true
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "default": null,
+          "description": "Inline styles for the root element. Theme CSS variables can be overridden here.",
+          "shared": true
+        },
+        {
+          "name": "aria-label",
+          "type": "string",
+          "required": false,
+          "default": "a summary with the total and the date range",
+          "description": "Accessible name of the graph.",
+          "shared": true
+        }
+      ]
+    },
+    {
+      "name": "RadialGraph",
+      "propsType": "RadialGraphProps",
+      "description": "The year as a ring: each week is a slice and each weekday a band.",
+      "props": [
+        {
+          "name": "data",
+          "type": "ContributionDay[]",
+          "required": true,
+          "default": null,
+          "description": "Days of activity. Missing days count as 0 and duplicate dates are added up.",
+          "shared": true
+        },
+        {
+          "name": "size",
+          "type": "number",
+          "required": false,
+          "default": "320",
+          "description": "Diameter in px.",
+          "shared": false
+        },
+        {
+          "name": "innerRadius",
+          "type": "number",
+          "required": false,
+          "default": "0.38",
+          "description": "Inner radius as a fraction of the outer radius.",
+          "shared": false
+        },
+        {
+          "name": "showMonths",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Show month labels around the ring.",
+          "shared": false
+        },
+        {
+          "name": "showTotal",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Show the header with the total. The total is already in the center of the ring.",
+          "shared": false
+        },
+        {
+          "name": "theme",
+          "type": "ThemeName | GraphTheme",
+          "required": false,
+          "default": "'github'",
+          "description": "A preset name or your own theme object.",
+          "shared": true
+        },
+        {
+          "name": "colorMode",
+          "type": "ColorMode",
+          "required": false,
+          "default": "'auto'",
+          "description": "`auto` follows `prefers-color-scheme`, or `data-theme=\"light|dark\"` on `<html>`.",
+          "shared": true
+        },
+        {
+          "name": "weeks",
+          "type": "number",
+          "required": false,
+          "default": "53",
+          "description": "Number of weeks to show.",
+          "shared": true
+        },
+        {
+          "name": "endDate",
+          "type": "string | Date",
+          "required": false,
+          "default": "today",
+          "description": "Last day of the calendar. When rendering on the server, always pass it:\nthe server and the browser may be on different days.",
+          "shared": true
+        },
+        {
+          "name": "weekStart",
+          "type": "0 | 1",
+          "required": false,
+          "default": "0",
+          "description": "First day of each column: 0 = Sunday, 1 = Monday.",
+          "shared": true
+        },
+        {
+          "name": "scale",
+          "type": "LevelScale",
+          "required": false,
+          "default": "'quantile'",
+          "description": "How counts map to the five color levels.",
+          "shared": true
+        },
+        {
+          "name": "locale",
+          "type": "string",
+          "required": false,
+          "default": "'en'",
+          "description": "Locale for dates and numbers. Fixed by default so server and client HTML match.",
+          "shared": true
+        },
+        {
+          "name": "animate",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Staggered entry animation. Turned off with `prefers-reduced-motion`.",
+          "shared": true
+        },
+        {
+          "name": "showLegend",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Show the Less–More legend.",
+          "shared": true
+        },
+        {
+          "name": "title",
+          "type": "ReactNode",
+          "required": false,
+          "default": "'{total} contributions in the last year'",
+          "description": "Replaces the whole header text.",
+          "shared": true
+        },
+        {
+          "name": "unit",
+          "type": "readonly [string, string]",
+          "required": false,
+          "default": "['contribution', 'contributions']",
+          "description": "Singular and plural of the unit being counted.",
+          "shared": true
+        },
+        {
+          "name": "periodLabel",
+          "type": "string | ((weeks: number) => string)",
+          "required": false,
+          "default": "'in the last year' (52+ weeks), otherwise 'in the last {weeks} weeks'",
+          "description": "Text after the total in the header. Can be a function of the weeks shown.",
+          "shared": true
+        },
+        {
+          "name": "legendLabels",
+          "type": "readonly [string, string]",
+          "required": false,
+          "default": "['Less', 'More']",
+          "description": "Labels at both ends of the legend.",
+          "shared": true
+        },
+        {
+          "name": "onDayClick",
+          "type": "(day: CalendarDay) => void",
+          "required": false,
+          "default": null,
+          "description": "Called when a day is clicked, or with Enter or Space while it is focused.",
+          "shared": true
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Extra class name for the root element.",
+          "shared": true
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "default": null,
+          "description": "Inline styles for the root element. Theme CSS variables can be overridden here.",
+          "shared": true
+        },
+        {
+          "name": "aria-label",
+          "type": "string",
+          "required": false,
+          "default": "a summary with the total and the date range",
+          "description": "Accessible name of the graph.",
+          "shared": true
+        }
+      ]
+    },
+    {
+      "name": "SkylineGraph",
+      "propsType": "SkylineGraphProps",
+      "description": "One building per week: your year as a city skyline.",
+      "props": [
+        {
+          "name": "data",
+          "type": "ContributionDay[]",
+          "required": true,
+          "default": null,
+          "description": "Days of activity. Missing days count as 0 and duplicate dates are added up.",
+          "shared": true
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "required": false,
+          "default": "110",
+          "description": "Height of the tallest building in px.",
+          "shared": false
+        },
+        {
+          "name": "barWidth",
+          "type": "number",
+          "required": false,
+          "default": "9",
+          "description": "Width of each building in px.",
+          "shared": false
+        },
+        {
+          "name": "gap",
+          "type": "number",
+          "required": false,
+          "default": "3",
+          "description": "Space between buildings in px.",
+          "shared": false
+        },
+        {
+          "name": "windows",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Draw seven windows per building, lit on the days with activity.",
+          "shared": false
+        },
+        {
+          "name": "fit",
+          "type": "'crop' | 'scale'",
+          "required": false,
+          "default": "'crop'",
+          "description": "On narrow screens, `crop` drops the oldest weeks and `scale` shrinks the SVG.",
+          "shared": false
+        },
+        {
+          "name": "onWeekClick",
+          "type": "(week: SkylineWeek) => void",
+          "required": false,
+          "default": null,
+          "description": "Called when a week is clicked, or with Enter or Space while it is focused.",
+          "shared": false
+        },
+        {
+          "name": "theme",
+          "type": "ThemeName | GraphTheme",
+          "required": false,
+          "default": "'github'",
+          "description": "A preset name or your own theme object.",
+          "shared": true
+        },
+        {
+          "name": "colorMode",
+          "type": "ColorMode",
+          "required": false,
+          "default": "'auto'",
+          "description": "`auto` follows `prefers-color-scheme`, or `data-theme=\"light|dark\"` on `<html>`.",
+          "shared": true
+        },
+        {
+          "name": "weeks",
+          "type": "number",
+          "required": false,
+          "default": "53",
+          "description": "Number of weeks to show.",
+          "shared": true
+        },
+        {
+          "name": "endDate",
+          "type": "string | Date",
+          "required": false,
+          "default": "today",
+          "description": "Last day of the calendar. When rendering on the server, always pass it:\nthe server and the browser may be on different days.",
+          "shared": true
+        },
+        {
+          "name": "weekStart",
+          "type": "0 | 1",
+          "required": false,
+          "default": "0",
+          "description": "First day of each column: 0 = Sunday, 1 = Monday.",
+          "shared": true
+        },
+        {
+          "name": "scale",
+          "type": "LevelScale",
+          "required": false,
+          "default": "'quantile'",
+          "description": "How counts map to the five color levels.",
+          "shared": true
+        },
+        {
+          "name": "locale",
+          "type": "string",
+          "required": false,
+          "default": "'en'",
+          "description": "Locale for dates and numbers. Fixed by default so server and client HTML match.",
+          "shared": true
+        },
+        {
+          "name": "animate",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Staggered entry animation. Turned off with `prefers-reduced-motion`.",
+          "shared": true
+        },
+        {
+          "name": "showLegend",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Show the Less–More legend.",
+          "shared": true
+        },
+        {
+          "name": "showTotal",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Show the header with the total.",
+          "shared": true
+        },
+        {
+          "name": "title",
+          "type": "ReactNode",
+          "required": false,
+          "default": "'{total} contributions in the last year'",
+          "description": "Replaces the whole header text.",
+          "shared": true
+        },
+        {
+          "name": "unit",
+          "type": "readonly [string, string]",
+          "required": false,
+          "default": "['contribution', 'contributions']",
+          "description": "Singular and plural of the unit being counted.",
+          "shared": true
+        },
+        {
+          "name": "periodLabel",
+          "type": "string | ((weeks: number) => string)",
+          "required": false,
+          "default": "'in the last year' (52+ weeks), otherwise 'in the last {weeks} weeks'",
+          "description": "Text after the total in the header. Can be a function of the weeks shown.",
+          "shared": true
+        },
+        {
+          "name": "legendLabels",
+          "type": "readonly [string, string]",
+          "required": false,
+          "default": "['Less', 'More']",
+          "description": "Labels at both ends of the legend.",
+          "shared": true
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Extra class name for the root element.",
+          "shared": true
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "default": null,
+          "description": "Inline styles for the root element. Theme CSS variables can be overridden here.",
+          "shared": true
+        },
+        {
+          "name": "aria-label",
+          "type": "string",
+          "required": false,
+          "default": "a summary with the total and the date range",
+          "description": "Accessible name of the graph.",
+          "shared": true
+        }
+      ]
+    },
+    {
+      "name": "CompactGraph",
+      "propsType": "CompactGraphProps",
+      "description": "A single row with the last N days, for headers, cards and footers.",
+      "props": [
+        {
+          "name": "data",
+          "type": "ContributionDay[]",
+          "required": true,
+          "default": null,
+          "description": "Days of activity. Missing days count as 0 and duplicate dates are added up.",
+          "shared": true
+        },
+        {
+          "name": "days",
+          "type": "number",
+          "required": false,
+          "default": "30",
+          "description": "Number of days to show.",
+          "shared": false
+        },
+        {
+          "name": "cellSize",
+          "type": "number",
+          "required": false,
+          "default": "10",
+          "description": "Size of each cell in px.",
+          "shared": false
+        },
+        {
+          "name": "gap",
+          "type": "number",
+          "required": false,
+          "default": "3",
+          "description": "Space between cells in px.",
+          "shared": false
+        },
+        {
+          "name": "radius",
+          "type": "number",
+          "required": false,
+          "default": "2",
+          "description": "Corner radius in px.",
+          "shared": false
+        },
+        {
+          "name": "showStreak",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Show the current streak next to the total.",
+          "shared": false
+        },
+        {
+          "name": "streakLabel",
+          "type": "(n: number) => string",
+          "required": false,
+          "default": "(n) => `${n} day streak`",
+          "description": "Streak text, given the number of days.",
+          "shared": false
+        },
+        {
+          "name": "rangeLabel",
+          "type": "(days: number) => string",
+          "required": false,
+          "default": "(days) => `in the last ${days} days`",
+          "description": "Text after the total, given the number of days.",
+          "shared": false
+        },
+        {
+          "name": "showLegend",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Show the Less–More legend.",
+          "shared": false
+        },
+        {
+          "name": "onDayClick",
+          "type": "(day: CalendarDay) => void",
+          "required": false,
+          "default": null,
+          "description": "Called when a day is clicked, or with Enter or Space while it is focused.",
+          "shared": true
+        },
+        {
+          "name": "theme",
+          "type": "ThemeName | GraphTheme",
+          "required": false,
+          "default": "'github'",
+          "description": "A preset name or your own theme object.",
+          "shared": true
+        },
+        {
+          "name": "colorMode",
+          "type": "ColorMode",
+          "required": false,
+          "default": "'auto'",
+          "description": "`auto` follows `prefers-color-scheme`, or `data-theme=\"light|dark\"` on `<html>`.",
+          "shared": true
+        },
+        {
+          "name": "endDate",
+          "type": "string | Date",
+          "required": false,
+          "default": "today",
+          "description": "Last day of the calendar. When rendering on the server, always pass it:\nthe server and the browser may be on different days.",
+          "shared": true
+        },
+        {
+          "name": "scale",
+          "type": "LevelScale",
+          "required": false,
+          "default": "'quantile'",
+          "description": "How counts map to the five color levels.",
+          "shared": true
+        },
+        {
+          "name": "locale",
+          "type": "string",
+          "required": false,
+          "default": "'en'",
+          "description": "Locale for dates and numbers. Fixed by default so server and client HTML match.",
+          "shared": true
+        },
+        {
+          "name": "animate",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Staggered entry animation. Turned off with `prefers-reduced-motion`.",
+          "shared": true
+        },
+        {
+          "name": "showTotal",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Show the header with the total.",
+          "shared": true
+        },
+        {
+          "name": "title",
+          "type": "ReactNode",
+          "required": false,
+          "default": "'{total} contributions in the last year'",
+          "description": "Replaces the whole header text.",
+          "shared": true
+        },
+        {
+          "name": "unit",
+          "type": "readonly [string, string]",
+          "required": false,
+          "default": "['contribution', 'contributions']",
+          "description": "Singular and plural of the unit being counted.",
+          "shared": true
+        },
+        {
+          "name": "legendLabels",
+          "type": "readonly [string, string]",
+          "required": false,
+          "default": "['Less', 'More']",
+          "description": "Labels at both ends of the legend.",
+          "shared": true
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "default": null,
+          "description": "Extra class name for the root element.",
+          "shared": true
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "default": null,
+          "description": "Inline styles for the root element. Theme CSS variables can be overridden here.",
+          "shared": true
+        },
+        {
+          "name": "aria-label",
+          "type": "string",
+          "required": false,
+          "default": "a summary with the total and the date range",
+          "description": "Accessible name of the graph.",
+          "shared": true
+        }
+      ]
+    }
+  ],
+  "functions": [
+    {
+      "name": "buildCalendar",
+      "signature": "buildCalendar(data: readonly ContributionDay[], opts?: CalendarOptions): Calendar",
+      "description": "Lays out days as a weeks × 7 grid with levels, totals and month labels. Dates are handled in UTC."
+    },
+    {
+      "name": "computeStats",
+      "signature": "computeStats(days: readonly CalendarDay[]): GraphStats",
+      "description": "Total, active days, best day, longest streak and current streak. A current streak isn't broken by a quiet today."
+    },
+    {
+      "name": "cropCalendar",
+      "signature": "cropCalendar(cal: Calendar, n: number, locale?: string | undefined): Calendar",
+      "description": "Keeps the last `n` weeks. Levels come from the full calendar, so cropping doesn't change colors."
+    },
+    {
+      "name": "fetchGitHubContributions",
+      "signature": "fetchGitHubContributions(login: string, token: string): Promise<ContributionDay[]>",
+      "description": "Fetches the last year of contributions from GitHub's GraphQL API. Server only (Node 18+, Deno, Bun, edge runtimes).\nA classic token with `read:user` includes private contributions."
+    },
+    {
+      "name": "fetchGitLabContributions",
+      "signature": "fetchGitLabContributions(username: string, baseUrl?: string): Promise<ContributionDay[]>",
+      "description": "Fetches a GitLab user's calendar. The endpoint is public but sends no CORS headers,\nso call it from the server or at build time. Pass `baseUrl` for self-hosted instances."
+    },
+    {
+      "name": "formatDate",
+      "signature": "formatDate(iso: string, locale?: string | undefined, opts?: DateTimeFormatOptions): string",
+      "description": "Formats an ISO date with `Intl`, in UTC so the day never shifts."
+    },
+    {
+      "name": "fromDates",
+      "signature": "fromDates(dates: readonly (string | Date)[]): ContributionDay[]",
+      "description": "Counts occurrences per day: blog posts, workouts, local commits… Strings are sliced to the date; `Date` objects use the local date."
+    },
+    {
+      "name": "fromGitHub",
+      "signature": "fromGitHub(res: GitHubCalendarResponse): ContributionDay[]",
+      "description": "Converts a GitHub GraphQL response into `{ date, count }` days."
+    },
+    {
+      "name": "fromGitLab",
+      "signature": "fromGitLab(json: Record<string, number>): ContributionDay[]",
+      "description": "Converts GitLab's `{ \"2026-03-01\": 4 }` calendar into `{ date, count }` days."
+    },
+    {
+      "name": "generateSampleData",
+      "signature": "generateSampleData({ seed, profile, days, endDate, }?: { seed?: number | undefined; profile?: SampleProfile | undefined; days?: number | undefined; endDate?: Date | undefined; }): ContributionDay[]",
+      "description": "Deterministic sample data: the same seed always gives the same days. Useful for demos and tests."
+    },
+    {
+      "name": "makeLevelFn",
+      "signature": "makeLevelFn(counts: readonly number[], scale?: LevelScale): (n: number) => Level",
+      "description": "Returns a function that maps a count to a level from 0 to 4 for the given counts and scale."
+    },
+    {
+      "name": "mergeSources",
+      "signature": "mergeSources(...sources: readonly ContributionDay[][]): ContributionDay[]",
+      "description": "Adds several sources day by day (for example GitHub plus GitLab), sorted by date."
+    },
+    {
+      "name": "resolveTheme",
+      "signature": "resolveTheme(theme: GraphTheme | \"github\" | \"gitlab\" | \"frost\" | \"ember\" | \"violet\" | \"mono\" | undefined): GraphTheme",
+      "description": "Returns the theme object for a preset name or a custom theme; unknown names fall back to `github`."
+    },
+    {
+      "name": "themeVars",
+      "signature": "themeVars(theme: GraphTheme): CSSProperties",
+      "description": "Turns a theme into CSS variables (`--cg-l0-light`, `--cg-l0-dark`…); the stylesheet picks light or dark."
+    }
+  ],
+  "constants": [
+    {
+      "name": "GITHUB_CONTRIBUTIONS_QUERY",
+      "description": "GitHub GraphQL query for the contribution calendar. It needs a token even\nfor public data, so run it on the server and never send the token to the browser."
+    },
+    {
+      "name": "sampleProfiles",
+      "description": "Available sample profiles with a short English label."
+    },
+    {
+      "name": "themeNames",
+      "description": "Names of the built-in themes."
+    },
+    {
+      "name": "themes",
+      "description": "Built-in themes: `github`, `gitlab`, `frost`, `ember`, `violet` and `mono`."
+    }
+  ]
+}
