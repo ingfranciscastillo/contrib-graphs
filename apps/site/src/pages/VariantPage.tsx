@@ -4,6 +4,7 @@ import { ArrowCounterClockwise, CaretLeft, CaretRight, Desktop, DeviceMobile, De
 import type { CalendarDay, SkylineWeek } from 'contrib-graphs'
 import { formatDate } from 'contrib-graphs'
 import { useLang, useLocaleParams, type Lang } from '../i18n'
+import { componentApi, PropsTable } from '../api'
 import { useT } from '../messages'
 import { useDemo } from '../search'
 import { CodeBlock, DemoToolbar } from '../ui'
@@ -102,6 +103,7 @@ function Playground({ def }: { def: VariantDef }) {
             )}
           </div>
           <CodeBlock code={usageSnippet(def, values, theme)} />
+          <PropsReference importName={def.importName} />
         </div>
 
         <aside className="controls" aria-label="Props">
@@ -182,3 +184,27 @@ const devices = [
   { id: 'tablet', Icon: DeviceTablet },
   { id: 'mobile', Icon: DeviceMobile },
 ] as const
+
+/** Tabla de props generada desde los tipos: primero las de la variante, luego las comunes plegadas. */
+function PropsReference({ importName }: { importName: string }) {
+  const api = componentApi(importName)
+  const lang = useLang()
+  const lp = useLocaleParams()
+  const t = useT()
+  if (!api) return null
+  const own = api.props.filter((p) => !p.shared)
+  const shared = api.props.filter((p) => p.shared && p.name !== 'data')
+  return (
+    <section className="props-reference" aria-labelledby="props-reference">
+      <h2 id="props-reference">{t.playground.reference}</h2>
+      <PropsTable props={own} lang={lang} />
+      <details>
+        <summary>{t.playground.sharedProps(shared.length)}</summary>
+        <PropsTable props={shared} lang={lang} />
+      </details>
+      <Link to="/{-$locale}/docs/api" params={lp} hash={importName.toLowerCase()} search={(p) => p} className="btn btn-sm">
+        {t.playground.fullReference}
+      </Link>
+    </section>
+  )
+}

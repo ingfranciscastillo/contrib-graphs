@@ -62,6 +62,9 @@ const en = {
     weekOf: 'week of',
     replay: 'Replay animation',
     reset: 'Reset',
+    reference: 'Props reference',
+    sharedProps: (n: number) => `Shared props (${n})`,
+    fullReference: 'Full API reference',
   },
 }
 
@@ -125,6 +128,9 @@ const es = {
     weekOf: 'semana del',
     replay: 'Repetir animación',
     reset: 'Restablecer',
+    reference: 'Referencia de props',
+    sharedProps: (n: number) => `Props comunes (${n})`,
+    fullReference: 'Referencia completa de la API',
   },
 } satisfies Messages
 
