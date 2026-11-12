@@ -14,7 +14,7 @@ const en = {
     label: (mode: string) => `Color mode: ${mode}. Change`,
   },
   footer: {
-    tagline: 'Contribution graphs for your site or portfolio. Install the package or copy the component, pass your data and pick a theme.',
+    tagline: 'React components for showing your activity on a personal site. Open source under the MIT License.',
     variants: 'Variants',
     resources: 'Resources',
     docs: 'Documentation',
@@ -47,7 +47,7 @@ const en = {
   code: { copy: 'Copy', copied: 'Copied', packageManager: 'Package manager' },
   hero: {
     title: 'Contribution graphs for your portfolio',
-    lead: 'React components you install or copy and make your own. One data format for GitHub, GitLab or anything you track, with themes, dark mode, keyboard and screen reader support built in.',
+    lead: 'Seven React components that draw your GitHub, GitLab or any other activity as a calendar. Install them from npm or copy the source into your project. Each one works with a keyboard and a screen reader.',
     start: 'Read the docs',
     seeVariants: 'See variants',
     realData: 'Real data from',
@@ -57,7 +57,7 @@ const en = {
   gallery: {
     customize: 'Customize',
     useIt: 'Use it in your project',
-    useItText: 'Install the package, or copy the source of any variant with the shadcn CLI and make it yours.',
+    useItText: 'Install it from npm, or copy the source of a single variant with the shadcn CLI and edit it like any other file in your project.',
     readDocs: 'Read the docs',
   },
   playground: {
@@ -88,7 +88,7 @@ const es = {
     label: (mode: string) => `Modo de color: ${mode}. Cambiar`,
   },
   footer: {
-    tagline: 'Contribution graphs para tu sitio o portfolio. Instala el paquete o copia el componente, pásale tus datos y elige un tema.',
+    tagline: 'Componentes de React para mostrar tu actividad en tu web personal. Código abierto con licencia MIT.',
     variants: 'Variantes',
     resources: 'Recursos',
     docs: 'Documentación',
@@ -121,7 +121,7 @@ const es = {
   code: { copy: 'Copiar', copied: 'Copiado', packageManager: 'Gestor de paquetes' },
   hero: {
     title: 'Contribution graphs para tu portfolio',
-    lead: 'Componentes de React que instalas o copias y haces tuyos. Un mismo formato de datos para GitHub, GitLab o lo que quieras medir, con temas, modo oscuro, teclado y lector de pantalla incluidos.',
+    lead: 'Siete componentes de React que dibujan tu actividad de GitHub, GitLab o lo que quieras medir como un calendario. Instálalos desde npm o copia el código a tu proyecto. Todos se pueden usar con teclado y lector de pantalla.',
     start: 'Leer la documentación',
     seeVariants: 'Ver variantes',
     realData: 'Datos reales de',
@@ -131,7 +131,7 @@ const es = {
   gallery: {
     customize: 'Personalizar',
     useIt: 'Úsalo en tu proyecto',
-    useItText: 'Instala el paquete, o copia el código de cualquier variante con el CLI de shadcn y hazlo tuyo.',
+    useItText: 'Instálalo desde npm, o copia el código de una sola variante con el CLI de shadcn y edítalo como cualquier archivo de tu proyecto.',
     readDocs: 'Leer la documentación',
   },
   playground: {

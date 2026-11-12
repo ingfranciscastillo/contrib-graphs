@@ -1,7 +1,7 @@
 {
   "name": "contrib-graphs",
   "version": "0.1.2",
-  "description": "Contribution graph components for React: GitHub-style heatmaps in seven designs, with themes, dark mode, keyboard navigation and screen reader support.",
+  "description": "Seven React components that draw your GitHub, GitLab or any other activity as a calendar heatmap. Install from npm or copy the source with the shadcn CLI.",
   "keywords": [
     "react",
     "contribution-graph",

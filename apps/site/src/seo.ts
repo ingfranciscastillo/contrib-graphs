@@ -19,13 +19,13 @@ export const routes = ['/', '/docs', '/docs/api', ...variantRoutes.map((v) => `/
 
 const text = {
   en: {
-    home: { title: `${SITE}: contribution graph components for React`, description: 'Contribution graph components for React: GitHub-style heatmaps in seven designs, with themes, dark mode and keyboard support.' },
+    home: { title: `${SITE}: contribution graph components for React`, description: 'Seven React components that show your GitHub, GitLab or any other activity as a calendar heatmap. Install them from npm or copy them with the shadcn CLI.' },
     docs: { title: `Documentation | ${SITE}`, description: 'Install contrib-graphs, pass your GitHub, GitLab or custom data, and use it in Vite, Next.js or Astro with themes and localization.' },
     api: { title: `API reference | ${SITE}`, description: 'Every prop of the seven contribution graph components and every function of contrib-graphs/data, generated from the package types.' },
     variant: (name: string) => `${name} | ${SITE}`,
   },
   es: {
-    home: { title: `${SITE}: componentes de contribution graph para React`, description: 'Componentes de contribution graph para React: mapas de actividad estilo GitHub en siete diseños, con temas, modo oscuro y teclado.' },
+    home: { title: `${SITE}: componentes de contribution graph para React`, description: 'Siete componentes de React que muestran tu actividad de GitHub, GitLab o la que quieras como un calendario. Instálalos desde npm o cópialos con el CLI de shadcn.' },
     docs: { title: `Documentación | ${SITE}`, description: 'Instala contrib-graphs, pásale tus datos de GitHub, GitLab o propios, y úsalo en Vite, Next.js o Astro con temas e idiomas.' },
     api: { title: `Referencia de la API | ${SITE}`, description: 'Todas las props de los siete componentes de contribution graph y las funciones de contrib-graphs/data, generadas desde los tipos del paquete.' },
     variant: (name: string) => `${name} | ${SITE}`,
