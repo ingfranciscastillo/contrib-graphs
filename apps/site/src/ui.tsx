@@ -3,6 +3,7 @@ import { Check, Copy, Desktop, Moon, Shuffle, Sun } from '@phosphor-icons/react'
 import { themeNames, themes, themeVars } from 'contrib-graphs'
 import { Link } from '@tanstack/react-router'
 import { langs, useLang, type Lang } from './i18n'
+import { highlightCode } from './highlight'
 import { useT } from './messages'
 import { githubData, profileKeys, useDemo, type Profile } from './search'
 
@@ -94,7 +95,10 @@ export function DemoToolbar() {
 
 /* ---------------------------------------------------------- Código */
 
-export function CodeBlock({ code, label }: { code: string; label?: string }) {
+/** El lenguaje sale de la etiqueta: "bash" o la extensión del archivo (app/page.tsx → tsx). */
+const langFromLabel = (label = 'tsx') => label.split('.').pop() ?? label
+
+export function CodeBlock({ code, label, lang }: { code: string; label?: string; lang?: string }) {
   const t = useT()
   const [copied, setCopied] = useState(false)
   const copy = async () => {
@@ -116,7 +120,7 @@ export function CodeBlock({ code, label }: { code: string; label?: string }) {
         </button>
       </div>
       <pre>
-        <code>{code}</code>
+        <code>{highlightCode(code, lang ?? langFromLabel(label))}</code>
       </pre>
     </div>
   )

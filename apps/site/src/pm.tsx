@@ -1,5 +1,6 @@
 import { useState, useSyncExternalStore, type KeyboardEvent } from 'react'
 import { Check, Copy } from '@phosphor-icons/react'
+import { highlightCode } from './highlight'
 import { useT } from './messages'
 
 /* --------------------------------------------- Gestor de paquetes elegido */
@@ -121,7 +122,7 @@ export function PmCommand({ kind, arg }: { kind: 'install' | 'dlx'; arg: string 
         </button>
       </div>
       <pre role="tabpanel">
-        <code>{command}</code>
+        <code>{highlightCode(command, 'bash')}</code>
       </pre>
     </div>
   )
