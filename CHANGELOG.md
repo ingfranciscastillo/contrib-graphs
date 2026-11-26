@@ -4,6 +4,8 @@ All notable changes to the `contrib-graphs` package are listed here. The format 
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-26
+
 ### Added
 
 - Four new designs:
@@ -46,7 +48,8 @@ First release.
 - Server rendering support: components are marked `'use client'` for the Next.js App Router, and `contrib-graphs/data` works in Server Components.
 - ESM and CommonJS builds with TypeScript types, and a single `styles.css`.
 
-[Unreleased]: https://github.com/ingfranciscastillo/contrib-graphs/compare/v0.1.2...HEAD
+[Unreleased]: https://github.com/ingfranciscastillo/contrib-graphs/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/ingfranciscastillo/contrib-graphs/compare/v0.1.2...v0.2.0
 [0.1.2]: https://github.com/ingfranciscastillo/contrib-graphs/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/ingfranciscastillo/contrib-graphs/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/ingfranciscastillo/contrib-graphs/releases/tag/v0.1.0
