@@ -52,6 +52,10 @@ const items = [
     ['radial-graph', 'RadialGraph', ['variants/RadialGraph.tsx']],
     ['skyline-graph', 'SkylineGraph', ['variants/SkylineGraph.tsx']],
     ['compact-graph', 'CompactGraph', ['variants/CompactGraph.tsx']],
+    ['months-graph', 'MonthsGraph', ['variants/MonthsGraph.tsx']],
+    ['waveform-graph', 'WaveformGraph', ['variants/WaveformGraph.tsx']],
+    ['stitch-graph', 'StitchGraph', ['variants/StitchGraph.tsx']],
+    ['pulse-graph', 'PulseGraph', ['variants/PulseGraph.tsx']],
   ].map(([name, component, files]) => ({ name, title: component, description: describe(component), files, core: true, component })),
 ]
 

@@ -18,7 +18,7 @@ const SITE = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const PKG = resolve(SITE, '../../packages/contrib-graphs/src')
 export const OUT = resolve(SITE, 'src/data/api.json')
 
-const COMPONENTS = ['ClassicGraph', 'DotsGraph', 'IsometricGraph', 'TerminalGraph', 'RadialGraph', 'SkylineGraph', 'CompactGraph']
+const COMPONENTS = ['ClassicGraph', 'DotsGraph', 'IsometricGraph', 'TerminalGraph', 'RadialGraph', 'SkylineGraph', 'CompactGraph', 'MonthsGraph', 'WaveformGraph', 'StitchGraph', 'PulseGraph']
 
 export function extractApi() {
   const program = ts.createProgram([resolve(PKG, 'index.ts'), resolve(PKG, 'data.ts')], {

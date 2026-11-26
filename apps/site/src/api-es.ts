@@ -13,6 +13,14 @@ export const apiEs: Record<string, string> = {
   'The year as a ring: each week is a slice and each weekday a band.': 'El año como un anillo: cada semana es una porción y cada día de la semana un aro.',
   'One building per week: your year as a city skyline.': 'Un edificio por semana: tu año como la silueta de una ciudad.',
   'A single row with the last N days, for headers, cards and footers.': 'Una sola fila con los últimos N días, para headers, tarjetas y footers.',
+  'One small calendar per month. The months wrap onto new rows, so it fits narrow screens.':
+    'Un calendario pequeño por mes. Los meses pasan a otra fila cuando no caben, así que entra en pantallas angostas.',
+  'One bar per day, mirrored on a center line: your year as a sound wave.':
+    'Una barra por día que crece desde una línea central: tu año como una onda de sonido.',
+  'Cross-stitch on aida cloth: each active day is an X, thicker and darker the busier it was.':
+    'Punto de cruz sobre tela de aída: cada día activo es una X, más gruesa y oscura cuanto más actividad tuvo.',
+  'Weekly totals as a smooth line: the shape of your rhythm over the year.':
+    'Los totales semanales como una línea suave: la forma de tu ritmo durante el año.',
 
   // ------------------------------------------------------------------ props compartidas
   'Days of activity. Missing days count as 0 and duplicate dates are added up.':
@@ -115,6 +123,19 @@ export const apiEs: Record<string, string> = {
   today: 'hoy',
   'a summary with the total and the date range': 'un resumen con el total y el rango de fechas',
   "'in the last year' (52+ weeks), otherwise 'in the last {weeks} weeks'": "'in the last year' (52+ semanas); si no, 'in the last {weeks} weeks'",
+
+  // ------------------------------------------------------------------ Months, Waveform, Stitch y Pulse
+  'Number of months to show, counting the month of `endDate`.': 'Número de meses a mostrar, contando el mes de `endDate`.',
+  'Text after the total, given the number of months.': 'Texto después del total, según el número de meses.',
+  'Height of the tallest bar in px, from the top of the wave to the bottom.': 'Altura de la barra más alta en px, de arriba abajo de la onda.',
+  "Width of each day's bar in px.": 'Ancho de la barra de cada día en px.',
+  'Space between bars in px.': 'Espacio entre barras en px.',
+  'Show month labels under the wave.': 'Muestra los meses debajo de la onda.',
+  'Size of each stitch in px.': 'Tamaño de cada puntada en px.',
+  'Height of the chart in px.': 'Altura del gráfico en px.',
+  'Horizontal space between two weeks in px.': 'Espacio horizontal entre dos semanas en px.',
+  'Mark the busiest week with a dot and its total.': 'Marca la semana con más actividad con un punto y su total.',
+  'Show month labels under the line.': 'Muestra los meses debajo de la línea.',
 }
 
 /** Traduce un texto de la API; los valores que son código (`'crop'`, `11`) se quedan igual. */

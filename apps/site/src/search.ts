@@ -57,6 +57,7 @@ export const i18n = {
     statLabels: ['racha más larga', 'racha actual', 'mejor día'] as const,
     streakLabel: (n: number) => `racha de ${n} ${n === 1 ? 'día' : 'días'}`,
     rangeLabel: (n: number) => `en los últimos ${n} días`,
+    monthsLabel: (n: number) => (n === 1 ? 'en el último mes' : `en los últimos ${n} meses`),
   },
   en: {
     locale: 'en',
@@ -66,5 +67,6 @@ export const i18n = {
     statLabels: ['longest streak', 'current streak', 'best day'] as const,
     streakLabel: (n: number) => `${n} day streak`,
     rangeLabel: (n: number) => `in the last ${n} days`,
+    monthsLabel: (n: number) => (n === 1 ? 'in the last month' : `in the last ${n} months`),
   },
 } satisfies Record<Lang, Record<string, unknown>>

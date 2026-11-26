@@ -105,7 +105,7 @@ export function Gallery() {
  * Orden de la galería en escritorio (dos columnas): Radial ocupa dos filas y a su
  * derecha van Compact y la tarjeta de instalación, así ninguna tarjeta queda sola.
  */
-const ORDER = ['classic', 'dots', 'isometric', 'terminal', 'skyline', 'radial', 'compact']
+const ORDER = ['classic', 'dots', 'isometric', 'terminal', 'skyline', 'waveform', 'stitch', 'months', 'pulse', 'radial', 'compact']
 const galleryOrder = [...variants].sort((a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id))
 
 /** Altura aproximada de cada gráfico en su tarjeta: reserva el espacio antes de montarlo. */
@@ -117,4 +117,8 @@ const previewHeight: Record<string, number> = {
   radial: 330,
   skyline: 190,
   compact: 50,
+  months: 320,
+  waveform: 130,
+  stitch: 160,
+  pulse: 160,
 }

@@ -9,12 +9,13 @@ const { items, index } = await buildRegistry()
 const SRC = new URL('../../../packages/contrib-graphs/src/', import.meta.url)
 const CORE = 'https://example.github.io/repo/r/contrib-graphs-core.json'
 
-test('núcleo, datos y las siete variantes, con su índice', () => {
+test('núcleo, datos y cada variante, con su índice', () => {
   assert.deepEqual(Object.keys(items).sort(), [
     'classic-graph', 'compact-graph', 'contrib-graphs-core', 'contrib-graphs-data', 'dots-graph',
-    'isometric-graph', 'radial-graph', 'skyline-graph', 'terminal-graph',
+    'isometric-graph', 'months-graph', 'pulse-graph', 'radial-graph', 'skyline-graph', 'stitch-graph',
+    'terminal-graph', 'waveform-graph',
   ])
-  assert.equal(index.items.length, 9)
+  assert.equal(index.items.length, 13)
   assert.ok(index.items.every((i) => i.files.every((f) => !('content' in f))), 'el índice no lleva el código')
 })
 
