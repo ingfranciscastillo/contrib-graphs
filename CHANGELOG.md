@@ -4,6 +4,15 @@ All notable changes to the `contrib-graphs` package are listed here. The format 
 
 ## [Unreleased]
 
+### Added
+
+- Four new designs:
+  - `MonthsGraph`: one small calendar per month. The months wrap onto new rows, so it fits narrow screens without cropping.
+  - `WaveformGraph`: one bar per day, mirrored on a center line, like a sound wave.
+  - `StitchGraph`: cross-stitch on cloth, where each active day is an X that gets thicker and darker with activity.
+  - `PulseGraph`: weekly totals as a smooth line, with the busiest week marked. It takes `onWeekClick`, like `SkylineGraph`.
+- Their shadcn registry items: `months-graph`, `waveform-graph`, `stitch-graph` and `pulse-graph`.
+
 ## [0.1.2] - 2026-11-12
 
 ### Fixed
