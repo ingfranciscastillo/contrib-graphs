@@ -243,8 +243,8 @@ export function useCalendarGraph(
     stepY: opts.stepY ?? 1,
     onActivate,
   })
-  /** `periodTotal` is the total of the requested period, even when fewer weeks are shown. */
-  return { calendar, periodTotal: full.total, interaction, theme: resolveTheme(props.theme) }
+  /** `periodTotal` and `periodMax` cover the requested period, even when fewer weeks are shown. */
+  return { calendar, periodTotal: full.total, periodMax: full.max, interaction, theme: resolveTheme(props.theme) }
 }
 
 /* --------------------------------------------------------- Presentation */

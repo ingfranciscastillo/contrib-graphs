@@ -9,6 +9,10 @@ export { RadialGraph, type RadialGraphProps } from './variants/RadialGraph'
 export { SkylineGraph, type SkylineGraphProps, type SkylineWeek } from './variants/SkylineGraph'
 export { TerminalGraph, terminalCharsets, type TerminalGraphProps, type TerminalCharset } from './variants/TerminalGraph'
 export { CompactGraph, type CompactGraphProps } from './variants/CompactGraph'
+export { MonthsGraph, type MonthsGraphProps } from './variants/MonthsGraph'
+export { WaveformGraph, type WaveformGraphProps } from './variants/WaveformGraph'
+export { StitchGraph, type StitchGraphProps } from './variants/StitchGraph'
+export { PulseGraph, type PulseGraphProps, type PulseWeek } from './variants/PulseGraph'
 
 // Also exported here for convenience in client-only apps (Vite, CRA…).
 export * from './data'

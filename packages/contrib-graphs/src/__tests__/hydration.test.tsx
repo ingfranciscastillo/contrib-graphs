@@ -10,9 +10,13 @@ import {
   CompactGraph,
   DotsGraph,
   IsometricGraph,
+  MonthsGraph,
+  PulseGraph,
   RadialGraph,
   SkylineGraph,
+  StitchGraph,
   TerminalGraph,
+  WaveformGraph,
   type BaseGraphProps,
 } from '../index'
 import { generateSampleData } from '../sample'
@@ -26,6 +30,10 @@ const variants: [string, ComponentType<BaseGraphProps>][] = [
   ['Radial', RadialGraph],
   ['Skyline', SkylineGraph],
   ['Compact', CompactGraph as ComponentType<BaseGraphProps>],
+  ['Months', MonthsGraph as ComponentType<BaseGraphProps>],
+  ['Waveform', WaveformGraph],
+  ['Stitch', StitchGraph],
+  ['Pulse', PulseGraph as ComponentType<BaseGraphProps>],
 ]
 
 /** Hidrata HTML del servidor y devuelve los errores que React reporta. */

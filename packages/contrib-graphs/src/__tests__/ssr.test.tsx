@@ -7,9 +7,13 @@ import {
   CompactGraph,
   DotsGraph,
   IsometricGraph,
+  MonthsGraph,
+  PulseGraph,
   RadialGraph,
   SkylineGraph,
+  StitchGraph,
   TerminalGraph,
+  WaveformGraph,
   type BaseGraphProps,
 } from '../index'
 import { generateSampleData } from '../sample'
@@ -23,6 +27,10 @@ const variants: [string, ComponentType<BaseGraphProps>][] = [
   ['Radial', RadialGraph],
   ['Skyline', SkylineGraph],
   ['Compact', CompactGraph as ComponentType<BaseGraphProps>],
+  ['Months', MonthsGraph as ComponentType<BaseGraphProps>],
+  ['Waveform', WaveformGraph],
+  ['Stitch', StitchGraph],
+  ['Pulse', PulseGraph as ComponentType<BaseGraphProps>],
 ]
 
 describe.each(variants)('%s en el servidor', (_name, Graph) => {

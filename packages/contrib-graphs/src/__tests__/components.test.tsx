@@ -7,9 +7,13 @@ import {
   CompactGraph,
   DotsGraph,
   IsometricGraph,
+  MonthsGraph,
+  PulseGraph,
   RadialGraph,
   SkylineGraph,
+  StitchGraph,
   TerminalGraph,
+  WaveformGraph,
   terminalCharsets,
   themes,
   type BaseGraphProps,
@@ -36,6 +40,7 @@ const dayVariants: [string, ComponentType<BaseGraphProps>, number][] = [
   ['Isometric', IsometricGraph, 368],
   ['Terminal', TerminalGraph, 368],
   ['Radial', RadialGraph, 368],
+  ['Stitch', StitchGraph, 368],
 ]
 
 describe.each(dayVariants)('%s', (_name, Graph, expectedCells) => {
@@ -238,6 +243,67 @@ describe('props de cada variante', () => {
     const lastDays = data.slice(-14)
     const total = lastDays.reduce((s, d) => s + d.count, 0)
     expect(container.querySelector('.cg-title strong')!.textContent).toBe(total.toLocaleString('en'))
+    expect(container.querySelector('.cg-legend')).toBeNull() // leyenda oculta por defecto
+  })
+
+  test('Waveform: una barra por día y ←/→ avanzan un día', () => {
+    const onDayClick = vi.fn()
+    const { container } = render(<WaveformGraph {...base} onDayClick={onDayClick} />)
+    expect(cells(container)).toHaveLength(368)
+    const r = root(container)
+    act(() => r.focus())
+    fireEvent.keyDown(r, { key: 'End' })
+    fireEvent.keyDown(r, { key: 'ArrowLeft' })
+    fireEvent.keyDown(r, { key: 'Enter' })
+    expect(onDayClick.mock.calls[0][0].date).toBe('2026-01-06')
+    // Ancho para semanas completas: los días que faltan de esta semana dejan su hueco.
+    expect(container.querySelector('.cg-body svg')!.getAttribute('width')).toBe(String(53 * 7 * 3 - 1))
+  })
+
+  test('Months: un calendario por mes, días futuros sin celda y su propio texto', () => {
+    const { container } = render(<MonthsGraph data={data} endDate={END} months={3} monthsLabel={(n) => `en ${n} meses`} />)
+    expect(container.querySelectorAll('.cg-month')).toHaveLength(3)
+    // Noviembre (30) + diciembre (31) + 7 días de enero
+    expect(cells(container)).toHaveLength(68)
+    expect(container.querySelectorAll('.cg-future')).toHaveLength(24)
+    expect(container.querySelector('.cg-header')!.textContent).toMatch(/en 3 meses/)
+    const total = data.filter((d) => d.date >= '2025-11-01' && d.date <= END).reduce((s, d) => s + d.count, 0)
+    expect(container.querySelector('.cg-title strong')!.textContent).toBe(total.toLocaleString('en'))
+    // ↑/↓ saltan una semana
+    const onDayClick = vi.fn()
+    cleanup()
+    const r2 = render(<MonthsGraph data={data} endDate={END} onDayClick={onDayClick} />)
+    const r = root(r2.container)
+    act(() => r.focus())
+    fireEvent.keyDown(r, { key: 'End' })
+    fireEvent.keyDown(r, { key: 'ArrowUp' })
+    fireEvent.keyDown(r, { key: 'Enter' })
+    expect(onDayClick.mock.calls[0][0].date).toBe('2025-12-31')
+  })
+
+  test('Stitch: los días sin actividad son agujeros y los activos, puntadas en cruz', () => {
+    const { container } = render(<StitchGraph {...base} />)
+    const quiet = container.querySelector('[data-level="0"]')!
+    const busy = container.querySelector('[data-level="4"]')!
+    expect(quiet.querySelector('.cg-hole')).not.toBeNull()
+    expect(busy.querySelectorAll('line')).toHaveLength(2)
+    // La misma fecha se tuerce igual en cada render.
+    const first = busy.innerHTML
+    cleanup()
+    const again = render(<StitchGraph {...base} />)
+    expect(again.container.querySelector(`[data-cg-i="${busy.getAttribute('data-cg-i')}"]`)!.innerHTML).toBe(first)
+  })
+
+  test('Pulse: un punto por semana, la mejor semana marcada y onWeekClick', () => {
+    const onWeekClick = vi.fn()
+    const { container } = render(<PulseGraph {...base} onWeekClick={onWeekClick} />)
+    expect(cells(container)).toHaveLength(53)
+    fireEvent.click(cell(container, 1))
+    const week = onWeekClick.mock.calls[0][0]
+    expect(week.days[0].date).toBe('2025-01-12')
+    expect(week.total).toBe(week.days.reduce((s: number, d: CalendarDay) => s + d.count, 0))
+    const best = container.querySelector('.cg-pulse-best-label')!.textContent
+    expect(Number(best!.replace(/\D/g, ''))).toBeGreaterThan(0)
     expect(container.querySelector('.cg-legend')).toBeNull() // leyenda oculta por defecto
   })
 

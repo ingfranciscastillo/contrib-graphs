@@ -275,6 +275,104 @@
   margin-bottom: 6px;
 }
 
+/* ---------- Months ---------- */
+.cg-months-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 10px;
+}
+.cg-month-name {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--cg-muted);
+  font-size: 10px;
+  line-height: 1.2;
+}
+.cg-months .cg-future {
+  fill: none;
+  stroke: var(--cg-border);
+  stroke-dasharray: 1.5 1.5;
+}
+
+/* ---------- Waveform ---------- */
+.cg-root[data-animate].cg-waveform .cg-rise {
+  transform-origin: center;
+}
+
+/* ---------- Stitch ---------- */
+.cg-stitch .cg-cloth {
+  fill: color-mix(in srgb, var(--cg-l0) 45%, transparent);
+}
+.cg-stitch .cg-hole,
+.cg-swatch-stitch .cg-hole {
+  fill: color-mix(in srgb, var(--cg-muted) 40%, transparent);
+}
+.cg-stitch .cg-under {
+  filter: brightness(0.82);
+}
+.cg-swatch-stitch {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* ---------- Pulse ---------- */
+.cg-pulse .cg-cell[data-active] {
+  stroke: none;
+}
+.cg-root[data-has-active].cg-pulse .cg-cell:not([data-active]) {
+  opacity: 1;
+}
+.cg-pulse-guide {
+  stroke: var(--cg-border);
+  stroke-dasharray: 2 2;
+}
+.cg-pulse-dot {
+  fill: var(--cg-l4);
+  stroke: var(--cg-surface);
+  stroke-width: 1.5px;
+}
+.cg-pulse-guide,
+.cg-pulse-dot {
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+.cg-pulse .cg-cell[data-active] .cg-pulse-guide,
+.cg-pulse .cg-cell[data-active] .cg-pulse-dot {
+  opacity: 1;
+}
+.cg-pulse-best-label {
+  fill: var(--cg-text);
+  font-weight: 600;
+}
+.cg-root[data-animate].cg-pulse .cg-cell {
+  animation: none;
+}
+.cg-root[data-animate] .cg-pulse-line {
+  stroke-dasharray: 1;
+  animation: cg-draw 1.1s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+.cg-root[data-animate] .cg-pulse-area,
+.cg-root[data-animate] .cg-pulse-best {
+  animation: cg-fade 0.6s ease 0.7s both;
+}
+@keyframes cg-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+@keyframes cg-fade {
+  from {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cg-root[data-animate] .cg-pulse-line,
+  .cg-root[data-animate] .cg-pulse-area,
+  .cg-root[data-animate] .cg-pulse-best {
+    animation: none;
+  }
+}
+
 /* ---------- Stats ---------- */
 .cg-stats {
   display: flex;
