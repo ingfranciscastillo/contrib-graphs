@@ -70,7 +70,7 @@ p { margin: 22px 0 0; font-size: 25px; line-height: 1.4; color: #a5a7ab; max-wid
   <div class="copy">
     <div class="brand"><svg width="34" height="34" viewBox="0 0 22 22">${logo}</svg><div>contrib<span>/graphs</span></div></div>
     <h1>Contribution graphs for React</h1>
-    <p>Seven designs for your portfolio. Install from npm or copy the source.</p>
+    <p>A design for every portfolio. Install from npm or copy the source.</p>
   </div>
   <div class="iso">${iso}</div>
   <div class="grid">${grid}<div class="cmd"><span>$</span> npm i contrib-graphs</div></div>

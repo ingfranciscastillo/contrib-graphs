@@ -47,7 +47,7 @@ const en = {
   code: { copy: 'Copy', copied: 'Copied', packageManager: 'Package manager' },
   hero: {
     title: 'Contribution graphs for your portfolio',
-    lead: 'Seven React components that draw your GitHub, GitLab or any other activity as a calendar. Install them from npm or copy the source into your project. Each one works with a keyboard and a screen reader.',
+    lead: 'React components that draw your GitHub, GitLab or any other activity as a calendar. Install them from npm or copy the source into your project. Each one works with a keyboard and a screen reader.',
     start: 'Read the docs',
     seeVariants: 'See variants',
     realData: 'Real data from',
@@ -121,7 +121,7 @@ const es = {
   code: { copy: 'Copiar', copied: 'Copiado', packageManager: 'Gestor de paquetes' },
   hero: {
     title: 'Contribution graphs para tu portfolio',
-    lead: 'Siete componentes de React que dibujan tu actividad de GitHub, GitLab o lo que quieras medir como un calendario. Instálalos desde npm o copia el código a tu proyecto. Todos se pueden usar con teclado y lector de pantalla.',
+    lead: 'Componentes de React que dibujan tu actividad de GitHub, GitLab o lo que quieras medir como un calendario. Instálalos desde npm o copia el código a tu proyecto. Todos se pueden usar con teclado y lector de pantalla.',
     start: 'Leer la documentación',
     seeVariants: 'Ver variantes',
     realData: 'Datos reales de',

@@ -4,7 +4,7 @@
 
 # contrib/graphs
 
-_Seven React components that draw your GitHub, GitLab or any other activity as a calendar._
+_React components that draw your GitHub, GitLab or any other activity as a calendar._
 
 [Live demo](https://ingfranciscastillo.github.io/contrib-graphs/) • [Features](#features) • [Installation](#installation) • [Usage](#usage) • [Variants](#variants) • [Data sources](#data-sources) • [Next.js and Astro](#nextjs-and-astro) • [Development](#development)
 
@@ -16,7 +16,7 @@ Show your activity on your site or portfolio with a graph that fits its design. 
 
 ## Features
 
-- **Seven designs**: Classic, Dots, Isometric, Terminal, Radial, Skyline and Compact.
+- **Designs**: Classic, Dots, Isometric, Terminal, Radial, Skyline, Compact, Months, Waveform, Stitch and Pulse.
 - **Themes**: six presets with light and dark palettes, or your own theme through an object or CSS variables.
 - **Accessible**: a single tab stop with arrow-key navigation, announced days and a text summary. Respects `prefers-reduced-motion`.
 - **Responsive**: drops the oldest weeks on narrow screens instead of scrolling, or scales to fit.
@@ -50,7 +50,7 @@ import { ClassicGraph } from '@/components/contrib-graphs/variants/GridGraph'
 import '@/components/contrib-graphs/styles.css'
 ```
 
-Items: `classic-graph`, `dots-graph`, `isometric-graph`, `terminal-graph`, `radial-graph`, `skyline-graph`, `compact-graph`, and `contrib-graphs-data` for the data helpers.
+Items: `classic-graph`, `dots-graph`, `isometric-graph`, `terminal-graph`, `radial-graph`, `skyline-graph`, `compact-graph`, `months-graph`, `waveform-graph`, `stitch-graph`, `pulse-graph`, and `contrib-graphs-data` for the data helpers.
 
 > [!NOTE]
 > The shadcn CLI needs a `components.json`. Run `npx shadcn@latest init` first if your project doesn't have one.
