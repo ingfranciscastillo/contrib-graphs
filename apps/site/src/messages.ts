@@ -25,7 +25,6 @@ const en = {
     dataSources: 'Data sources',
     project: 'Project',
     viewOnGithub: 'View on GitHub',
-    githubLabel: 'contrib-graphs on GitHub',
     issues: 'Report an issue',
     license: 'MIT License',
     copyright: (year: number) => `© ${year} Francis Miguel Castillo Cruz`,
@@ -33,7 +32,7 @@ const en = {
     themes: 'Custom themes',
     frameworks: 'Next.js and Astro',
   },
-  notFound: { title: 'Not found', text: "That page doesn't exist.", back: 'Back to the gallery' },
+  notFound: { title: 'Not found', text: "That page doesn't exist.", back: 'Back to the gallery', graph: 'contributions on this page' },
   toolbar: {
     label: 'Demo options',
     theme: 'Theme',
@@ -102,7 +101,6 @@ const es = {
     dataSources: 'Fuentes de datos',
     project: 'Proyecto',
     viewOnGithub: 'Ver en GitHub',
-    githubLabel: 'contrib-graphs en GitHub',
     issues: 'Reportar un problema',
     license: 'Licencia MIT',
     copyright: (year: number) => `© ${year} Francis Miguel Castillo Cruz`,
@@ -110,7 +108,7 @@ const es = {
     themes: 'Temas propios',
     frameworks: 'Next.js y Astro',
   },
-  notFound: { title: 'No encontrado', text: 'Esa página no existe.', back: 'Volver a la galería' },
+  notFound: { title: 'No encontrado', text: 'Esa página no existe.', back: 'Volver a la galería', graph: 'contribuciones en esta página' },
   toolbar: {
     label: 'Opciones del demo',
     theme: 'Tema',

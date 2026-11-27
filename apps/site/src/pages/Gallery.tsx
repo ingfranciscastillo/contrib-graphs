@@ -76,7 +76,15 @@ export function Gallery() {
               </header>
               <div className="card-demo">
                 <WhenVisible minHeight={previewHeight[v.id] ?? 200}>
-                  <C data={data} theme={theme} {...locale} animate weeks={v.id === 'radial' ? 53 : undefined} size={v.id === 'radial' ? 300 : undefined} />
+                  <C
+                    data={data}
+                    theme={theme}
+                    {...locale}
+                    animate
+                    weeks={v.id === 'radial' ? 53 : undefined}
+                    size={v.id === 'radial' ? 300 : undefined}
+                    {...halfSize[v.id]}
+                  />
                 </WhenVisible>
               </div>
             </article>
@@ -107,6 +115,15 @@ export function Gallery() {
       </div>
     </>
   )
+}
+
+/**
+ * Tamaños más finos para las variantes de media columna: así cabe el año entero en
+ * escritorio, en vez de recortar meses bajo un título que dice "el último año".
+ */
+const halfSize: Record<string, Record<string, number>> = {
+  dots: { cellSize: 7, gap: 2 },
+  pulse: { weekWidth: 9 },
 }
 
 /** Altura aproximada de cada gráfico en su tarjeta: reserva el espacio antes de montarlo. */

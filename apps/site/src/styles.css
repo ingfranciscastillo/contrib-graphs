@@ -12,6 +12,8 @@
   --mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
   --sans: 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --display: 'Bricolage Grotesque', var(--sans);
+  /* Texto sobre --accent (el nivel 4 del tema): 6,3:1 o más en los seis temas. */
+  --on-accent: #ffffff;
   color-scheme: light;
 }
 
@@ -25,8 +27,7 @@
     --text-3: #82858b; /* 5.3:1 sobre --bg */
     --line: #1f2024;
     --line-2: #2c2d32;
-    --accent: var(--accent-dark, #39d353);
-    --on-accent: #08090a;
+    --on-accent: var(--bg); /* 9,8:1 o más sobre el nivel 4 oscuro */
     --shadow: 0 1px 2px rgb(0 0 0 / 0.3);
     color-scheme: dark;
   }
@@ -40,6 +41,7 @@
   --text-3: #82858b; /* 5.3:1 sobre --bg */
   --line: #1f2024;
   --line-2: #2c2d32;
+  --on-accent: var(--bg);
   --shadow: 0 1px 2px rgb(0 0 0 / 0.3);
   color-scheme: dark;
 }
@@ -236,10 +238,11 @@ h3 {
   opacity: 0.45;
   cursor: default;
 }
+/* El botón principal lleva el color del tema elegido, como el logo y el foco. */
 .btn-primary {
-  background: var(--text);
-  border-color: var(--text);
-  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
 }
 .btn-primary:hover {
   opacity: 0.88;
@@ -517,7 +520,8 @@ input[type='text'] {
 .card-demo {
   flex: 1;
   display: flex;
-  align-items: center;
+  /* Arriba, no centrado: en una fila de dos tarjetas la más baja no flota con aire encima. */
+  align-items: flex-start;
   justify-content: center;
   padding: 22px 20px 20px;
   min-width: 0;
@@ -928,6 +932,23 @@ input[type='checkbox'][role='switch']:checked::after {
 }
 
 
+/* ---------- 404 ---------- */
+.not-found {
+  display: grid;
+  justify-items: start;
+  gap: 14px;
+  padding-top: 64px;
+  padding-bottom: 96px;
+}
+.not-found-graph {
+  max-width: 100%;
+  margin-bottom: 18px;
+}
+.not-found h1,
+.not-found .lead {
+  margin: 0;
+}
+
 /* ---------- Footer ---------- */
 .footer {
   margin-top: 24px;
@@ -1074,23 +1095,6 @@ input[type='checkbox'][role='switch']:checked::after {
   border-top: 1px solid var(--line);
   color: var(--text-3);
   font-size: 13px;
-}
-.footer-base-end {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-}
-.footer-icon {
-  display: grid;
-  place-items: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 9px;
-  color: var(--text-2);
-}
-.footer-icon:hover {
-  color: var(--text);
-  background: var(--bg-2);
 }
 
 @media (max-width: 640px) {

@@ -1,7 +1,7 @@
 import { Link, Outlet, useLocation } from '@tanstack/react-router'
 import { useEffect, useMemo, useState } from 'react'
-import { ArrowUpRight, BookOpen, BracketsCurly, Check, Copy, GithubLogo, SquaresFour } from '@phosphor-icons/react'
-import { buildCalendar, themes, themeVars } from 'contrib-graphs'
+import { ArrowLeft, ArrowUpRight, BookOpen, BracketsCurly, Check, Copy, GithubLogo, SquaresFour } from '@phosphor-icons/react'
+import { ClassicGraph, buildCalendar, themes, themeVars } from 'contrib-graphs'
 import { useLang, useLocaleParams } from './i18n'
 import { useT } from './messages'
 import { routeMeta } from './seo.ts'
@@ -173,12 +173,6 @@ function Footer() {
           <p>{t.footer.project}</p>
           <ul>
             <li>
-              <a href={REPO} target="_blank" rel="noreferrer">
-                GitHub
-                <ArrowUpRight size={13} aria-hidden="true" />
-              </a>
-            </li>
-            <li>
               <a href={`${REPO}/issues`} target="_blank" rel="noreferrer">
                 {t.footer.issues}
                 <ArrowUpRight size={13} aria-hidden="true" />
@@ -197,11 +191,6 @@ function Footer() {
       <div className="container footer-base">
         <span>
           {t.footer.copyright(year)}. {t.footer.license}.
-        </span>
-        <span className="footer-base-end">
-          <a className="footer-icon" href={REPO} target="_blank" rel="noreferrer" aria-label={t.footer.githubLabel} title={t.footer.githubLabel}>
-            <GithubLogo size={20} weight="fill" aria-hidden="true" />
-          </a>
         </span>
       </div>
     </footer>
@@ -232,17 +221,32 @@ function InstallCommand({ label }: { label: string }) {
 }
 
 export function NotFound() {
+  const { theme, locale } = useDemo()
   const lp = useLocaleParams()
   const t = useT()
   return (
-    <div className="container page">
+    <div className="container page not-found">
+      {/* Decorativo: un año sin actividad, con el tema elegido. `inert` lo saca del orden de Tab. */}
+      <div className="not-found-graph" aria-hidden="true" {...{ inert: '' }}>
+        <ClassicGraph
+          data={[]}
+          theme={theme}
+          {...locale}
+          weeks={26}
+          showLegend={false}
+          title={
+            <>
+              <strong>0</strong> {t.notFound.graph}
+            </>
+          }
+        />
+      </div>
       <h1>{t.notFound.title}</h1>
-      <p className="lead">
-        {t.notFound.text}{' '}
-        <Link to="/{-$locale}" params={lp} search={(p) => p}>
-          {t.notFound.back}
-        </Link>
-      </p>
+      <p className="lead">{t.notFound.text}</p>
+      <Link to="/{-$locale}" params={lp} search={(p) => p} className="btn btn-primary">
+        <ArrowLeft size={15} aria-hidden="true" />
+        {t.notFound.back}
+      </Link>
     </div>
   )
 }
