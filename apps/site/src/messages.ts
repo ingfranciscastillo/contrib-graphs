@@ -7,6 +7,9 @@ import { useLang, type Lang } from './i18n'
 const en = {
   skip: 'Skip to content',
   nav: { label: 'Main', gallery: 'Gallery', docs: 'Docs', api: 'API' },
+  stars: {
+    label: (stars: string | null) => (stars ? `View on GitHub, ${stars} stars` : 'View on GitHub'),
+  },
   mode: {
     system: 'System',
     light: 'Light',
@@ -81,6 +84,9 @@ export type Messages = typeof en
 const es = {
   skip: 'Saltar al contenido',
   nav: { label: 'Principal', gallery: 'Galería', docs: 'Docs', api: 'API' },
+  stars: {
+    label: (stars: string | null) => (stars ? `Ver en GitHub, ${stars} estrellas` : 'Ver en GitHub'),
+  },
   mode: {
     system: 'Sistema',
     light: 'Claro',

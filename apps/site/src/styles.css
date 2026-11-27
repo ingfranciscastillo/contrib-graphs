@@ -196,6 +196,18 @@ h3 {
 .nav a[aria-current='page'] svg {
   color: var(--accent);
 }
+.gh-stars {
+  text-decoration: none;
+}
+.gh-stars-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-variant-numeric: tabular-nums;
+}
+.gh-stars-count svg {
+  color: var(--accent);
+}
 .logo rect {
   transition: fill 0.35s ease;
 }
@@ -1025,7 +1037,7 @@ input[type='checkbox'][role='switch']:checked::after {
   background: var(--bg-2);
 }
 
-@media (max-width: 560px) {
+@media (max-width: 640px) {
   .topbar-inner {
     gap: 8px;
   }
@@ -1091,7 +1103,26 @@ input[type='checkbox'][role='switch']:checked::after {
   }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 900px) {
+  /* En la barra los textos largos no caben hasta bastante después del móvil: modo compacto. */
+  .topbar .hide-sm {
+    display: none;
+  }
+  .topbar .show-sm {
+    display: inline;
+  }
+  .topbar .lang-switch a {
+    padding: 0 6px;
+  }
+}
+@media (max-width: 767px) {
+  /* El número no cabe junto al menú: sigue en el aria-label. */
+  .gh-stars-count {
+    display: none;
+  }
+}
+
+@media (max-width: 500px) {
   /* Con el selector de idioma no cabe todo: en teléfonos pequeños queda solo el logo. */
   .topbar .brand > span {
     position: absolute;
@@ -1100,6 +1131,12 @@ input[type='checkbox'][role='switch']:checked::after {
     overflow: hidden;
     clip: rect(0 0 0 0);
     white-space: nowrap;
+  }
+}
+@media (max-width: 360px) {
+  /* Tampoco cabe el enlace a GitHub: queda el del pie. */
+  .gh-stars {
+    display: none;
   }
 }
 

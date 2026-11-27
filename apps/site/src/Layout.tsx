@@ -6,7 +6,7 @@ import { useLang, useLocaleParams } from './i18n'
 import { useT } from './messages'
 import { routeMeta } from './seo.ts'
 import { useDemo } from './search'
-import { LanguageSwitch, Logo, ModeToggle } from './ui'
+import { GithubStars, LanguageSwitch, Logo, ModeToggle } from './ui'
 import { PmIcon, pmCommand, usePackageManager } from './pm'
 import { variants } from './variants'
 
@@ -43,6 +43,7 @@ export function Layout() {
               {t.nav.api}
             </Link>
           </nav>
+          <GithubStars />
           <LanguageSwitch />
           <ModeToggle />
         </div>

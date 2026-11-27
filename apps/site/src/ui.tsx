@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
-import { Check, Copy, Desktop, Moon, Shuffle, Sun } from '@phosphor-icons/react'
+import { Check, Copy, Desktop, GithubLogo, Moon, Shuffle, Star, Sun } from '@phosphor-icons/react'
 import { themeNames, themes, themeVars } from 'contrib-graphs'
 import { Link } from '@tanstack/react-router'
 import { langs, useLang, type Lang } from './i18n'
@@ -41,6 +41,67 @@ export function ModeToggle() {
       <Icon size={17} aria-hidden="true" />
       <span className="hide-sm">{label}</span>
     </button>
+  )
+}
+
+/* ---------------------------------------------------------- Estrellas de GitHub */
+
+const REPO = 'ingfranciscastillo/contrib-graphs'
+const STARS_KEY = 'cg-site-stars'
+const STARS_TTL = 60 * 60 * 1000
+
+/**
+ * Estrellas del repo desde la API pública de GitHub (sin token: 60 consultas por hora e IP),
+ * guardadas una hora en sessionStorage. `null` mientras carga, si falla o si aún no hay ninguna.
+ */
+function useGithubStars(): number | null {
+  const [stars, setStars] = useState<number | null>(null)
+  useEffect(() => {
+    try {
+      const cached = JSON.parse(sessionStorage.getItem(STARS_KEY) ?? 'null') as { n: number; at: number } | null
+      if (cached && Date.now() - cached.at < STARS_TTL) {
+        setStars(cached.n)
+        return
+      }
+    } catch {
+      /* almacenamiento no disponible */
+    }
+    const ctrl = new AbortController()
+    fetch(`https://api.github.com/repos/${REPO}`, { signal: ctrl.signal, headers: { Accept: 'application/vnd.github+json' } })
+      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
+      .then((d: { stargazers_count?: unknown }) => {
+        if (typeof d.stargazers_count !== 'number') return
+        setStars(d.stargazers_count)
+        try {
+          sessionStorage.setItem(STARS_KEY, JSON.stringify({ n: d.stargazers_count, at: Date.now() }))
+        } catch {
+          /* almacenamiento no disponible */
+        }
+      })
+      .catch(() => {
+        /* sin red o límite de la API: el botón queda sin número */
+      })
+    return () => ctrl.abort()
+  }, [])
+  return stars
+}
+
+/** Enlace al repo con sus estrellas. Con 0 estrellas, o si la API falla, no se muestra número. */
+export function GithubStars() {
+  const lang = useLang()
+  const t = useT()
+  const stars = useGithubStars()
+  const count = stars ? new Intl.NumberFormat(lang, { notation: 'compact', maximumFractionDigits: 1 }).format(stars) : null
+  return (
+    <a className="btn btn-ghost gh-stars" href={`https://github.com/${REPO}`} target="_blank" rel="noreferrer" aria-label={t.stars.label(count)}>
+      <GithubLogo size={17} weight="fill" aria-hidden="true" />
+      {count && (
+        <span className="gh-stars-count" aria-hidden="true">
+          <Star size={13} weight="fill" />
+          {count}
+        </span>
+      )}
+    </a>
   )
 }
 
