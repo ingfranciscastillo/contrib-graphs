@@ -59,7 +59,7 @@ export function Gallery() {
       </div>
 
       <div className="container gallery">
-        {galleryOrder.map((v) => {
+        {variants.map((v) => {
           const C = v.component
           return (
             <article key={v.id} className={`card${v.wide ? ' card-wide' : ''}${v.id === 'radial' ? ' card-tall' : ''}`}>
@@ -100,13 +100,6 @@ export function Gallery() {
     </>
   )
 }
-
-/**
- * Orden de la galería en escritorio (dos columnas): Radial ocupa dos filas y a su
- * derecha van Compact y la tarjeta de instalación, así ninguna tarjeta queda sola.
- */
-const ORDER = ['classic', 'dots', 'isometric', 'terminal', 'skyline', 'waveform', 'stitch', 'months', 'pulse', 'radial', 'compact']
-const galleryOrder = [...variants].sort((a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id))
 
 /** Altura aproximada de cada gráfico en su tarjeta: reserva el espacio antes de montarlo. */
 const previewHeight: Record<string, number> = {

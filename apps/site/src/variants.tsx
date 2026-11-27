@@ -94,7 +94,7 @@ const fit: Control = {
   ],
 }
 
-export const variants: VariantDef[] = [
+const defs: VariantDef[] = [
   {
     id: 'classic',
     name: 'Classic',
@@ -311,6 +311,15 @@ export const variants: VariantDef[] = [
     ],
   },
 ]
+
+/**
+ * Orden en todo el sitio: galería, pie, Anterior/Siguiente y API. En la galería de
+ * escritorio (dos columnas), Radial ocupa dos filas y a su derecha van Compact y la
+ * tarjeta de instalación, así ninguna tarjeta queda sola.
+ */
+const ORDER = ['classic', 'dots', 'isometric', 'terminal', 'skyline', 'waveform', 'stitch', 'months', 'pulse', 'radial', 'compact']
+
+export const variants: VariantDef[] = [...defs].sort((a, b) => ORDER.indexOf(a.id) - ORDER.indexOf(b.id))
 
 export const variantsById = Object.fromEntries(variants.map((v) => [v.id, v])) as Record<string, VariantDef>
 
