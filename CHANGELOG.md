@@ -1,8 +1,29 @@
 # Changelog
 
-All notable changes to the `contrib-graphs` package are listed here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+All notable changes to the `contrib-graphs` package and its [docs site](https://ingfranciscastillo.github.io/contrib-graphs/) are listed here. Site changes don't change the package version. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+### Added
+
+- The site's top bar links to the GitHub repository with its star count. With no stars yet, or if the GitHub API can't be reached, it shows only the logo.
+- The 404 page shows an empty graph, "0 contributions on this page", in the chosen theme.
+
+### Changed
+
+- The home has one main action, See variants. Read the docs became a quieter link, and the last gallery card now points to the docs on getting data from GitHub, GitLab or any list of dates instead of repeating the install command.
+- The main button takes the color of the chosen theme, like the logo and the focus ring.
+- The gallery, the footer, the previous/next links and the API page list the designs in the same order.
+- In the gallery, `DotsGraph` and `PulseGraph` show the whole year in their half-width cards, and every graph sits at the top of its card.
+- The footer links to the repository once.
+
+### Fixed
+
+- On phones, a variant's playground shows the controls right after the preview, before the code and the props reference.
+- The theme chips and the preview width switch work like radio groups: arrow keys, Home and End pick an option, and each group is a single Tab stop.
+- Graph tooltips in the gallery draw above the sticky demo toolbar.
+- The docs and API pages keep running text at a readable width, and their table of contents, hidden on phones before, is a collapsible list.
+- The site's top bar no longer overflows between 421px and 700px wide.
 
 ## [0.2.0] - 2026-11-26
 
