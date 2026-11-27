@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react'
-import { Check, Copy, Desktop, GithubLogo, Moon, Shuffle, Star, Sun } from '@phosphor-icons/react'
+import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react'
+import { CaretDown, Check, Copy, Desktop, GithubLogo, Moon, Shuffle, Star, Sun } from '@phosphor-icons/react'
 import { themeNames, themes, themeVars } from 'contrib-graphs'
 import { Link } from '@tanstack/react-router'
 import { langs, useLang, type Lang } from './i18n'
@@ -105,6 +105,64 @@ export function GithubStars() {
   )
 }
 
+/* ---------------------------------------------------------- Índice de página */
+
+const TOC_WIDE = '(min-width: 960px)'
+
+/**
+ * Índice de Docs y API. En escritorio es la columna fija de la izquierda, siempre abierta;
+ * en móvil va plegado encima del texto y se cierra al elegir una sección.
+ */
+export function Toc({ label, children }: { label: string; children: ReactNode }) {
+  const [open, setOpen] = useState(false)
+  const [wide, setWide] = useState(false)
+  useEffect(() => {
+    const mq = window.matchMedia(TOC_WIDE)
+    const sync = () => {
+      setWide(mq.matches)
+      setOpen(mq.matches)
+    }
+    sync()
+    mq.addEventListener('change', sync)
+    return () => mq.removeEventListener('change', sync)
+  }, [])
+  return (
+    <nav className="toc" aria-label={label}>
+      <details open={open} onToggle={(e) => setOpen(e.currentTarget.open)}>
+        <summary tabIndex={wide ? -1 : undefined} onClick={(e) => wide && e.preventDefault()}>
+          {label}
+          <CaretDown size={14} aria-hidden="true" />
+        </summary>
+        <ul onClick={(e) => !wide && (e.target as HTMLElement).closest('a') && setOpen(false)}>{children}</ul>
+      </details>
+    </nav>
+  )
+}
+
+/* ---------------------------------------------------------- Grupo de radio */
+
+/**
+ * Teclado de un grupo de radio (patrón ARIA): las flechas e Inicio/Fin eligen la opción
+ * vecina y le pasan el foco. Cada opción lleva `tabIndex={checked ? 0 : -1}`, así el
+ * grupo entero es una sola parada de Tab.
+ */
+export function radioKeys<T>(options: readonly T[], current: T, select: (next: T) => void) {
+  return (e: KeyboardEvent<HTMLElement>) => {
+    const i = options.indexOf(current)
+    const last = options.length - 1
+    const to =
+      e.key === 'ArrowRight' || e.key === 'ArrowDown' ? (i >= last ? 0 : i + 1)
+      : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? (i <= 0 ? last : i - 1)
+      : e.key === 'Home' ? 0
+      : e.key === 'End' ? last
+      : -1
+    if (to < 0) return
+    e.preventDefault()
+    select(options[to])
+    e.currentTarget.querySelectorAll<HTMLElement>('[role="radio"]')[to]?.focus()
+  }
+}
+
 /* ---------------------------------------------------------- Toolbar demo */
 
 export function DemoToolbar() {
@@ -112,7 +170,12 @@ export function DemoToolbar() {
   const t = useT()
   return (
     <div className="toolbar" role="toolbar" aria-label={t.toolbar.label}>
-      <div className="toolbar-group chips" role="radiogroup" aria-label={t.toolbar.theme}>
+      <div
+        className="toolbar-group chips"
+        role="radiogroup"
+        aria-label={t.toolbar.theme}
+        onKeyDown={radioKeys(themeNames, theme, (next) => set({ theme: next }))}
+      >
         {themeNames.map((t) => (
           <button
             key={t}
@@ -120,6 +183,7 @@ export function DemoToolbar() {
             style={themeVars(themes[t])}
             role="radio"
             aria-checked={t === theme}
+            tabIndex={t === theme ? 0 : -1}
             onClick={() => set({ theme: t })}
           >
             <span className="chip-swatches" aria-hidden="true">

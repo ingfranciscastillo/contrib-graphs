@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { apiComponents, apiConstants, apiFunctions, Inline, PropsTable, sharedProps } from '../api'
 import { apiText } from '../api-es'
 import { useLang, useLocaleParams } from '../i18n'
-import { CodeBlock } from '../ui'
+import { CodeBlock, Toc } from '../ui'
 import { variants } from '../variants'
 
 /** Variante del sitio que corresponde a cada componente (para enlazar al playground). */
@@ -16,9 +16,7 @@ export function ApiPage() {
 
   return (
     <div className="container page docs">
-      <aside className="toc" aria-label={L('On this page', 'En esta página')}>
-        <p>{L('On this page', 'En esta página')}</p>
-        <ul>
+      <Toc label={L('On this page', 'En esta página')}>
           <li>
             <a href="#shared-props">{L('Shared props', 'Props comunes')}</a>
           </li>
@@ -30,8 +28,7 @@ export function ApiPage() {
           <li>
             <a href="#data">contrib-graphs/data</a>
           </li>
-        </ul>
-      </aside>
+      </Toc>
       <article className="prose api">
         <h1>{L('API reference', 'Referencia de la API')}</h1>
         <p className="lead">

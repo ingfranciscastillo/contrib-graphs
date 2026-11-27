@@ -4,7 +4,7 @@ import { fromDates } from 'contrib-graphs/data'
 import { useMemo, type ReactNode } from 'react'
 import { useLang, useLocaleParams } from '../i18n'
 import { useDemo } from '../search'
-import { CodeBlock, Section, registryUrl } from '../ui'
+import { CodeBlock, Section, Toc, registryUrl } from '../ui'
 import { PmCommand } from '../pm'
 
 /** Anclas iguales en los dos idiomas: un enlace a #themes funciona en /docs y en /es/docs. */
@@ -42,16 +42,13 @@ export function Docs() {
 
   return (
     <div className="container page docs">
-      <aside className="toc" aria-label={L('On this page', 'En esta página')}>
-        <p>{L('On this page', 'En esta página')}</p>
-        <ul>
+      <Toc label={L('On this page', 'En esta página')}>
           {toc.map(([id, en, es]) => (
             <li key={id}>
               <a href={`#${id}`}>{L(en, es)}</a>
             </li>
           ))}
-        </ul>
-      </aside>
+      </Toc>
       <article className="prose">
         <h1>{L('Documentation', 'Documentación')}</h1>
         <p className="lead">

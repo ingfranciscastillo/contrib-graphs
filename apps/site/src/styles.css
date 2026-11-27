@@ -347,6 +347,10 @@ h3 {
 }
 
 /* ---------- Toolbar ---------- */
+/* El tooltip de las gráficas pasa por encima de la barra de demo fija (20), no de la superior (30). */
+.app .cg-tooltip {
+  z-index: 25;
+}
 .toolbar-wrap {
   position: sticky;
   top: 56px;
@@ -583,15 +587,27 @@ input[type='text'] {
 @media (min-width: 980px) {
   .playground {
     grid-template-columns: minmax(0, 1fr) 300px;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 'preview controls' 'docs controls';
+    row-gap: 12px;
+  }
+  .preview-col {
+    grid-area: preview;
+  }
+  .preview-docs {
+    grid-area: docs;
   }
   .controls {
+    grid-area: controls;
+    align-self: start;
     position: sticky;
     top: 72px;
     max-height: calc(100vh - 88px);
     overflow: auto;
   }
 }
-.preview-col {
+.preview-col,
+.preview-docs {
   display: grid;
   gap: 12px;
   min-width: 0;
@@ -806,14 +822,51 @@ input[type='checkbox'][role='switch']:checked::after {
     align-self: start;
   }
 }
-@media (max-width: 959px) {
-  .toc {
+.toc summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 8px;
+  font-weight: 600;
+  list-style: none;
+}
+.toc summary::-webkit-details-marker {
+  display: none;
+}
+@media (min-width: 960px) {
+  .toc summary {
+    cursor: default;
+  }
+  .toc summary svg {
     display: none;
   }
 }
-.toc p {
-  margin: 0 0 8px;
-  font-weight: 600;
+@media (max-width: 959px) {
+  /* Plegado encima del texto: una fila que se abre con la lista. */
+  .toc details {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--panel);
+  }
+  .toc summary {
+    min-height: 44px;
+    margin: 0;
+    padding: 0 14px;
+    cursor: pointer;
+  }
+  .toc summary svg {
+    color: var(--text-3);
+    transition: transform 0.2s ease;
+  }
+  .toc details[open] summary svg {
+    transform: rotate(180deg);
+  }
+  .toc ul {
+    margin: 0 14px 12px;
+  }
+  .toc a {
+    padding: 6px 12px;
+  }
 }
 .toc ul {
   list-style: none;
@@ -842,6 +895,13 @@ input[type='checkbox'][role='switch']:checked::after {
 .prose p,
 .prose li {
   color: var(--text-2);
+}
+/* Texto corrido a un ancho de lectura cómodo; código y tablas siguen usando todo el ancho. */
+.prose > p,
+.prose section > p,
+.prose ul,
+.prose ol {
+  max-width: 68ch;
 }
 .prose strong {
   color: var(--text);

@@ -7,7 +7,7 @@ import { useLang, useLocaleParams, type Lang } from '../i18n'
 import { componentApi, PropsTable } from '../api'
 import { useT } from '../messages'
 import { useDemo } from '../search'
-import { CodeBlock, DemoToolbar, registryUrl } from '../ui'
+import { CodeBlock, DemoToolbar, radioKeys, registryUrl } from '../ui'
 import { PmCommand } from '../pm'
 import { tr, usageSnippet, variants, variantsById, type Control, type Values, type VariantDef } from '../variants'
 
@@ -65,9 +65,18 @@ function Playground({ def }: { def: VariantDef }) {
       <div className="playground">
         <div className="preview-col">
           <div className="preview-bar">
-            <div className="segmented" role="radiogroup" aria-label={t.playground.previewWidth}>
+            <div
+              className="segmented"
+              role="radiogroup"
+              aria-label={t.playground.previewWidth}
+              onKeyDown={radioKeys(
+                devices.map((d) => d.id),
+                device,
+                setDevice,
+              )}
+            >
               {devices.map(({ id, Icon }) => (
-                <button key={id} role="radio" aria-checked={device === id} onClick={() => setDevice(id)}>
+                <button key={id} role="radio" aria-checked={device === id} tabIndex={device === id ? 0 : -1} onClick={() => setDevice(id)}>
                   <Icon size={15} aria-hidden="true" />
                   <span className="hide-sm">{t.playground.devices[id]}</span>
                 </button>
@@ -103,10 +112,6 @@ function Playground({ def }: { def: VariantDef }) {
               </button>
             )}
           </div>
-          <CodeBlock code={usageSnippet(def, values, theme)} />
-          <p className="preview-note">{t.playground.orCopy}</p>
-          <PmCommand kind="dlx" arg={`shadcn@latest add ${registryUrl(`${def.id}-graph`)}`} />
-          <PropsReference importName={def.importName} />
         </div>
 
         <aside className="controls" aria-label="Props">
@@ -121,6 +126,14 @@ function Playground({ def }: { def: VariantDef }) {
             <ControlField key={c.key} control={c} lang={lang} value={values[c.key]} onChange={(v) => setValues((s) => ({ ...s, [c.key]: v }))} />
           ))}
         </aside>
+
+        {/* Después de los controles en el DOM: en móvil quedan justo bajo la vista previa. */}
+        <div className="preview-docs">
+          <CodeBlock code={usageSnippet(def, values, theme)} />
+          <p className="preview-note">{t.playground.orCopy}</p>
+          <PmCommand kind="dlx" arg={`shadcn@latest add ${registryUrl(`${def.id}-graph`)}`} />
+          <PropsReference importName={def.importName} />
+        </div>
       </div>
     </div>
   )
