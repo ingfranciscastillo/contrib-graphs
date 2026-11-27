@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router'
-import { ArrowDown, BookOpen, SlidersHorizontal } from '@phosphor-icons/react'
+import { ArrowDown, ArrowRight, BookOpen, SlidersHorizontal } from '@phosphor-icons/react'
 import { IsometricGraph } from 'contrib-graphs'
 import { useLang, useLocaleParams } from '../i18n'
 import { useT } from '../messages'
@@ -21,13 +21,14 @@ export function Gallery() {
             <h1>{t.hero.title}</h1>
             <p className="lead">{t.hero.lead}</p>
             <div className="hero-actions">
-              <Link to="/{-$locale}/docs" params={lp} search={(p) => p} className="btn btn-primary">
-                {t.hero.start}
-              </Link>
-              <a href="#variants" className="btn">
+              <a href="#variants" className="btn btn-primary">
                 <ArrowDown size={15} aria-hidden="true" />
                 {t.hero.seeVariants}
               </a>
+              <Link to="/{-$locale}/docs" params={lp} search={(p) => p} className="btn btn-ghost">
+                <BookOpen size={15} aria-hidden="true" />
+                {t.hero.start}
+              </Link>
             </div>
             <div className="hero-install">
               <PmCommand kind="install" arg="contrib-graphs" />
@@ -84,17 +85,24 @@ export function Gallery() {
         <article className="card card-cta">
           <header className="card-head">
             <div>
-              <h2>{t.gallery.useIt}</h2>
-              <p>{t.gallery.useItText}</p>
+              <h2>{t.gallery.ownData}</h2>
+              <p>{t.gallery.ownDataText}</p>
             </div>
           </header>
-          <div className="card-cta-body">
-            <PmCommand kind="install" arg="contrib-graphs" />
-            <Link to="/{-$locale}/docs" params={lp} hash="installation" search={(p) => p} className="btn">
-              <BookOpen size={15} aria-hidden="true" />
-              {t.gallery.readDocs}
-            </Link>
-          </div>
+          <nav className="card-cta-body" aria-label={t.gallery.sources.label}>
+            {(
+              [
+                ['github', t.gallery.sources.github],
+                ['gitlab', t.gallery.sources.gitlab],
+                ['other-sources', t.gallery.sources.other],
+              ] as const
+            ).map(([hash, label]) => (
+              <Link key={hash} to="/{-$locale}/docs" params={lp} hash={hash} search={(p) => p} className="btn btn-sm">
+                {label}
+                <ArrowRight size={14} aria-hidden="true" />
+              </Link>
+            ))}
+          </nav>
         </article>
       </div>
     </>

@@ -59,9 +59,9 @@ const en = {
   },
   gallery: {
     customize: 'Customize',
-    useIt: 'Use it in your project',
-    useItText: 'Install it from npm, or copy the source of a single variant with the shadcn CLI and edit it like any other file in your project.',
-    readDocs: 'Read the docs',
+    ownData: 'Bring your own data',
+    ownDataText: 'Every design takes an array of { date, count }. The docs show how to fetch it from GitHub or GitLab, or build it from any list of dates.',
+    sources: { label: 'Data sources', github: 'GitHub', gitlab: 'GitLab', other: 'Other sources' },
   },
   playground: {
     breadcrumb: 'Breadcrumb',
@@ -136,9 +136,9 @@ const es = {
   },
   gallery: {
     customize: 'Personalizar',
-    useIt: 'Úsalo en tu proyecto',
-    useItText: 'Instálalo desde npm, o copia el código de una sola variante con el CLI de shadcn y edítalo como cualquier archivo de tu proyecto.',
-    readDocs: 'Leer la documentación',
+    ownData: 'Usa tus propios datos',
+    ownDataText: 'Todos los diseños reciben un arreglo de { date, count }. La documentación explica cómo sacarlo de GitHub o GitLab, o armarlo a partir de cualquier lista de fechas.',
+    sources: { label: 'Fuentes de datos', github: 'GitHub', gitlab: 'GitLab', other: 'Otras fuentes' },
   },
   playground: {
     breadcrumb: 'Migas',

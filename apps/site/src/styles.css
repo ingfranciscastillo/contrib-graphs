@@ -531,14 +531,10 @@ input[type='text'] {
 
 .card-cta-body {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 14px;
+  flex-wrap: wrap;
+  gap: 8px;
   margin-top: auto;
   padding: 20px;
-}
-.card-cta-body .pm-code {
-  align-self: stretch;
 }
 
 /* ---------- Página de variante ---------- */
